@@ -6,10 +6,14 @@ import { api } from 'services/api';
 
 const middleware = getDefaultMiddleware => getDefaultMiddleware().concat(logger, api.middleware);
 
-const store = configureStore({
-  reducer,
-  middleware,
-  devTools: process.env.NODE_ENV !== 'production',
-});
+const store = () => {
+  const store = configureStore({
+    reducer,
+    middleware,
+    devTools: process.env.NODE_ENV !== 'production',
+  });
+
+  return store;
+};
 
 export default store;

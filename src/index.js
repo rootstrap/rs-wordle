@@ -20,7 +20,7 @@ const messages = locales[locale];
 ReactDOM.render(
   <React.StrictMode>
     <IntlProvider messages={flatten(messages)} locale={locale} defaultLocale={DEFAULT_LANGUAGE}>
-      <Provider store={store}>
+      <Provider store={store()}>
         <HelmetProvider>
           <App />
         </HelmetProvider>

@@ -1,0 +1,36 @@
+{
+  "global": {
+    "pageTitle": "RS React Redux Base"
+  },
+  "home": {
+    "welcomeMsg": "Welcome to React Redux Base",
+    "logoAltMsg": "React logo",
+    "logoutBtn": "Logout"
+  },
+  "signup": {
+    "title": "Sign up",
+    "alreadyHaveAccount": "Already have an account? Log in",
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "passwordConfirmation": "Confirm password"
+    },
+    "errors": {
+      "emailMsg": "Must provide an email",
+      "passwordMsg": "Password must have at least 8 characters, a letter and a number",
+      "passwordConfirmationMsg": "Passwords must match"
+    }
+  },
+  "login": {
+    "title": "Log in",
+    "dontHaveAccountMsg": "Don't have an account? Sign up",
+    "labels": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "errors": {
+      "emailMsg": "Must provide an email",
+      "passwordMsg": "Must provide a password"
+    }
+  }
+}

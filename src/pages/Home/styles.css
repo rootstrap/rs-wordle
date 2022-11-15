@@ -1,0 +1,28 @@
+.home {
+  text-align: center;
+}
+
+.home__logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.home__logout {
+  margin: auto;
+  max-width: 15rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home__logo {
+    animation: Home-logo infinite 20s linear;
+  }
+}
+
+@keyframes Home-logo {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

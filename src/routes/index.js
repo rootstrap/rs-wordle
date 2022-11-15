@@ -1,6 +1,5 @@
 import routesPaths from './routesPaths';
 import Home from 'pages/Home';
-import Signup from 'pages/Signup';
 import Login from 'pages/Login';
 
 const routes = [
@@ -9,10 +8,6 @@ const routes = [
     component: <Home />,
     exact: true,
     private: true,
-  },
-  {
-    path: routesPaths.signup,
-    component: <Signup />,
   },
   {
     path: routesPaths.login,

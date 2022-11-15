@@ -1,25 +1,41 @@
+import { Redirect, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import Button from 'components/common/Button';
+import firebaseData from 'firebase/firebase';
+import useAuth from 'hooks/useAuth';
 import useTranslation from 'hooks/useTranslation';
-import { useLogoutMutation } from 'services/auth/auth';
+import routesPaths from 'routes/routesPaths';
+import { logout } from 'state/actions/userActions';
 
 import logo from 'assets/logo.svg';
 
 import './styles.css';
 
 const Home = () => {
-  const t = useTranslation();
-  const [logout, { isLoading }] = useLogoutMutation();
+  const { authenticated } = useAuth();
 
-  const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
+  const t = useTranslation();
+  const dispatch = useDispatch();
+  const { push } = useHistory();
+  const { logout: firebaseLogout } = firebaseData;
+
+  const handleLogout = async () => {
+    await firebaseLogout();
+    await dispatch(logout());
+    push(routesPaths.login);
+  };
+
+  if (!authenticated) {
+    return <Redirect to={routesPaths.login} />;
+  }
 
   return (
     <div className="home">
       <img src={logo} className="home__logo" alt={t('home.logoAltMsg')} />
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
-        <Button handleClick={handleLogout} disabled={isLoading}>
-          {t('home.logoutBtn')}
-        </Button>
+        <Button handleClick={handleLogout}>{t('home.logoutBtn')}</Button>
       </div>
     </div>
   );

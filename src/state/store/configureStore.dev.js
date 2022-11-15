@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import reducer from 'state/reducer';
+import reducer from 'state/reducers/reducer';
 import { api } from 'services/api';
 
 const middleware = getDefaultMiddleware => getDefaultMiddleware().concat(logger, api.middleware);

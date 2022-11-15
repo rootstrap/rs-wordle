@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import { selectAuth } from 'services/auth/auth';
-
 const useAuth = () => {
-  const { user, authenticated } = useSelector(selectAuth);
+  const { user, authenticated } = useSelector(({ user: { user, authenticated } }) => ({
+    user,
+    authenticated,
+  }));
 
   return {
     user,

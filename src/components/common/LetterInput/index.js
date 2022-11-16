@@ -2,7 +2,7 @@ import { string, func, object } from 'prop-types';
 import cn from 'classnames';
 import './styles.css';
 
-const LetterInput = ({ type = 'text', name, handleOnChange, error, onKeyPress, value }) => (
+const LetterInput = ({ type = 'text', name, handleOnChange, error, onKeyPress, value, style }) => (
   <div className="Input">
     <input
       maxLength={1}
@@ -12,6 +12,7 @@ const LetterInput = ({ type = 'text', name, handleOnChange, error, onKeyPress, v
       onChange={handleOnChange}
       onKeyDown={(...params) => onKeyPress(name, ...params)}
       value={value}
+      style={style}
     />
   </div>
 );

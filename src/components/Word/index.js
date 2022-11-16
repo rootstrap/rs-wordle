@@ -38,13 +38,14 @@ const Word = ({ word = '' }) => {
   };
 
   const onKeyPress = (name, { key }) => {
-    if (key === 'Enter' || key.match(/Arrow/g)) {
+    const isDelete = key === 'Backspace';
+
+    if (key.length > 1 && !isDelete) {
       return;
     }
     const [_, fieldIndex] = name.split('-');
     const currentValue = usersAttempts[currentRound][fieldIndex];
     const isLetter = key.match(/[a-zA-Z]/g);
-    const isDelete = key === 'Backspace';
 
     console.log('key: ', key);
 

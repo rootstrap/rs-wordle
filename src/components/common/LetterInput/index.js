@@ -2,7 +2,15 @@ import { string, func, object } from 'prop-types';
 import cn from 'classnames';
 import './styles.css';
 
-const LetterInput = ({ type = 'text', name, handleOnChange, error, onKeyPress, value, style }) => (
+const LetterInput = ({
+  type = 'text',
+  name,
+  handleOnChange = () => {},
+  error,
+  onKeyPress,
+  value,
+  style,
+}) => (
   <div className="Input">
     <input
       maxLength={1}
@@ -21,8 +29,10 @@ LetterInput.propTypes = {
   error: object,
   name: string,
   type: string,
+  handleOnChange: func,
   onKeyPress: func,
   value: string,
+  style: object,
 };
 
 export default LetterInput;

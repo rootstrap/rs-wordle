@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+// I prefer this library but generates out of memory errors in netlify
 // import { initialize } from '@paunovic/random-words';
 import randomWords from 'random-words';
 
@@ -7,8 +8,8 @@ import { WORDS_COLLECTION } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getRandomInt, getTodaysDate } from 'utils/helpers';
 
-const ADMITED_WORDS_SIZES = [5, 6];
-const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS'];
+const ADMITED_WORDS_SIZES = [4, 5, 6];
+const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS', 'DOGS', 'CATS'];
 
 const useWordDb = () => {
   const [word, setWord] = useState('');

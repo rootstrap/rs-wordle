@@ -60,10 +60,9 @@ const Word = () => {
       return;
     }
     const [_, fieldIndex] = name.split('-');
-    const currentValue = usersAttempts[currentRound][fieldIndex];
     const isLetter = key.match(/[a-zA-Z]/g);
 
-    if ((!!currentValue && isLetter) || isDelete) {
+    if (isLetter || isDelete) {
       const newAttempt = [...usersAttempts];
       newAttempt[currentRound][fieldIndex] = isDelete ? '' : key;
       setUsersAttempts(newAttempt);
@@ -71,22 +70,7 @@ const Word = () => {
     }
   };
 
-  const handleOnChange = ({ target: { value, name } }) => {
-    const [_, fieldIndex] = name.split('-');
-
-    if (!!value) {
-      const isLetter = value.match(/[a-zA-Z]/g);
-      if (isLetter) {
-        const newAttempt = [...usersAttempts];
-        newAttempt[currentRound][fieldIndex] = value;
-        setUsersAttempts(newAttempt);
-        focusNext(fieldIndex);
-      }
-    }
-  };
-
   const commonProps = {
-    handleOnChange,
     onKeyPress,
   };
 

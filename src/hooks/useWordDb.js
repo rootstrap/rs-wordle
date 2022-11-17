@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 // import { initialize } from '@paunovic/random-words';
+import randomWords from 'random-words';
 
 import { WORDS_COLLECTION } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -13,8 +14,6 @@ const useWordDb = () => {
   const [word, setWord] = useState('');
   const [wordDate, setWordDate] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  // const RANDOM = initialize({ countryCode: 'us' });
 
   const today = getTodaysDate();
   const { firebaseDb } = firebaseData;
@@ -33,17 +32,17 @@ const useWordDb = () => {
             setWord(todaysWord);
           } else {
             let todaysWord = '';
-            /* const wordsCollection = RANDOM.words(100);
+            const wordsCollection = randomWords({ exactly: 7, maxLength: 6 });
             const correctSizeWords = await wordsCollection.filter(word =>
               ADMITED_WORDS_SIZES.includes(word.length)
             );
             if (!!correctSizeWords.length) {
               const randomIndex = getRandomInt(correctSizeWords.length);
               todaysWord = correctSizeWords[randomIndex].toUpperCase();
-            } else { */
-            const randomIndex = getRandomInt(DEFAULT_WORDS.length);
-            todaysWord = DEFAULT_WORDS[randomIndex];
-            // }
+            } else {
+              const randomIndex = getRandomInt(DEFAULT_WORDS.length);
+              todaysWord = DEFAULT_WORDS[randomIndex];
+            }
             await setDoc(doc(wordsRef, today), { word: todaysWord });
             setWord(todaysWord);
           }
@@ -56,7 +55,7 @@ const useWordDb = () => {
       }
     };
     getWord();
-  }, [/* RANDOM,  */ firebaseDb, today, wordDate, wordsRef]);
+  }, [firebaseDb, today, wordDate, wordsRef]);
 
   const letters = useMemo(() => word?.split(''), [word]);
 

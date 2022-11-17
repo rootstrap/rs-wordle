@@ -1,10 +1,11 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import wordExists from 'word-exists';
 
 import LetterInput from 'components/common/LetterInput';
+import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
-import { useMemo, useState } from 'react';
 
 const STATUS = {
   correct: 'green',
@@ -18,7 +19,9 @@ const GAME_STATUS = {
   won: 'won',
 };
 
-const Word = ({ word = '' }) => {
+const Word = (/* { word = '' } */) => {
+  const { word } = useWordDb();
+  console.log('word: ', word);
   const { handleSubmit } = useForm();
 
   const letters = useMemo(() => word?.split(''), [word]);
@@ -29,6 +32,10 @@ const Word = ({ word = '' }) => {
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.playing);
 
   const gameEnded = gameStatus !== GAME_STATUS.playing;
+
+  useEffect(() => {
+    setUsersAttempts([Array(letters.length).fill('')]);
+  }, [letters]);
 
   const focusBefore = fieldIndex => {
     let fieldIntIndex = parseInt(fieldIndex, 10);
@@ -145,7 +152,7 @@ const Word = ({ word = '' }) => {
   return (
     <form onSubmit={handleSubmit(onSubmitWord)}>
       {usersAttempts.map((attempt, round) => (
-        <div className="word">
+        <div className="word" key={`word-attempt-${round}`}>
           <>
             {attempt.map((c, index) => (
               <LetterInput

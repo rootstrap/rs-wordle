@@ -1,41 +1,30 @@
-import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import wordExists from 'word-exists';
 
 import LetterInput from 'components/common/LetterInput';
+import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
 
-const STATUS = {
-  correct: 'green',
-  misplaced: 'yellow',
-  incorrect: 'grey',
-};
-
-const GAME_STATUS = {
-  lose: 'lose',
-  playing: 'playing',
-  won: 'won',
-};
-
-const Word = (/* { word = '' } */) => {
-  const { word } = useWordDb();
-  console.log('word: ', word);
+const Word = () => {
+  const { letters, word, loading, setLoading } = useWordDb();
   const { handleSubmit } = useForm();
 
-  const letters = useMemo(() => word?.split(''), [word]);
-  const [currentRound, setCurrentRound] = useState(0);
-  const [usersAttempts, setUsersAttempts] = useState([Array(letters.length).fill('')]);
-  const [roundsResults, setRoundsResults] = useState([]);
-  const [error, setError] = useState('');
-  const [gameStatus, setGameStatus] = useState(GAME_STATUS.playing);
-
-  const gameEnded = gameStatus !== GAME_STATUS.playing;
-
-  useEffect(() => {
-    setUsersAttempts([Array(letters.length).fill('')]);
-  }, [letters]);
+  const {
+    currentRound,
+    usersAttempts,
+    roundsResults,
+    setUsersAttempts,
+    gameEnded,
+    error,
+    setError,
+    onSubmitWord,
+  } = useUsersAttempts({
+    wordLength: letters.length,
+    correctWord: word,
+    letters,
+    setLoading,
+  });
 
   const focusBefore = fieldIndex => {
     let fieldIntIndex = parseInt(fieldIndex, 10);
@@ -101,53 +90,13 @@ const Word = (/* { word = '' } */) => {
     onKeyPress,
   };
 
-  const compareWithWord = currentAttempt => {
-    const newRoundsResults = [...roundsResults];
-    const currentRoundResult = [];
-    let correctCount = 0;
-    currentAttempt.forEach((letter, index) => {
-      const indexes = [];
-      for (let i = 0; i < letters.length; i++) {
-        if (letters[i].toUpperCase() === letter.toUpperCase()) {
-          indexes.push(i);
-        }
-      }
-
-      if (indexes.includes(index)) {
-        currentRoundResult.push(STATUS.correct);
-        correctCount++;
-      } else if (indexes.length > 0) {
-        currentRoundResult.push(STATUS.misplaced);
-      } else {
-        currentRoundResult.push(STATUS.incorrect);
-      }
-    });
-
-    newRoundsResults.push(currentRoundResult);
-
-    setRoundsResults(newRoundsResults);
-    if (correctCount === word.length) {
-      setGameStatus(GAME_STATUS.won);
-    } else {
-      const attempts = [...usersAttempts];
-      attempts.push(Array(letters.length).fill(''));
-      setCurrentRound(currentRound + 1);
-      setUsersAttempts(attempts);
-    }
-  };
-
-  const onSubmitWord = () => {
-    setError('');
-    const currentAttempt = usersAttempts[currentRound];
-    const attemptedWord = currentAttempt.join('');
-    if (attemptedWord.length !== word.length) return;
-    const existsWord = wordExists(attemptedWord);
-    if (!existsWord) {
-      setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
-    } else {
-      compareWithWord(currentAttempt);
-    }
-  };
+  if (loading) {
+    return (
+      <div>
+        <p>LOADING DATA...</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmitWord)}>
@@ -173,7 +122,6 @@ const Word = (/* { word = '' } */) => {
           </>
         </div>
       ))}
-
       {!!error && <p className="error-message">{error}</p>}
       <br />
       {!gameEnded && <input type="submit" style={{ marginBottom: 200 }} />}

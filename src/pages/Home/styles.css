@@ -10,6 +10,7 @@
 .home__logout {
   margin: auto;
   max-width: 15rem;
+  padding-top: 300px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

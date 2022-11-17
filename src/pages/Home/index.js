@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Word word="GENIE" />
+      <Word />
       <div className="home__logout">
         <Button handleClick={handleLogout}>{t('home.logoutBtn')}</Button>
       </div>

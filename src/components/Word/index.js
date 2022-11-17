@@ -108,7 +108,7 @@ const Word = () => {
       ))}
       {!!error && <p className="error-message">{error}</p>}
       <br />
-      {!gameEnded && <input type="submit" style={{ marginBottom: 200 }} />}
+      {!gameEnded && <input type="submit" />}
     </form>
   );
 };

@@ -75,7 +75,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     const currentRoundResult = [];
     let correctCount = 0;
     currentAttempt.forEach((letter, index) => {
-      const indexes = [];
+      let indexes = [];
       for (let i = 0; i < wordLength; i++) {
         if (letters[i].toUpperCase() === letter.toUpperCase()) {
           indexes.push(i);
@@ -86,7 +86,22 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         currentRoundResult.push(LETTER_STATUS.correct);
         correctCount++;
       } else if (indexes.length > 0) {
-        currentRoundResult.push(LETTER_STATUS.misplaced);
+        const allCurrentAttemptIndexes = [];
+        for (let j = 0; j < wordLength; j++) {
+          if (currentAttempt[j].toUpperCase() === letter.toUpperCase()) {
+            if (indexes.includes(j)) {
+              indexes = indexes.filter(ind => ind !== j);
+            } else {
+              allCurrentAttemptIndexes.push(j);
+            }
+          }
+        }
+        const occurrenceIndex = allCurrentAttemptIndexes.indexOf(index);
+        if (occurrenceIndex < indexes.length) {
+          currentRoundResult.push(LETTER_STATUS.misplaced);
+        } else {
+          currentRoundResult.push(LETTER_STATUS.incorrect);
+        }
       } else {
         currentRoundResult.push(LETTER_STATUS.incorrect);
       }

@@ -1,0 +1,10 @@
+.keyboard-letter {
+  font-weight: 800;
+  margin: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.letter-text {
+  color: white;
+}

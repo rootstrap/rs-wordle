@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
+import { COLOR_ORDER, KEYBOARD_LETTERS } from 'constants/constants';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { USERS_ATTEMPTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -20,6 +21,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const [roundsResults, setRoundsResults] = useState([Array(wordLength).fill('')]);
   const [error, setError] = useState('');
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.playing);
+  const [keyboardLetters, setKeyboardLetters] = useState(KEYBOARD_LETTERS);
 
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
@@ -42,6 +44,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           const docs = await getDocs(q);
           const newUsersAttempts = [];
           const newRoundsResults = [];
+          const newKeyboardLetters = { ...keyboardLetters };
           let roundCount = 0;
           let won = false;
           docs.forEach(doc => {
@@ -49,6 +52,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
             const wordAttempt = word.split('');
             newUsersAttempts.push(wordAttempt);
             newRoundsResults.push(result);
+            result.forEach((color, index) => {
+              const letter = wordAttempt[index];
+              const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
+              const newColorOrder = COLOR_ORDER[color];
+              if (newColorOrder > currentColorOrder) {
+                newKeyboardLetters[letter] = color;
+              }
+            });
             won = word.toUpperCase() === correctWord.toUpperCase();
             roundCount++;
           });
@@ -60,6 +71,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           }
           setUsersAttempts(newUsersAttempts);
           setRoundsResults(newRoundsResults);
+          setKeyboardLetters(newKeyboardLetters);
           setLoading(false);
         } catch (err) {
           console.log('err: ', err);
@@ -68,7 +80,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       }
     };
     getUserAttempts();
-  }, [correctWord, currentUser, firebaseDb, setLoading, today, wordDate, wordLength]);
+  }, [
+    correctWord,
+    currentUser,
+    firebaseDb,
+    keyboardLetters,
+    setLoading,
+    today,
+    wordDate,
+    wordLength,
+  ]);
 
   const compareWithWord = async (currentAttempt, attemptedWord) => {
     const newRoundsResults = [...roundsResults];
@@ -107,6 +128,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       }
     });
 
+    const newKeyboardLetters = { ...keyboardLetters };
+    currentRoundResult.forEach((color, index) => {
+      const letter = currentAttempt[index].toUpperCase();
+      const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
+      const newColorOrder = COLOR_ORDER[color];
+      if (newColorOrder > currentColorOrder) {
+        newKeyboardLetters[letter] = color;
+      }
+    });
+
     await addDoc(collection(firebaseDb, USERS_ATTEMPTS), {
       date: today,
       result: currentRoundResult,
@@ -116,8 +147,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     });
 
     newRoundsResults.push(currentRoundResult);
-
+    setKeyboardLetters(newKeyboardLetters);
     setRoundsResults(newRoundsResults);
+
     if (correctCount === wordLength) {
       setGameStatus(GAME_STATUS.won);
     } else {
@@ -150,6 +182,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     gameEnded,
     error,
     setError,
+    keyboardLetters,
   };
 };
 

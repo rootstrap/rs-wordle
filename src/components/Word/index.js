@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form';
 
 import LetterInput from 'components/common/LetterInput';
+import Keyboard from 'components/Keyboard';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
+import { LETTER_STATUS } from 'constants/types';
 
 const Word = () => {
   const { letters, word, loading, setLoading } = useWordDb();
@@ -19,6 +21,7 @@ const Word = () => {
     error,
     setError,
     onSubmitWord,
+    keyboardLetters,
   } = useUsersAttempts({
     wordLength: letters.length,
     correctWord: word,
@@ -83,33 +86,35 @@ const Word = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmitWord)}>
-      {usersAttempts.map((attempt, round) => (
-        <div className="word" key={`word-attempt-${round}`}>
-          <>
-            {attempt.map((c, index) => (
-              <LetterInput
-                key={`${c}-${round}-${index}`}
-                {...commonProps}
-                name={`letter${round}-${index}`}
-                value={usersAttempts[round][index]}
-                style={
-                  round !== currentRound || gameEnded
-                    ? {
-                        backgroundColor: roundsResults[round][index],
-                        fontWeight: 800,
-                      }
-                    : { fontWeight: 800 }
-                }
-              />
-            ))}
-          </>
-        </div>
-      ))}
-      {!!error && <p className="error-message">{error}</p>}
-      <br />
-      {!gameEnded && <input type="submit" />}
-    </form>
+    <div>
+      <form onSubmit={handleSubmit(onSubmitWord)}>
+        {usersAttempts.map((attempt, round) => (
+          <div className="word" key={`word-attempt-${round}`}>
+            <>
+              {attempt.map((c, index) => (
+                <LetterInput
+                  key={`${c}-${round}-${index}`}
+                  {...commonProps}
+                  name={`letter${round}-${index}`}
+                  value={usersAttempts[round][index]}
+                  style={{
+                    backgroundColor:
+                      round !== currentRound || gameEnded
+                        ? roundsResults[round][index]
+                        : LETTER_STATUS.nothing,
+                    fontWeight: 800,
+                  }}
+                />
+              ))}
+            </>
+          </div>
+        ))}
+        {!!error && <p className="error-message">{error}</p>}
+        <br />
+        {!gameEnded && <input type="submit" />}
+      </form>
+      <Keyboard keyboardLetters={keyboardLetters} />
+    </div>
   );
 };
 

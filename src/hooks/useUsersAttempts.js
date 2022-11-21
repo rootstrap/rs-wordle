@@ -190,10 +190,11 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       return;
     }
 
-    const alreadyAttemptedWord =
-      usersAttempts.filter(word =>
+    const alreadyAttemptedWord = usersAttempts.some(
+      (word, wordIndex) =>
+        wordIndex !== currentRound &&
         word.every((value, itemIndex) => value === currentAttempt[itemIndex])
-      ).length > 1;
+    );
 
     if (alreadyAttemptedWord) {
       setError(`You already tried with ${attemptedWord.toUpperCase()}`);

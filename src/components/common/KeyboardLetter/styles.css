@@ -1,4 +1,4 @@
-button {
+.keyboard-letter {
   border-radius: 5px;
   border-width: 0px;
   color: white;
@@ -11,7 +11,11 @@ button {
   padding-top: 10px;
 }
 
-button.isSmall {
+.keyboard-letter.isSmall {
   height: 40px;
   width: 40px;
+}
+
+.keyboard-letter.disabled {
+  cursor: default;
 }

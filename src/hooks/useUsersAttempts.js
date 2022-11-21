@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
-import { COLOR_ORDER, KEYBOARD_LETTERS } from 'constants/constants';
+import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS } from 'constants/constants';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { USERS_ATTEMPTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -63,11 +63,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
               }
             });
             won = word.toUpperCase() === correctWord.toUpperCase();
-            roundCount++;
+            if (!won) {
+              roundCount++;
+            }
           });
-          setCurrentRound(won ? roundCount - 1 : roundCount);
-          if (won) {
-            setGameStatus(GAME_STATUS.won);
+          setCurrentRound(roundCount);
+          const lost = newUsersAttempts.length === MAX_ATTEMPTS;
+          if (won || lost) {
+            setGameStatus(won ? GAME_STATUS.won : GAME_STATUS.lost);
             setLetterIndex(-1);
           } else {
             newUsersAttempts.push(Array(wordLength).fill(''));
@@ -154,8 +157,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       setKeyboardLetters(newKeyboardLetters);
       setRoundsResults(newRoundsResults);
 
-      if (correctCount === wordLength) {
-        setGameStatus(GAME_STATUS.won);
+      if (correctCount === wordLength || usersAttempts.length === MAX_ATTEMPTS) {
+        setGameStatus(correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost);
         setLetterIndex(-1);
       } else {
         const attempts = [...usersAttempts];
@@ -262,6 +265,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     usersAttempts,
     roundsResults,
     gameEnded,
+    gameStatus,
     error,
     keyboardLetters,
     letterIndex,

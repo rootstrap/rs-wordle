@@ -6,7 +6,7 @@ export const LETTER_STATUS = {
 };
 
 export const GAME_STATUS = {
-  lose: 'lose',
+  lost: 'lost',
   playing: 'playing',
   won: 'won',
 };

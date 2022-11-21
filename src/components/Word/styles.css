@@ -13,3 +13,8 @@
 .error-message {
   color: red;
 }
+
+.game-status {
+  color: white;
+  font-weight: 800;
+}

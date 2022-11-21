@@ -7,7 +7,7 @@ const KeyboardLetter = ({ value, color, onKeyPress, disabled }) => {
 
   return (
     <button
-      className={cn({ isSmall })}
+      className={cn('keyboard-letter', { isSmall, disabled })}
       style={{ backgroundColor: color }}
       onClick={onKeyPress}
       disabled={disabled}

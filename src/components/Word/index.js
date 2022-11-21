@@ -18,6 +18,7 @@ const Word = () => {
     keyboardLetters,
     letterIndex,
     onKeyPress,
+    wordProcessing,
   } = useUsersAttempts({
     wordLength: letters.length,
     correctWord: word,
@@ -58,7 +59,11 @@ const Word = () => {
         {!!error && <p className="error-message">{error}</p>}
       </div>
       <br />
-      <Keyboard keyboardLetters={keyboardLetters} onKeyPress={onKeyPress} />
+      <Keyboard
+        keyboardLetters={keyboardLetters}
+        onKeyPress={onKeyPress}
+        disabled={wordProcessing}
+      />
     </div>
   );
 };

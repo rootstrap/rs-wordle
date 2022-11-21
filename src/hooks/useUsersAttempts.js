@@ -23,6 +23,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const [error, setError] = useState('');
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.playing);
   const [keyboardLetters, setKeyboardLetters] = useState(KEYBOARD_LETTERS);
+  const [wordProcessing, setWordProcessing] = useState(false);
 
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
@@ -178,11 +179,13 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   );
 
   const onSubmitWord = useCallback(async () => {
+    setWordProcessing(true);
     setError('');
     const currentAttempt = usersAttempts[currentRound];
     const attemptedWord = currentAttempt.join('');
     if (attemptedWord.length !== wordLength) {
       setError(`${attemptedWord.toUpperCase()} doesn't have ${wordLength} letters`);
+      setWordProcessing(false);
       return;
     }
     const existsWord = wordExists(attemptedWord);
@@ -191,6 +194,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     } else {
       await compareWithWord(currentAttempt, attemptedWord);
     }
+    setWordProcessing(false);
   }, [compareWithWord, currentRound, usersAttempts, wordLength]);
 
   const focusBefore = letterIndex => {
@@ -228,7 +232,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         isDelete ? focusBefore(letterIndex) : focusNext(letterIndex);
       }
     },
-    [currentRound, focusNext, letterIndex, onSubmitWord, usersAttempts]
+    [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts]
   );
 
   useEffect(() => {
@@ -248,6 +252,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     keyboardLetters,
     letterIndex,
     onKeyPress,
+    wordProcessing,
   };
 };
 

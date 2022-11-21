@@ -3,7 +3,7 @@ import { CHANGE_LINES_VALUES } from 'constants/constants';
 
 import './styles.css';
 
-const Keyboard = ({ keyboardLetters, onKeyPress }) => {
+const Keyboard = ({ keyboardLetters, onKeyPress, disabled }) => {
   return (
     <div className="keyboard">
       <div className="keyboard-row">
@@ -19,6 +19,7 @@ const Keyboard = ({ keyboardLetters, onKeyPress }) => {
                 value={letter}
                 color={color}
                 onKeyPress={handleOnKeyPress}
+                disabled={disabled}
               />
             );
           })}
@@ -36,6 +37,7 @@ const Keyboard = ({ keyboardLetters, onKeyPress }) => {
                 value={letter}
                 color={color}
                 onKeyPress={handleOnKeyPress}
+                disabled={disabled}
               />
             );
           })}
@@ -49,6 +51,7 @@ const Keyboard = ({ keyboardLetters, onKeyPress }) => {
               value={letter}
               color={color}
               onKeyPress={() => onKeyPress({ key: letter })}
+              disabled={disabled}
             />
           ))}
       </div>

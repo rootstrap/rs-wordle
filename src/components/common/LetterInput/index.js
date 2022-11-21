@@ -1,23 +1,24 @@
-import { string, func, object } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import cn from 'classnames';
 import './styles.css';
 
-const LetterInput = ({ value, style, isSelected }) => (
-  <div className="Input">
-    <p className={cn({ isSelected })} style={style}>
-      {value}
-    </p>
-  </div>
+const LetterInput = ({ value, style, isSelected, onClick, disabled }) => (
+  <button
+    onClick={onClick}
+    className={cn('letter-input', { isSelected, disabled })}
+    style={style}
+    disabled={disabled}
+  >
+    {value}
+  </button>
 );
 
 LetterInput.propTypes = {
-  error: object,
-  name: string,
-  type: string,
-  handleOnChange: func,
-  onKeyPress: func,
-  value: string,
+  disabled: bool,
+  isSelected: bool,
+  onClick: func,
   style: object,
+  value: string,
 };
 
 export default LetterInput;

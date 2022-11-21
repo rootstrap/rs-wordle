@@ -251,6 +251,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     error,
     keyboardLetters,
     letterIndex,
+    setLetterIndex,
     onKeyPress,
     wordProcessing,
   };

@@ -19,6 +19,7 @@ const Word = () => {
     letterIndex,
     onKeyPress,
     wordProcessing,
+    setLetterIndex,
   } = useUsersAttempts({
     wordLength: letters.length,
     correctWord: word,
@@ -51,6 +52,8 @@ const Word = () => {
                         : LETTER_STATUS.nothing,
                   }}
                   isSelected={index === letterIndex && round === currentRound}
+                  onClick={() => setLetterIndex(index)}
+                  disabled={round !== currentRound || gameEnded}
                 />
               ))}
             </>

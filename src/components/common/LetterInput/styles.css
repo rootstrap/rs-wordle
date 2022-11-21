@@ -1,8 +1,4 @@
-.Input {
-  margin: 0.3rem 0 0.8rem;
-}
-
-.Input p {
+.letter-input {
   color: white;
   border-radius: 5px;
   border: 1px solid var(--color-black);
@@ -15,8 +11,13 @@
   text-transform: uppercase;
   margin: 5px;
 }
-.Input p.isSelected {
+
+.letter-input.isSelected {
   border-color: #eec824;
   border-style: solid;
   border-width: 2px;
+}
+
+.letter-input.disabled {
+  cursor: default;
 }

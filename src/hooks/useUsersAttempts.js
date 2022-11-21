@@ -183,11 +183,24 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     setError('');
     const currentAttempt = usersAttempts[currentRound];
     const attemptedWord = currentAttempt.join('');
+
     if (attemptedWord.length !== wordLength) {
       setError(`${attemptedWord.toUpperCase()} doesn't have ${wordLength} letters`);
       setWordProcessing(false);
       return;
     }
+
+    const alreadyAttemptedWord =
+      usersAttempts.filter(word =>
+        word.every((value, itemIndex) => value === currentAttempt[itemIndex])
+      ).length > 1;
+
+    if (alreadyAttemptedWord) {
+      setError(`You already tried with ${attemptedWord.toUpperCase()}`);
+      setWordProcessing(false);
+      return;
+    }
+
     const existsWord = wordExists(attemptedWord);
     if (!existsWord) {
       setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
@@ -227,7 +240,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
       if (isLetter || isDelete) {
         const newAttempt = [...usersAttempts];
-        newAttempt[currentRound][letterIndex] = isDelete ? '' : key;
+        newAttempt[currentRound][letterIndex] = isDelete ? '' : key.toUpperCase();
         setUsersAttempts(newAttempt);
         isDelete ? focusBefore(letterIndex) : focusNext(letterIndex);
       }

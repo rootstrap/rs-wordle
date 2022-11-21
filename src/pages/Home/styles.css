@@ -1,5 +1,10 @@
 .home {
+  background-color: #1a1a1b;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
+  min-height: 100vh;
 }
 
 .home__logo {
@@ -8,9 +13,8 @@
 }
 
 .home__logout {
-  margin: auto;
+  margin: 20px auto;
   max-width: 15rem;
-  padding-top: 300px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

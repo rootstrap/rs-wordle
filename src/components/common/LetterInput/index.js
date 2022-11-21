@@ -2,26 +2,11 @@ import { string, func, object } from 'prop-types';
 import cn from 'classnames';
 import './styles.css';
 
-const LetterInput = ({
-  type = 'text',
-  name,
-  handleOnChange = () => {},
-  error,
-  onKeyPress,
-  value,
-  style,
-}) => (
+const LetterInput = ({ value, style, isSelected }) => (
   <div className="Input">
-    <input
-      maxLength={1}
-      className={cn({ error })}
-      type={type}
-      name={name}
-      onChange={handleOnChange}
-      onKeyDown={(...params) => onKeyPress(name, ...params)}
-      value={value}
-      style={style}
-    />
+    <p className={cn({ isSelected })} style={style}>
+      {value}
+    </p>
   </div>
 );
 

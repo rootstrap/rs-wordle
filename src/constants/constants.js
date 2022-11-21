@@ -37,7 +37,7 @@ export const KEYBOARD_LETTERS = {
   J: LETTER_STATUS.nothing,
   K: LETTER_STATUS.nothing,
   L: LETTER_STATUS.nothing,
-  ENTER: LETTER_STATUS.nothing,
+  Enter: LETTER_STATUS.nothing,
   Z: LETTER_STATUS.nothing,
   X: LETTER_STATUS.nothing,
   C: LETTER_STATUS.nothing,
@@ -45,5 +45,5 @@ export const KEYBOARD_LETTERS = {
   B: LETTER_STATUS.nothing,
   N: LETTER_STATUS.nothing,
   M: LETTER_STATUS.nothing,
-  BACKSPACE: LETTER_STATUS.nothing,
+  Backspace: LETTER_STATUS.nothing,
 };

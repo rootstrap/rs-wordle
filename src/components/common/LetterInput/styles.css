@@ -2,18 +2,21 @@
   margin: 0.3rem 0 0.8rem;
 }
 
-.Input input {
+.Input p {
   color: white;
   border-radius: 5px;
   border: 1px solid var(--color-black);
   box-sizing: border-box;
   font-size: 16px;
+  font-weight: 800;
   padding: 0.8rem;
+  height: 45px;
   width: 45px;
   text-transform: uppercase;
   margin: 5px;
 }
-
-.Input input.error {
-  border: 1px solid var(--color-red);
+.Input p.isSelected {
+  border-color: #eec824;
+  border-style: solid;
+  border-width: 2px;
 }

@@ -47,3 +47,5 @@ export const KEYBOARD_LETTERS = {
   M: LETTER_STATUS.nothing,
   Backspace: LETTER_STATUS.nothing,
 };
+
+export const MAX_ATTEMPTS = 6;

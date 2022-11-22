@@ -14,6 +14,7 @@ const Word = () => {
     usersAttempts,
     roundsResults,
     gameEnded,
+    gameStatus,
     error,
     keyboardLetters,
     letterIndex,
@@ -61,11 +62,12 @@ const Word = () => {
         ))}
         {!!error && <p className="error-message">{error}</p>}
       </div>
+      {gameEnded && <p className="game-status">You {gameStatus.toUpperCase()}</p>}
       <br />
       <Keyboard
         keyboardLetters={keyboardLetters}
         onKeyPress={onKeyPress}
-        disabled={wordProcessing}
+        disabled={wordProcessing || gameEnded}
       />
     </div>
   );

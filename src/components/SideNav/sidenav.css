@@ -6,7 +6,6 @@
 }
 
 .sidenav.closed {
-  transition: width 0.3s ease-in-out;
   width: 60px;
 }
 
@@ -32,9 +31,6 @@
 }
 
 .menuBtn {
-  align-self: center;
-  align-self: flex-start;
-  justify-self: flex-end;
   color: white;
   background-color: transparent;
   border: none;

@@ -8,10 +8,10 @@ import { navData } from './navData';
 import './sidenav.css';
 
 const SideNav = () => {
-  const [open, setopen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleOpen = () => {
-    setopen(!open);
+    setOpen(prev => !prev);
   };
 
   return (

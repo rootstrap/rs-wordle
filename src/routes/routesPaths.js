@@ -1,7 +1,9 @@
 const routesPaths = {
   index: '/',
+  ranking: '/ranking',
+  statistics: '/statistics',
+  settings: '/settings',
   login: '/login',
-  signup: '/sign-up',
 };
 
 export default routesPaths;

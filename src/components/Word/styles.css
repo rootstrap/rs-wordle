@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 85vh;
+  margin-top: 40px;
 }
 
 .word {

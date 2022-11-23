@@ -1,8 +1,16 @@
-.home {
+.settings {
   background-color: #1a1a1b;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: center;
   min-height: 100vh;
+}
+
+.settings-title {
+  color: white;
+}
+
+.home-logout {
+  margin: 20px auto;
+  max-width: 15rem;
 }

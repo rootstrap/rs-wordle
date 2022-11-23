@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@hookform/resolvers": "^2.6.0",
+    "@mui/icons-material": "^5.10.15",
+    "@mui/material": "^5.10.15",
     "@paunovic/random-words": "^1.2.1",
     "@reduxjs/toolkit": "^1.5.1",
     "@rootstrap/redux-tools": "^1.0.0",

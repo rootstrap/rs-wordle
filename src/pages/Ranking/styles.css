@@ -30,7 +30,7 @@
   justify-content: space-between;
   border: 1px solid #30602c;
   border-radius: 2rem;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .react-tabs__tab {
@@ -40,7 +40,7 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.7s;
-  bottom: 0px;
+  bottom: 0;
 }
 
 .react-tabs__tab--selected {
@@ -85,7 +85,7 @@
   border-style: solid;
   border-width: 2px;
   display: flex;
-  margin: 15px 0px;
+  margin: 15px 0;
 }
 
 .daily-data-container.isCurrentUser {
@@ -106,7 +106,7 @@
 .daily-position {
   flex: 0.15;
   font-size: 24px;
-  margin: 0px;
+  margin: 0;
 }
 
 .daily-data-user {
@@ -117,7 +117,7 @@
 
 .daily-data-photo {
   border-radius: 50px;
-  margin: 0px 20px;
+  margin: 0 20px;
   height: 40px;
   width: 40px;
 }

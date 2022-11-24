@@ -9,3 +9,11 @@
 .statistics-title {
   color: white;
 }
+
+.stat-box-container {
+  border-radius: 20px;
+  background-color: rgba(83, 141, 78, 0.85);
+  display: flex;
+  justify-content: center;
+  margin: 0 40px;
+}

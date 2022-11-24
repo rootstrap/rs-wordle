@@ -13,7 +13,7 @@ const Ranking = () => {
 
   return (
     <div className="ranking">
-      <h1 className="ranking-title">Ranking</h1>
+      <h1 className="section-title">Ranking</h1>
       <Tabs className="Tabs">
         <TabList>
           <Tab>Today</Tab>

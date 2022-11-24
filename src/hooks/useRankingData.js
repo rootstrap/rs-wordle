@@ -23,6 +23,7 @@ const useRankingData = () => {
         collection(firebaseDb, DAILY_RESULTS),
         where('formattedDate', '==', today),
         orderBy('attempts'),
+        orderBy('status', 'desc'),
         orderBy('date')
       );
       const docs = await getDocs(q);

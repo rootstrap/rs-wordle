@@ -25,7 +25,10 @@ const Ranking = () => {
             const lost = status === GAME_STATUS.lost;
 
             return (
-              <div className={cn('daily-data-container', { isCurrentUser, lost })}>
+              <div
+                key={`${email}-${attempts}`}
+                className={cn('daily-data-container', { isCurrentUser, lost })}
+              >
                 <p className="daily-position">{index + 1}</p>
                 <div className="daily-data-user">
                   <img src={photo} className="daily-data-photo" alt="user" />

@@ -9,6 +9,7 @@ import firebaseData from 'firebase/firebase';
 import { getTodaysDate } from 'utils/helpers';
 
 import useAuth from './useAuth';
+import useUserStatistics from './useUsersStatistics';
 
 const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
@@ -29,6 +30,17 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
   const { firebaseDb } = firebaseData;
   const today = getTodaysDate();
+  const {
+    statistics: {
+      totalGames,
+      totalWins,
+      totalAttempts,
+      currentStreak,
+      longestStreak,
+      attemptedWords,
+    },
+    updateStatistics,
+  } = useUserStatistics();
 
   useEffect(() => {
     const getUserAttempts = async () => {
@@ -159,10 +171,12 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
       if (correctCount === wordLength || usersAttempts.length === MAX_ATTEMPTS) {
         const newStatus = correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost;
+        const won = newStatus === GAME_STATUS.won;
+        const currentAttemptedWords = usersAttempts.map(attempt => attempt.join(''));
 
         await addDoc(collection(firebaseDb, DAILY_RESULTS), {
           attempts: currentRound + 1,
-          attemptedWords: usersAttempts.map(attempt => attempt.join('')),
+          attemptedWords: currentAttemptedWords,
           date: getTodaysDate(false),
           formattedDate: today,
           status: newStatus,
@@ -173,6 +187,25 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           },
         });
 
+        const newCurrentStreak = won ? currentStreak + 1 : currentStreak;
+        const newTotalAttempts = [...totalAttempts];
+        newTotalAttempts[currentRound] = totalAttempts[currentRound] + 1;
+        const newAttemptedWords = { ...attemptedWords };
+        currentAttemptedWords.forEach(word => {
+          const currentValue = newAttemptedWords[word] ?? 0;
+          newAttemptedWords[word] = currentValue + 1;
+        });
+
+        const newStatistics = {
+          totalGames: totalGames + 1,
+          totalWins: won ? totalWins + 1 : totalWins,
+          totalAttempts: newTotalAttempts,
+          currentStreak: newCurrentStreak,
+          longestStreak: newCurrentStreak > longestStreak ? newCurrentStreak : longestStreak,
+          attemptedWords: newAttemptedWords,
+        };
+
+        updateStatistics(newStatistics);
         setGameStatus(newStatus);
         setLetterIndex(-1);
       } else {
@@ -184,15 +217,21 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       }
     },
     [
+      attemptedWords,
       currentRound,
+      currentStreak,
       currentUser,
       firebaseDb,
       keyboardLetters,
       letters,
+      longestStreak,
       name,
       photo,
       roundsResults,
       today,
+      totalAttempts,
+      totalGames,
+      totalWins,
       usersAttempts,
       wordLength,
     ]

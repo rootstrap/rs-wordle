@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 import { MAX_ATTEMPTS } from 'constants/constants';
 import { USERS_STATISTICS } from 'firebase/collections';
@@ -56,7 +56,7 @@ const useUserStatistics = () => {
         } else {
           await setDoc(doc(statisticsRef, currentUser), currentStatistics);
         }
-        dispatch(setUserStatistics({ statistics: currentStatistics }));
+        await dispatch(setUserStatistics({ statistics: currentStatistics }));
       } catch (err) {
         console.error(err);
       }
@@ -67,8 +67,14 @@ const useUserStatistics = () => {
     }
   }, [currentUser, dispatch, firebaseDb, statistics, statisticsRef]);
 
+  const updateStatistics = async newStatistics => {
+    await updateDoc(doc(statisticsRef, currentUser), newStatistics);
+    await dispatch(setUserStatistics({ statistics: newStatistics }));
+  };
+
   return {
     statistics,
+    updateStatistics,
   };
 };
 

@@ -1,4 +1,5 @@
 .ranking {
+  align-items: center;
   background-color: #1a1a1b;
   display: flex;
   flex-direction: column;
@@ -8,4 +9,130 @@
 
 .ranking-title {
   color: white;
+}
+
+.Tabs {
+  width: 80%;
+  padding: 2rem 1rem;
+  color: #e8f0f2;
+  font-weight: 800;
+}
+
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  width: 60%;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #30602c;
+  border-radius: 2rem;
+  padding-left: 0;
+}
+
+.react-tabs__tab {
+  width: 50%;
+  padding: 1rem;
+  list-style: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.7s;
+  bottom: 0;
+}
+
+.react-tabs__tab--selected {
+  background: #538d4e;
+  border-color: #538d4e;
+  color: white;
+}
+
+.react-tabs__tab--disabled {
+  color: grey;
+  cursor: default;
+}
+
+.react-tabs__tab:hover {
+  background: rgba(48, 96, 44, 0.75);
+}
+
+.react-tabs__tab:first-child {
+  border-bottom-left-radius: 2rem;
+  border-top-left-radius: 2rem;
+}
+
+.react-tabs__tab:last-child {
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+  text-align: center;
+}
+
+.react-tabs__tab:focus:after {
+  background: transparent;
+}
+
+.daily-data-container {
+  align-items: center;
+  background-color: rgba(83, 141, 78, 0.5);
+  border-color: rgba(83, 141, 78, 0.5);
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  display: flex;
+  margin: 15px 0;
+}
+
+.daily-data-container.isCurrentUser {
+  background-color: rgb(83, 141, 78);
+  border-color: rgb(83, 141, 78);
+}
+
+.daily-data-container.lost {
+  background-color: rgba(210, 62, 62, 0.5);
+  border-color: rgba(210, 62, 62, 0.5);
+}
+
+.daily-data-container.isCurrentUser.lost {
+  background-color: rgb(210, 62, 62);
+  border-color: rgb(210, 62, 62);
+}
+
+.daily-position {
+  flex: 0.15;
+  font-size: 24px;
+  margin: 0;
+}
+
+.daily-data-user {
+  align-items: center;
+  display: flex;
+  flex: 0.7;
+}
+
+.daily-data-photo {
+  border-radius: 50px;
+  margin: 0 20px;
+  height: 40px;
+  width: 40px;
+}
+
+.daily-data-name {
+  font-size: 20px;
+}
+
+.daily-data-attempts-container {
+  align-items: center;
+  display: flex;
+  flex: 0.15;
+}
+
+.daily-data-attempts {
+  font-size: 18px;
+  padding-right: 7px;
 }

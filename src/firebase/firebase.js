@@ -33,6 +33,7 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: 'google',
         email: user.email,
+        photo: user.photoURL,
       });
     }
   } catch (err) {

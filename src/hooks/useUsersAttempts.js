@@ -4,7 +4,7 @@ import wordExists from 'word-exists';
 
 import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS } from 'constants/constants';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
-import { USERS_ATTEMPTS } from 'firebase/collections';
+import { USERS_ATTEMPTS, DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getTodaysDate } from 'utils/helpers';
 
@@ -12,7 +12,7 @@ import useAuth from './useAuth';
 
 const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
-    user: { email: currentUser },
+    user: { email: currentUser, name, photo },
   } = useAuth();
 
   const [wordDate, setWordDate] = useState(null);
@@ -158,7 +158,22 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       setRoundsResults(newRoundsResults);
 
       if (correctCount === wordLength || usersAttempts.length === MAX_ATTEMPTS) {
-        setGameStatus(correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost);
+        const newStatus = correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost;
+
+        await addDoc(collection(firebaseDb, DAILY_RESULTS), {
+          attempts: currentRound + 1,
+          attemptedWords: usersAttempts.map(attempt => attempt.join('')),
+          date: getTodaysDate(false),
+          formattedDate: today,
+          status: newStatus,
+          user: {
+            email: currentUser,
+            name,
+            photo,
+          },
+        });
+
+        setGameStatus(newStatus);
         setLetterIndex(-1);
       } else {
         const attempts = [...usersAttempts];
@@ -174,6 +189,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       firebaseDb,
       keyboardLetters,
       letters,
+      name,
+      photo,
       roundsResults,
       today,
       usersAttempts,

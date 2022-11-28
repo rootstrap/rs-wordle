@@ -23,7 +23,7 @@ const Settings = () => {
 
   return (
     <div className="settings">
-      <h1 className="settings-title ">Settings in progress...</h1>
+      <h1 className="section-title">Settings in progress...</h1>
       <div className="home-logout">
         <Button handleClick={handleLogout}>{t('home.logoutBtn')}</Button>
       </div>

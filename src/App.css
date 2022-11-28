@@ -2,9 +2,25 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .App {
   display: flex;
 }
+
 main {
   flex: 1;
+}
+
+.font-frijole {
+  font-family: 'Frijole', cursive;
+}
+
+.font-caveat-brush {
+  font-family: 'Caveat Brush', cursive;
+}
+
+.section-title {
+  color: white;
+  font-family: 'Caveat Brush', cursive;
+  text-transform: uppercase;
 }

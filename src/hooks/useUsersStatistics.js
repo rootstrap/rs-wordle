@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
@@ -72,9 +72,15 @@ const useUserStatistics = () => {
     await dispatch(setUserStatistics({ statistics: newStatistics }));
   };
 
+  const maxAttemptsRound = useMemo(
+    () => Math.max(...(statistics.totalAttempts ?? [])),
+    [statistics.totalAttempts]
+  );
+
   return {
     statistics,
     updateStatistics,
+    maxAttemptsRound,
   };
 };
 

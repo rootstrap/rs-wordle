@@ -11,8 +11,9 @@ const Statistics = () => {
       totalAttempts,
       currentStreak,
       longestStreak,
-      attemptedWords,
+      // attemptedWords, // TODO: show common words used as attempts
     },
+    maxAttemptsRound,
   } = useUserStatistics();
 
   return (
@@ -24,6 +25,24 @@ const Statistics = () => {
         <StatBox label="Wins (%)" value={totalGames ? (totalWins * 100) / totalGames : 0} />
         <StatBox label="Current Streak" value={currentStreak} />
         <StatBox label="Max Streak" value={longestStreak} />
+      </div>
+      <div className="statistics-round-container">
+        <h2 className="statistics-round-attempts-title">Guess Distribution</h2>
+        {totalAttempts.map((roundAttempts, index) => {
+          const widthPercentage = (roundAttempts * 100) / maxAttemptsRound ?? 10;
+
+          return (
+            <div className="statistics-round-attempts">
+              <span className="font-frijole statistics-round">{index + 1}</span>
+              <span
+                className="font-caveat-brush statistics-round-value"
+                style={{ width: !!widthPercentage ? `${widthPercentage}%` : 'auto' }}
+              >
+                {roundAttempts}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

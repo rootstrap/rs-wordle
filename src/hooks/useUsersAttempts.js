@@ -232,6 +232,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       totalAttempts,
       totalGames,
       totalWins,
+      updateStatistics,
       usersAttempts,
       wordLength,
     ]

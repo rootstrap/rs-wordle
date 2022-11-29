@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { toPairs } from 'lodash';
 
 import { MAX_ATTEMPTS } from 'constants/constants';
 import { USERS_STATISTICS } from 'firebase/collections';
@@ -77,10 +78,16 @@ const useUserStatistics = () => {
     [statistics.totalAttempts]
   );
 
+  const topAttemptedWords = useMemo(() => {
+    const attemptedWordsArray = toPairs(statistics.attemptedWords).sort((a, b) => b[1] - a[1]);
+    return attemptedWordsArray.slice(0, MAX_ATTEMPTS);
+  }, [statistics.attemptedWords]);
+
   return {
     statistics,
     updateStatistics,
     maxAttemptsRound,
+    topAttemptedWords,
   };
 };
 

@@ -2,11 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
-import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS } from 'constants/constants';
-import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
+import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { LETTER_STATUS, LETTER_STATUS_ICON, GAME_STATUS } from 'constants/types';
 import { USERS_ATTEMPTS, DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
-import { getTodaysDate } from 'utils/helpers';
+import { getTodaysDate, getTodaysDisplayDate } from 'utils/helpers';
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
@@ -317,6 +317,21 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     };
   }, [onKeyPress]);
 
+  const shareResults = async () => {
+    const resultsDate = getTodaysDisplayDate();
+    const resultsRatio = `${roundsResults.length}/${MAX_ATTEMPTS}`;
+    let textResult = `RS Wordle ${resultsDate} ${resultsRatio} \n \n`;
+    roundsResults.forEach(lineResult => {
+      lineResult.forEach(result => {
+        textResult = `${textResult}${LETTER_STATUS_ICON[result]}`;
+      });
+      textResult = `${textResult}\n`;
+    });
+    textResult = `${textResult}\n${WORDLE_URL}`;
+    await navigator.clipboard.writeText(textResult);
+    alert('Copied to Clipboard: \n \n' + textResult);
+  };
+
   return {
     currentRound,
     usersAttempts,
@@ -329,6 +344,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     setLetterIndex,
     onKeyPress,
     wordProcessing,
+    shareResults,
   };
 };
 

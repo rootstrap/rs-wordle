@@ -122,13 +122,8 @@
   font-size: 20px;
 }
 
-.daily-data-attempts-container {
-  align-items: center;
-  display: flex;
-  flex: 0.15;
-}
-
 .daily-data-attempts {
+  flex: 0.15;
   font-size: 18px;
   padding-right: 7px;
 }

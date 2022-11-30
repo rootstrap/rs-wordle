@@ -64,10 +64,14 @@ const Word = () => {
         ))}
         {!!error && <p className="error-message">{error}</p>}
       </div>
-      {gameEnded && <p className="game-status">You {gameStatus.toUpperCase()}</p>}
-      <div className="share-results-button">
-        <Button handleClick={shareResults}>Share Results</Button>
-      </div>
+      {gameEnded && (
+        <>
+          <p className="game-status">You {gameStatus.toUpperCase()}</p>
+          <div className="share-results-button">
+            <Button handleClick={shareResults}>Share Results</Button>
+          </div>
+        </>
+      )}
       <Keyboard
         keyboardLetters={keyboardLetters}
         onKeyPress={onKeyPress}

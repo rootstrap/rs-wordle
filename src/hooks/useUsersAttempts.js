@@ -323,11 +323,11 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     let textResult = `RS Wordle ${resultsDate} ${resultsRatio} \n \n`;
     roundsResults.forEach(lineResult => {
       lineResult.forEach(result => {
-        textResult = `${textResult}${LETTER_STATUS_ICON[result]}`;
+        textResult += LETTER_STATUS_ICON[result];
       });
-      textResult = `${textResult}\n`;
+      textResult += '\n';
     });
-    textResult = `${textResult}\n${WORDLE_URL}`;
+    textResult += `\n${WORDLE_URL}`;
     await navigator.clipboard.writeText(textResult);
     alert('Copied to Clipboard: \n \n' + textResult);
   };

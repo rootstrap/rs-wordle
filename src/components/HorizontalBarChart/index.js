@@ -20,7 +20,7 @@ const HorizontalBarChart = ({ data, maxValue, title }) => (
           <div className="bar-chart-value-container">
             <div
               className="font-caveat-brush bar-chart-value"
-              style={{ width: !!widthPercentage ? `${widthPercentage}%` : 'auto' }}
+              style={{ width: widthPercentage ? `${widthPercentage}%` : 'fit-content' }}
             >
               {numericValue}
             </div>

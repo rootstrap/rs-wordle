@@ -3,6 +3,8 @@ import { LETTER_STATUS } from './types';
 export const SUPPORTED_LANGUAGES = ['en'];
 export const DEFAULT_LANGUAGE = 'en';
 
+export const WORDLE_URL = 'https://rs-wordle.netlify.app/';
+
 // REGEX
 export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 

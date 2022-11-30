@@ -19,3 +19,8 @@
   color: white;
   font-weight: 800;
 }
+
+.share-results-button {
+  align-self: center;
+  max-width: 100px;
+}

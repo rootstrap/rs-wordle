@@ -11,3 +11,5 @@ export const getTodaysDate = (shouldFormat = true) => {
 
   return shouldFormat ? formatDate(today) : today;
 };
+
+export const getTodaysDisplayDate = () => new Date().toLocaleString('en').split(',')[0];

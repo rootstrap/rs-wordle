@@ -19,34 +19,8 @@
   margin: 0 40px;
 }
 
-.statistics-round-container {
-  margin: 40px;
-  width: 35%;
-}
-
-.statistics-round-attempts-title {
-  color: white;
-}
-
-.statistics-round-attempts {
-  align-items: center;
-  color: white;
+.statistics-charts-container {
   display: flex;
-  padding: 3px;
-}
-
-.statistics-round {
-  font-size: 24px;
-  padding: 5px 15px;
-  width: 20px;
-}
-
-.statistics-round-value {
-  background-color: #538d4e;
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: 800;
-  margin-left: 15px;
-  padding: 5px 10px;
-  text-align: right;
+  justify-content: center;
+  width: 100%;
 }

@@ -1,10 +1,11 @@
+import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Keyboard from 'components/Keyboard';
+import { LETTER_STATUS } from 'constants/types';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
-import { LETTER_STATUS } from 'constants/types';
 
 const Word = () => {
   const { letters, word, loading, setLoading } = useWordDb();
@@ -21,6 +22,7 @@ const Word = () => {
     onKeyPress,
     wordProcessing,
     setLetterIndex,
+    shareResults,
   } = useUsersAttempts({
     wordLength: letters.length,
     correctWord: word,
@@ -62,8 +64,14 @@ const Word = () => {
         ))}
         {!!error && <p className="error-message">{error}</p>}
       </div>
-      {gameEnded && <p className="game-status">You {gameStatus.toUpperCase()}</p>}
-      <br />
+      {gameEnded && (
+        <>
+          <p className="game-status">You {gameStatus.toUpperCase()}</p>
+          <div className="share-results-button">
+            <Button handleClick={shareResults}>Share Results</Button>
+          </div>
+        </>
+      )}
       <Keyboard
         keyboardLetters={keyboardLetters}
         onKeyPress={onKeyPress}

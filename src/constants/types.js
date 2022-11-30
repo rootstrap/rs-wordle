@@ -5,6 +5,12 @@ export const LETTER_STATUS = {
   incorrect: '#3a3a3c',
 };
 
+export const LETTER_STATUS_ICON = {
+  [LETTER_STATUS.correct]: '🟩',
+  [LETTER_STATUS.misplaced]: '🟨',
+  [LETTER_STATUS.incorrect]: '⬜',
+};
+
 export const GAME_STATUS = {
   lost: 'lost',
   playing: 'playing',

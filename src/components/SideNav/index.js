@@ -15,7 +15,7 @@ const SideNav = () => {
   };
 
   return (
-    <div className={cn('sidenav', { closed: !open })}>
+    <nav className={cn('sidenav', { closed: !open })}>
       <button className="menuBtn" onClick={toggleOpen}>
         {open ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
       </button>
@@ -25,7 +25,7 @@ const SideNav = () => {
           <span className={cn('sidenav-link-text', { closed: !open })}>{item.text}</span>
         </NavLink>
       ))}
-    </div>
+    </nav>
   );
 };
 

@@ -7,6 +7,8 @@ import { getTodaysDate } from 'utils/helpers';
 
 import useAuth from './useAuth';
 
+const { firebaseDb } = firebaseData;
+
 const useRankingData = () => {
   const {
     user: { email: currentUser },
@@ -14,11 +16,10 @@ const useRankingData = () => {
 
   const [dailyResults, setDailyResults] = useState([]);
 
-  const { firebaseDb } = firebaseData;
   const today = getTodaysDate();
 
   useEffect(() => {
-    const getDailyResults = async () => {
+    (async function () {
       const q = query(
         collection(firebaseDb, DAILY_RESULTS),
         where('formattedDate', '==', today),
@@ -39,9 +40,8 @@ const useRankingData = () => {
         });
       });
       setDailyResults(results);
-    };
-    getDailyResults();
-  }, [firebaseDb, today]);
+    })();
+  }, [today]);
 
   return {
     currentUser,

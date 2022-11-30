@@ -1,10 +1,10 @@
 import LetterInput from 'components/common/LetterInput';
 import Keyboard from 'components/Keyboard';
+import { LETTER_STATUS } from 'constants/types';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
-import { LETTER_STATUS } from 'constants/types';
 
 const Word = () => {
   const { letters, word, loading, setLoading } = useWordDb();
@@ -22,7 +22,7 @@ const Word = () => {
     wordProcessing,
     setLetterIndex,
   } = useUsersAttempts({
-    wordLength: letters.length,
+    wordLength: word.length,
     correctWord: word,
     letters,
     setLoading,
@@ -31,7 +31,7 @@ const Word = () => {
   if (loading) {
     return (
       <div>
-        <p style={{ color: 'white', paddingTop: 20 }}>LOADING DATA...</p>
+        <p className="loading">LOADING DATA...</p>
       </div>
     );
   }

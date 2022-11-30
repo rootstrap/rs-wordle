@@ -20,6 +20,10 @@
   width: 20px;
 }
 
+.bar-chart-value-container {
+  width: 100%;
+}
+
 .bar-chart-value {
   background-color: #538d4e;
   border-radius: 10px;

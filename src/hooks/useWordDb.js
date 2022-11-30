@@ -11,17 +11,18 @@ import { getRandomInt, getTodaysDate } from 'utils/helpers';
 const ADMITED_WORDS_SIZES = [4, 5, 6];
 const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS', 'DOGS', 'CATS'];
 
+const { firebaseDb } = firebaseData;
+const wordsRef = collection(firebaseDb, WORDS_COLLECTION);
+
 const useWordDb = () => {
   const [word, setWord] = useState('');
   const [wordDate, setWordDate] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const today = getTodaysDate();
-  const { firebaseDb } = firebaseData;
-  const wordsRef = collection(firebaseDb, WORDS_COLLECTION);
 
   useEffect(() => {
-    const getWord = async () => {
+    (async function () {
       if (wordDate !== today) {
         setLoading(true);
         setWordDate(today);
@@ -54,9 +55,8 @@ const useWordDb = () => {
           setWord(todaysWord);
         }
       }
-    };
-    getWord();
-  }, [firebaseDb, today, wordDate, wordsRef]);
+    })();
+  }, [today, wordDate]);
 
   const letters = useMemo(() => word?.split(''), [word]);
 

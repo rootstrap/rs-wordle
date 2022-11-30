@@ -1,6 +1,6 @@
 {
   "global": {
-    "pageTitle": "RS React Redux Base"
+    "pageTitle": "RS Wordle"
   },
   "home": {
     "welcomeMsg": "Welcome to React Redux Base",

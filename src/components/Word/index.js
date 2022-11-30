@@ -24,7 +24,7 @@ const Word = () => {
     setLetterIndex,
     shareResults,
   } = useUsersAttempts({
-    wordLength: letters.length,
+    wordLength: word.length,
     correctWord: word,
     letters,
     setLoading,
@@ -33,7 +33,7 @@ const Word = () => {
   if (loading) {
     return (
       <div>
-        <p style={{ color: 'white', paddingTop: 20 }}>LOADING DATA...</p>
+        <p className="loading">LOADING DATA...</p>
       </div>
     );
   }

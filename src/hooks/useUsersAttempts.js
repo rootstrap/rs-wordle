@@ -11,6 +11,8 @@ import { getTodaysDate, getTodaysDisplayDate } from 'utils/helpers';
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
 
+const { firebaseDb } = firebaseData;
+
 const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
     user: { email: currentUser, name, photo },
@@ -28,7 +30,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
-  const { firebaseDb } = firebaseData;
   const today = getTodaysDate();
   const {
     statistics: {
@@ -43,7 +44,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   } = useUserStatistics();
 
   useEffect(() => {
-    const getUserAttempts = async () => {
+    (async function () {
       if (wordDate !== today && !!correctWord) {
         setWordDate(today);
         setUsersAttempts([Array(wordLength).fill('')]);
@@ -96,18 +97,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           setLoading(false);
         }
       }
-    };
-    getUserAttempts();
-  }, [
-    correctWord,
-    currentUser,
-    firebaseDb,
-    keyboardLetters,
-    setLoading,
-    today,
-    wordDate,
-    wordLength,
-  ]);
+    })();
+  }, [correctWord, currentUser, keyboardLetters, setLoading, today, wordDate, wordLength]);
 
   const compareWithWord = useCallback(
     async (currentAttempt, attemptedWord) => {

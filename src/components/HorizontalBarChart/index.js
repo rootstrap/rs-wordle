@@ -6,14 +6,16 @@ const HorizontalBarChart = ({ data, maxValue, title }) => (
     {data.map((value, index) => {
       let numericValue = value;
       let displayValue;
+      let key = index;
       if (typeof value !== 'number') {
         numericValue = value[1];
         displayValue = value[0];
+        key = value[0];
       }
       const widthPercentage = (numericValue * 100) / maxValue ?? 10;
 
       return (
-        <div className="bar-container" key={index}>
+        <div className="bar-container" key={key}>
           <span className="font-frijole bar-chart-position">{index + 1}</span>
           <span
             className="font-caveat-brush bar-chart-value"

@@ -17,12 +17,14 @@ const HorizontalBarChart = ({ data, maxValue, title }) => (
       return (
         <div className="bar-container" key={key}>
           <span className="font-frijole bar-chart-position">{index + 1}</span>
-          <span
-            className="font-caveat-brush bar-chart-value"
-            style={{ width: !!widthPercentage ? `${widthPercentage}%` : 'auto' }}
-          >
-            {numericValue}
-          </span>
+          <div className="bar-chart-value-container">
+            <div
+              className="font-caveat-brush bar-chart-value"
+              style={{ width: !!widthPercentage ? `${widthPercentage}%` : 'auto' }}
+            >
+              {numericValue}
+            </div>
+          </div>
           {!!displayValue && <span className="bar-chart-display-value">{displayValue}</span>}
         </div>
       );

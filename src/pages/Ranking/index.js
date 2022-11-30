@@ -28,12 +28,12 @@ const Ranking = () => {
                 key={`${email}-${attempts}`}
                 className={cn('daily-data-container', { isCurrentUser, lost })}
               >
-                <p className="daily-position">{position}</p>
+                <span className="daily-position">{position}</span>
                 <div className="daily-data-user">
                   <img src={photo} className="daily-data-photo" alt="user" />
-                  <p className="daily-data-name">{name}</p>
+                  <span className="daily-data-name">{name}</span>
                 </div>
-                <p className="daily-data-attempts">{lost ? 'X' : attempts}</p>
+                <span className="daily-data-attempts">{lost ? 'X' : attempts}</span>
               </div>
             );
           })}

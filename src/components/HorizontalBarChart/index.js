@@ -1,8 +1,9 @@
+import { MAX_ATTEMPTS } from 'constants/constants';
 import './styles.css';
 
-const HorizontalBarChart = ({ data, maxValue, title }) => (
+const HorizontalBarChart = ({ data, maxValue, words = false }) => (
   <div className="bar-chart-container ">
-    <h2 className="bar-chart-title">{title}</h2>
+    <h2 className="bar-chart-title">{words ? 'Top Used Words' : 'Guess Distribution'}</h2>
     {data.map((value, index) => {
       let numericValue = value;
       let displayValue;
@@ -16,7 +17,9 @@ const HorizontalBarChart = ({ data, maxValue, title }) => (
 
       return (
         <div className="bar-container" key={key}>
-          <span className="font-frijole bar-chart-position">{index + 1}</span>
+          <span className="font-frijole bar-chart-position">
+            {index === MAX_ATTEMPTS && !words ? 'X' : index + 1}
+          </span>
           <div className="bar-chart-value-container">
             <div
               className="font-caveat-brush bar-chart-value"

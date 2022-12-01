@@ -22,16 +22,8 @@ const Statistics = () => {
         <StatBox label="Max Streak" value={longestStreak} />
       </div>
       <div className="statistics-charts-container">
-        <HorizontalBarChart
-          data={totalAttempts}
-          maxValue={maxAttemptsRound}
-          title="Guess Distribution"
-        />
-        <HorizontalBarChart
-          data={topAttemptedWords}
-          maxValue={topAttemptedWords[0][1]}
-          title="Top Used Words"
-        />
+        <HorizontalBarChart data={totalAttempts} maxValue={maxAttemptsRound} />
+        <HorizontalBarChart data={topAttemptedWords} maxValue={topAttemptedWords[0][1]} words />
       </div>
     </div>
   );

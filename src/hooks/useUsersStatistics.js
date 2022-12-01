@@ -30,7 +30,7 @@ const useUserStatistics = () => {
         let currentStatistics = {
           totalGames: 0,
           totalWins: 0,
-          totalAttempts: Array(MAX_ATTEMPTS).fill(0),
+          totalAttempts: Array(MAX_ATTEMPTS + 1).fill(0),
           currentStreak: 0,
           longestStreak: 0,
           attemptedWords: {},

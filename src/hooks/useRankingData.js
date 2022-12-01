@@ -53,8 +53,11 @@ const useRankingData = () => {
     })();
   }, [today]);
 
+  const currentUserPlayed = dailyResults.find(item => item.user.email === currentUser);
+
   return {
     currentUser,
+    currentUserPlayed,
     dailyResults,
   };
 };

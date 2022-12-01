@@ -163,7 +163,10 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       if (correctCount === wordLength || usersAttempts.length === MAX_ATTEMPTS) {
         const newStatus = correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost;
         const won = newStatus === GAME_STATUS.won;
-        const currentAttemptedWords = usersAttempts.map(attempt => attempt.join(''));
+        const currentAttemptedWords = usersAttempts.map((attempt, index) => ({
+          word: attempt.join(''),
+          results: newRoundsResults[index],
+        }));
 
         await addDoc(collection(firebaseDb, DAILY_RESULTS), {
           attempts: currentRound + 1,
@@ -212,7 +215,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       currentRound,
       currentStreak,
       currentUser,
-      firebaseDb,
       keyboardLetters,
       letters,
       longestStreak,

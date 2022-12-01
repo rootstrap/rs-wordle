@@ -16,6 +16,7 @@ const useRankingData = () => {
   } = useAuth();
 
   const [dailyResults, setDailyResults] = useState([]);
+  const [expandedUser, setExpandedUser] = useState();
 
   const today = getTodaysDate();
 
@@ -53,9 +54,14 @@ const useRankingData = () => {
     })();
   }, [today]);
 
+  const currentUserPlayed = dailyResults.find(item => item.user.email === currentUser);
+
   return {
     currentUser,
+    currentUserPlayed,
     dailyResults,
+    expandedUser,
+    setExpandedUser,
   };
 };
 

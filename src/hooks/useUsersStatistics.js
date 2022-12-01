@@ -10,13 +10,13 @@ import { setUserStatistics } from 'state/actions/statisticsActions';
 
 import useAuth from './useAuth';
 
+const { firebaseDb } = firebaseData;
+const statisticsRef = collection(firebaseDb, USERS_STATISTICS);
+
 const useUserStatistics = () => {
   const { statistics } = useSelector(({ statistics: { statistics } }) => ({
     statistics,
   }));
-
-  const { firebaseDb } = firebaseData;
-  const statisticsRef = collection(firebaseDb, USERS_STATISTICS);
 
   const dispatch = useDispatch();
 
@@ -66,7 +66,7 @@ const useUserStatistics = () => {
     if (Object.keys(statistics).length === 0) {
       getStatistics();
     }
-  }, [currentUser, dispatch, firebaseDb, statistics, statisticsRef]);
+  }, [currentUser, dispatch, statistics]);
 
   const updateStatistics = async newStatistics => {
     await updateDoc(doc(statisticsRef, currentUser), newStatistics);
@@ -80,7 +80,7 @@ const useUserStatistics = () => {
 
   const topAttemptedWords = useMemo(() => {
     const attemptedWordsArray = toPairs(statistics.attemptedWords).sort((a, b) => b[1] - a[1]);
-    return attemptedWordsArray.slice(0, MAX_ATTEMPTS);
+    return attemptedWordsArray.slice(0, MAX_ATTEMPTS + 1);
   }, [statistics.attemptedWords]);
 
   return {

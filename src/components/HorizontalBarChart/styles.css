@@ -25,13 +25,17 @@
 }
 
 .bar-chart-value {
-  background-color: #538d4e;
+  background-color: var(--color-green);
   border-radius: 10px;
   font-size: 20px;
   font-weight: 800;
   margin-left: 15px;
   padding: 5px 10px;
   text-align: right;
+}
+
+.bar-chart-value-lost {
+  background-color: var(--color-red);
 }
 
 .bar-chart-display-value {

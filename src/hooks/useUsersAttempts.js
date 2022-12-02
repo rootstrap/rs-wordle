@@ -185,7 +185,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         const newTotalAttempts = [...totalAttempts];
         newTotalAttempts[won ? currentRound : currentRound + 1] = totalAttempts[currentRound] + 1;
         const newAttemptedWords = { ...attemptedWords };
-        currentAttemptedWords.forEach(word => {
+        usersAttempts.forEach(attempt => {
+          const word = attempt.join('');
           const currentValue = newAttemptedWords[word] ?? 0;
           newAttemptedWords[word] = currentValue + 1;
         });

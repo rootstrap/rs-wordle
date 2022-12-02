@@ -36,7 +36,7 @@ const Ranking = () => {
                   <button
                     key={`${email}-${attempts}`}
                     className={cn('daily-data-container', { isCurrentUser, lost, isDisabled })}
-                    onClick={() => (isExpanded ? setExpandedUser('') : setExpandedUser(email))}
+                    onClick={() => setExpandedUser(isExpanded ? '' : email)}
                     disabled={!currentUserPlayed}
                   >
                     <span className="daily-position">{position}</span>

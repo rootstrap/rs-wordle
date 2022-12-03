@@ -1,8 +1,11 @@
 .sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 250px;
   transition: width 0.3s ease-in-out;
   background-color: #538d4e;
-  padding-top: 28px;
+  padding: 28px 0 18px;
 }
 
 .sidenav.closed {

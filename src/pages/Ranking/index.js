@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import cn from 'classnames';
@@ -32,7 +33,7 @@ const Ranking = () => {
               const isDisabled = !currentUserPlayed;
 
               return (
-                <>
+                <Fragment key={email}>
                   <button
                     key={`${email}-${attempts}`}
                     className={cn('daily-data-container', { isCurrentUser, lost, isDisabled })}
@@ -54,24 +55,30 @@ const Ranking = () => {
                   {currentUserPlayed && (
                     <div
                       className={cn('daily-data-words', { isExpanded })}
-                      style={{ height: isExpanded ? attemptedWords.length * WORD_HEIGHT : 0 }}
+                      style={{
+                        height: isExpanded ? attemptedWords.length * WORD_HEIGHT : 0,
+                      }}
                     >
-                      {attemptedWords.map(({ word = '', results }) => (
-                        <div className={cn('daily-data-word-container', { isExpanded })}>
-                          {word.split('').map((letter, index) => (
-                            <span
-                              key={`${word}-${index}`}
-                              className={cn('daily-data-word', { isExpanded })}
-                              style={{ backgroundColor: results[index] }}
-                            >
-                              {letter}
-                            </span>
+                      {isExpanded && (
+                        <>
+                          {attemptedWords.map(({ word = '', results }) => (
+                            <div key={word} className="daily-data-word-container">
+                              {word.split('').map((letter, index) => (
+                                <span
+                                  key={`${word}-${index}`}
+                                  className="daily-data-word"
+                                  style={{ backgroundColor: results[index] }}
+                                >
+                                  {letter}
+                                </span>
+                              ))}
+                            </div>
                           ))}
-                        </div>
-                      ))}
+                        </>
+                      )}
                     </div>
                   )}
-                </>
+                </Fragment>
               );
             }
           )}

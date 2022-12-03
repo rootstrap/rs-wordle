@@ -15,7 +15,7 @@ const printLetterExplanation = (backgroundColor, text) => (
 const Rules = () => (
   <div className="rules">
     <h1 className="section-title">RULES</h1>
-    <h3>Can you guess a word before other Rootstrappers do?</h3>
+    <h3>Can you guess the word before other Rootstrappers do?</h3>
     <div className="rules-container">
       <ul className="rules-bullet">
         <li>Guess a word in 6 attempts or less</li>

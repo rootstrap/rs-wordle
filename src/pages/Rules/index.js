@@ -21,7 +21,7 @@ const Rules = () => (
         <li>Guess a word in 6 attempts or less</li>
         <li>The word could have between 4 and 6 letters</li>
         <li>
-          Every day you will have a different word to guess and it would be the same for everyone
+          Every day you will have a different word to guess and it will be the same for everyone
         </li>
         <li>Each guess must be a valid English word</li>
         <li>To write the word you can use either your keyboard or the virtual keyboard provided</li>

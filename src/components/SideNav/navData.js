@@ -2,6 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import SettingsIcon from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
 
 export const navData = [
   {
@@ -24,6 +25,12 @@ export const navData = [
   },
   {
     id: 3,
+    icon: <InfoIcon />,
+    text: 'Rules',
+    link: 'rules',
+  },
+  {
+    id: 4,
     icon: <SettingsIcon />,
     text: 'Settings',
     link: 'settings',

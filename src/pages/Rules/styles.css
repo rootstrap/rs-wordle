@@ -1,0 +1,31 @@
+.rules {
+  background-color: #1a1a1b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.rules-container {
+  margin: 0 60px;
+  text-align: left;
+}
+
+.rules-bullet {
+  line-height: 45px;
+}
+
+.rules-letters-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 25px;
+}
+
+.rules-letter-explanation {
+  margin: 0 15px;
+}
+
+.rules-letter-explanation-bold {
+  font-weight: 800;
+}

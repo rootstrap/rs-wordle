@@ -313,7 +313,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
   const shareResults = async () => {
     const resultsDate = getTodaysDisplayDate();
-    const resultsRatio = `${roundsResults.length}/${MAX_ATTEMPTS}`;
+    const resultsRatio = `${
+      gameStatus === GAME_STATUS.won ? roundsResults.length : 'X'
+    }/${MAX_ATTEMPTS}`;
     let textResult = `RS Wordle ${resultsDate} ${resultsRatio} \n \n`;
     roundsResults.forEach(lineResult => {
       lineResult.forEach(result => {

@@ -17,7 +17,10 @@ const Statistics = () => {
       <div className="stat-box-container">
         <StatBox label="Played" value={totalGames} />
         <StatBox label="Wins" value={totalWins} />
-        <StatBox label="Wins (%)" value={totalGames ? (totalWins * 100) / totalGames : 0} />
+        <StatBox
+          label="Wins (%)"
+          value={totalGames ? ((totalWins * 100) / totalGames).toFixed(0) : 0}
+        />
         <StatBox label="Current Streak" value={currentStreak} />
         <StatBox label="Max Streak" value={longestStreak} />
       </div>

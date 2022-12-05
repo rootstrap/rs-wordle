@@ -2,6 +2,7 @@ import routesPaths from './routesPaths';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Ranking from 'pages/Ranking';
+import Rules from 'pages/Rules';
 import Settings from 'pages/Settings';
 import Statistics from 'pages/Statistics';
 
@@ -15,6 +16,12 @@ const routes = [
   {
     path: routesPaths.ranking,
     component: <Ranking />,
+    exact: true,
+    private: true,
+  },
+  {
+    path: routesPaths.rules,
+    component: <Rules />,
     exact: true,
     private: true,
   },

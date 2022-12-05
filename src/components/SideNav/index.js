@@ -14,7 +14,8 @@ const SideNav = () => {
     setOpen(prev => !prev);
   };
 
-  const settings = navData[navData.length - 1];
+  const settingsIndex = navData.length - 1;
+  const settings = navData[settingsIndex];
 
   return (
     <nav className={cn('sidenav', { closed: !open })}>
@@ -23,7 +24,7 @@ const SideNav = () => {
           {open ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
         </button>
         {navData.map(item =>
-          item.id !== 3 ? (
+          item.id !== settingsIndex ? (
             <NavLink key={item.id} className="sideitem" to={item.link}>
               {item.icon}
               <span className={cn('sidenav-link-text', { closed: !open })}>{item.text}</span>

@@ -67,6 +67,7 @@ const Word = () => {
       {gameEnded && (
         <>
           <p className="game-status">You {gameStatus.toUpperCase()}</p>
+          <p className="game-status">The word was {word}</p>
           <div className="share-results-button">
             <Button handleClick={shareResults}>Share Results</Button>
           </div>

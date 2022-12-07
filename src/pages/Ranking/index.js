@@ -5,6 +5,7 @@ import cn from 'classnames';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import ListRow from 'components/common/ListRow';
 import { GAME_STATUS } from 'constants/types';
 import useRankingData from 'hooks/useRankingData';
 
@@ -33,25 +34,18 @@ const Ranking = () => {
               const isDisabled = !currentUserPlayed;
 
               return (
-                <Fragment key={email}>
-                  <button
-                    key={`${email}-${attempts}`}
-                    className={cn('daily-data-container', { isCurrentUser, lost, isDisabled })}
-                    onClick={() => setExpandedUser(isExpanded ? '' : email)}
-                    disabled={!currentUserPlayed}
-                  >
-                    <span className="daily-position">{position}</span>
-                    <div className="daily-data-user">
-                      <img src={photo} className="daily-data-photo" alt="user" />
-                      <span className="daily-data-name">{name}</span>
-                    </div>
-                    <span className="daily-data-attempts">{lost ? 'X' : attempts}</span>
-                    {currentUserPlayed && (
-                      <div className="daily-data-expand-icon">
-                        {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                      </div>
-                    )}
-                  </button>
+                <ListRow
+                  key={email}
+                  classProps={{ isCurrentUser, lost, isDisabled }}
+                  onClick={() => setExpandedUser(isExpanded ? '' : email)}
+                  disabled={!currentUserPlayed}
+                  name={name}
+                  photo={photo}
+                  leftText={position}
+                  rightText={lost ? 'X' : attempts}
+                  icon={isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  showIcon={currentUserPlayed}
+                >
                   {currentUserPlayed && (
                     <div
                       className={cn('daily-data-words', { isExpanded })}
@@ -78,7 +72,7 @@ const Ranking = () => {
                       )}
                     </div>
                   )}
-                </Fragment>
+                </ListRow>
               );
             }
           )}

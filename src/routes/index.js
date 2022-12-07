@@ -5,6 +5,7 @@ import Ranking from 'pages/Ranking';
 import Rules from 'pages/Rules';
 import Settings from 'pages/Settings';
 import Statistics from 'pages/Statistics';
+import Users from 'pages/Users';
 
 const routes = [
   {
@@ -34,6 +35,12 @@ const routes = [
   {
     path: routesPaths.statistics,
     component: <Statistics />,
+    exact: true,
+    private: true,
+  },
+  {
+    path: routesPaths.users,
+    component: <Users />,
     exact: true,
     private: true,
   },

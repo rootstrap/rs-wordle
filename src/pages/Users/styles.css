@@ -1,0 +1,13 @@
+.users {
+  align-items: center;
+  background-color: #1a1a1b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.users-list-container {
+  width: 80%;
+}

@@ -4,6 +4,7 @@ const routesPaths = {
   rules: '/rules',
   statistics: '/statistics',
   settings: '/settings',
+  users: '/users',
   login: '/login',
 };
 

@@ -2,8 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
+import { USERS } from './collections';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDtNY3LQVPluB4BLU97CZpr-1X8GELUNZU',
@@ -25,10 +25,10 @@ const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(firebaseAuth, googleProvider);
     const user = res.user;
-    const q = query(collection(firebaseDb, 'users'), where('uid', '==', user.uid));
+    const q = query(collection(firebaseDb, USERS), where('uid', '==', user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
-      await addDoc(collection(firebaseDb, 'users'), {
+      await addDoc(collection(firebaseDb, USERS), {
         uid: user.uid,
         name: user.displayName,
         authProvider: 'google',

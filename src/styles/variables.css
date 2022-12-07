@@ -3,8 +3,10 @@
   --color-light-black: #303030;
   --color-light-grey: #d3d3d3;
   --color-dark-green: rgba(83, 141, 78, 0.85);
+  --color-medium-green: rgba(83, 141, 78, 0.5);
   --color-green: #538d4e;
   --color-white: #fff;
+  --color-medium-red: rgba(210, 62, 62, 0.5);
   --color-red: #d23e3e;
   --color-light-blue: #278ed3;
   --box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);

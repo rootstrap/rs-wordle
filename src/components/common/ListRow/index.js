@@ -4,7 +4,6 @@ import cn from 'classnames';
 import './styles.css';
 
 const ListRow = ({
-  key,
   classProps,
   onClick,
   disabled,
@@ -16,7 +15,7 @@ const ListRow = ({
   showIcon,
   children,
 }) => (
-  <Fragment key={key}>
+  <Fragment>
     <button
       className={cn('list-row-container', { ...classProps, isEnabled: !classProps?.isDisabled })}
       onClick={onClick}

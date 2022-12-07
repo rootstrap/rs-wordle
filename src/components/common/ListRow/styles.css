@@ -1,7 +1,7 @@
 .list-row-container {
   align-items: center;
-  background-color: rgba(83, 141, 78, 0.5);
-  border-color: rgba(83, 141, 78, 0.5);
+  background-color: var(--color-medium-green);
+  border-color: var(--color-medium-green);
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
@@ -19,18 +19,18 @@
 }
 
 .list-row-container.isCurrentUser {
-  background-color: rgb(83, 141, 78);
-  border-color: rgb(83, 141, 78);
+  background-color: var(--color-green);
+  border-color: var(--color-green);
 }
 
 .list-row-container.lost {
-  background-color: rgba(210, 62, 62, 0.5);
-  border-color: rgba(210, 62, 62, 0.5);
+  background-color: var(--color-medium-red);
+  border-color: var(--color-medium-red);
 }
 
 .list-row-container.isCurrentUser.lost {
-  background-color: rgb(210, 62, 62);
-  border-color: rgb(210, 62, 62);
+  background-color: var(--color-red);
+  border-color: var(--color-red);
 }
 
 .list-row-container.isDisabled {

@@ -6,7 +6,8 @@ import useUsers from 'hooks/useUsers';
 import './styles.css';
 
 const Users = () => {
-  const { setFilters, usersList } = useUsers();
+  // TODO: add name filter
+  const { /* setFilters, */ usersList } = useUsers();
 
   return (
     <div className="users">
@@ -20,9 +21,7 @@ const Users = () => {
             photo={photo}
             icon={<KeyboardArrowRightIcon />}
             showIcon
-          >
-            <div></div>
-          </ListRow>
+          />
         ))}
       </div>
     </div>

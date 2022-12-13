@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom';
+
 import HorizontalBarChart from 'components/HorizontalBarChart';
 import StatBox from 'components/StatBox';
 import useUserStatistics from 'hooks/useUsersStatistics';
@@ -5,12 +7,14 @@ import useUserStatistics from 'hooks/useUsersStatistics';
 import './styles.css';
 
 const Statistics = () => {
+  const location = useLocation();
+
   const {
     statistics,
     statistics: { totalGames, totalWins, totalAttempts, currentStreak, longestStreak },
     maxAttemptsRound,
     topAttemptedWords,
-  } = useUserStatistics();
+  } = useUserStatistics(location?.state?.email);
 
   return (
     <div className="statistics">

@@ -3,6 +3,7 @@ import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/fir
 import wordExists from 'word-exists';
 
 import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, LETTER_STATUS_ICON, GAME_STATUS } from 'constants/types';
 import { USERS_ATTEMPTS, DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -284,20 +285,29 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     ({ key }) => {
       setError('');
       if (gameEnded) return;
-      const isDelete = key === 'Backspace';
-      const isEnter = key === 'Enter';
+      const isArrowLeft = key === ARROW_LEFT;
+      const isArrowRight = key === ARROW_RIGHT;
+      const isDelete = key === BACKSPACE;
+      const isEnter = key === ENTER;
 
       if (key.length > 1 && !isDelete) {
         isEnter && onSubmitWord();
+        isArrowLeft && focusBefore(letterIndex);
+        isArrowRight && focusNext(letterIndex);
         return;
       }
       const isLetter = key.match(/[a-zA-Z]/g);
 
       if (isLetter || isDelete) {
         const newAttempt = [...usersAttempts];
+        const wasEmpty = !newAttempt[currentRound][letterIndex];
         newAttempt[currentRound][letterIndex] = isDelete ? '' : key.toUpperCase();
         setUsersAttempts(newAttempt);
-        isDelete ? focusBefore(letterIndex) : focusNext(letterIndex);
+        if (isDelete) {
+          wasEmpty && focusBefore(letterIndex);
+        } else {
+          focusNext(letterIndex);
+        }
       }
     },
     [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts]

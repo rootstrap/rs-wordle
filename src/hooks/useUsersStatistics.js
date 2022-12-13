@@ -24,8 +24,11 @@ const useUserStatistics = () => {
     user: { email: currentUser },
   } = useAuth();
 
+  console.log('currentUser: ', currentUser);
+
   useEffect(() => {
     const getStatistics = async () => {
+      console.log('en el use effect para obtener datos');
       try {
         let currentStatistics = {
           totalGames: 0,

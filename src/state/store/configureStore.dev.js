@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 
 import reducer from 'state/reducers/reducer';
@@ -13,7 +14,9 @@ const store = () => {
     devTools: process.env.NODE_ENV !== 'production',
   });
 
-  return store;
+  const persistor = persistStore(store);
+
+  return { store, persistor };
 };
 
 export default store;

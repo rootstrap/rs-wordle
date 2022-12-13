@@ -20,9 +20,9 @@ const useUsers = () => {
           const docs = await getDocs(q);
           const newUsersList = [];
           docs.forEach(doc => {
-            const { name, photo } = doc.data();
+            const { email, name, photo, uid } = doc.data();
             if (name.toUpperCase().includes(username.toUpperCase())) {
-              newUsersList.push({ name, photo });
+              newUsersList.push({ email, name, photo, id: uid });
             }
           });
           setUsersList(newUsersList);

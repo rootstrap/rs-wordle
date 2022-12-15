@@ -13,12 +13,16 @@ const Statistics = () => {
     statistics,
     statistics: { totalGames, totalWins, totalAttempts, currentStreak, longestStreak },
     maxAttemptsRound,
+    maxAttemptedWords,
     topAttemptedWords,
-  } = useUserStatistics(location?.state?.email);
+    profilePhoto,
+    userName,
+  } = useUserStatistics(location?.state ?? {});
 
   return (
     <div className="statistics">
-      <h1 className="section-title">Statistics</h1>
+      <h1 className="section-title">{userName} Statistics</h1>
+      <img src={profilePhoto} className="statistics-photo" alt={`user-${userName}`} />
       {!!Object.keys(statistics).length && (
         <>
           <div className="stat-box-container">
@@ -33,7 +37,7 @@ const Statistics = () => {
           </div>
           <div className="statistics-charts-container">
             <HorizontalBarChart data={totalAttempts} maxValue={maxAttemptsRound} />
-            <HorizontalBarChart data={topAttemptedWords} maxValue={topAttemptedWords[0][1]} words />
+            <HorizontalBarChart data={topAttemptedWords} maxValue={maxAttemptedWords} words />
           </div>
         </>
       )}

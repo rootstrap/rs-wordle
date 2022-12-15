@@ -21,7 +21,7 @@ const Users = () => {
             onClick={() =>
               push({
                 pathname: `/statistics/${id}`,
-                state: { email },
+                state: { email, name, photo },
               })
             }
             name={name}

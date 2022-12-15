@@ -11,6 +11,11 @@
   color: white;
 }
 
+.statistics-photo {
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
 .stat-box-container {
   border-radius: 20px;
   background-color: rgba(83, 141, 78, 0.85);

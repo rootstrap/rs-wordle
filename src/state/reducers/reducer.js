@@ -8,7 +8,7 @@ import statisticsReducer from './statisticsReducer';
 import userReducer from './userReducer';
 
 const sessionPersistConfig = {
-  key: api.reducerPath,
+  key: 'user',
   storage,
   whitelist: ['authenticated', 'user'],
 };

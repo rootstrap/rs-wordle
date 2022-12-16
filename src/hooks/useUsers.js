@@ -30,10 +30,10 @@ const useUsers = () => {
   }, [username]);
 
   const changeFilter = async (key, value) => {
-    setFilters({
-      ...filters,
+    setFilters(prevFilters => ({
+      ...prevFilters,
       [key]: value,
-    });
+    }));
     getUsers();
   };
 

@@ -34,13 +34,11 @@ const useUsers = () => {
       ...filters,
       [key]: value,
     });
-    await getUsers();
+    getUsers();
   };
 
   useEffect(() => {
-    (async function () {
-      await getUsers();
-    })();
+    getUsers();
   }, [getUsers]);
 
   return {

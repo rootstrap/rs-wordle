@@ -8,6 +8,38 @@
   min-height: 100vh;
 }
 
+.users-filters-container {
+  align-items: center;
+  display: flex;
+  flex: 0 1;
+  width: 80%;
+}
+
+.users-filter-label {
+  font-size: 22px;
+  font-weight: 600;
+  padding-right: 25px;
+}
+
+.users-filter-input {
+  background-color: var(--color-dark-green);
+  border-radius: 8px;
+  border-color: var(--color-dark-green);
+  color: var(--color-white);
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  height: 25px;
+  padding: 5px 10px;
+}
+
+.users-filter-input:focus {
+  outline: none;
+  border-color: var(--color-white);
+  border-style: solid;
+  border-width: 2px;
+}
+
 .users-list-container {
   width: 80%;
 }

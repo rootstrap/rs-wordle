@@ -8,13 +8,23 @@ const { firebaseDb } = firebaseData;
 
 const useUsers = () => {
   const [filters, setFilters] = useState({ username: '' });
+  const [filtersChanged, setFiltersChanged] = useState(false);
   const [usersList, setUsersList] = useState();
 
   const { username } = filters;
 
+  const changeFilter = (key, value) => {
+    setFilters({
+      ...filters,
+      [key]: value,
+    });
+    setFiltersChanged(true);
+  };
+
   useEffect(() => {
     (async function () {
-      if (!usersList) {
+      if (!usersList || filtersChanged) {
+        setFiltersChanged(false);
         try {
           const q = query(collection(firebaseDb, USERS), orderBy('name'));
           const docs = await getDocs(q);
@@ -31,10 +41,11 @@ const useUsers = () => {
         }
       }
     })();
-  }, [username, usersList]);
+  }, [filtersChanged, username, usersList]);
 
   return {
-    setFilters,
+    filters,
+    changeFilter,
     usersList,
   };
 };

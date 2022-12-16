@@ -5,6 +5,7 @@ const routesPaths = {
   statistics: '/statistics',
   settings: '/settings',
   users: '/users',
+  usersStatistics: '/statistics/:id',
   login: '/login',
 };
 

@@ -13,16 +13,20 @@ import useAuth from './useAuth';
 const { firebaseDb } = firebaseData;
 const statisticsRef = collection(firebaseDb, USERS_STATISTICS);
 
-const useUserStatistics = () => {
-  const { statistics } = useSelector(({ statistics: { statistics } }) => ({
-    statistics,
-  }));
-
+const useUserStatistics = ({ email, name, photo } = {}) => {
   const dispatch = useDispatch();
 
   const {
-    user: { email: currentUser },
+    user: { email: currentUser, photo: currentUserPhoto },
   } = useAuth();
+
+  const selectedUser = email ?? currentUser;
+  const userName = name ? `${name.split(' ')[0]}'s` : 'My ';
+  const profilePhoto = photo ?? currentUserPhoto;
+
+  const { statistics } = useSelector(({ statistics: { statistics = {} } }) => ({
+    statistics: statistics[selectedUser] ?? {},
+  }));
 
   useEffect(() => {
     const getStatistics = async () => {
@@ -35,7 +39,7 @@ const useUserStatistics = () => {
           longestStreak: 0,
           attemptedWords: {},
         };
-        const docRef = doc(firebaseDb, USERS_STATISTICS, currentUser);
+        const docRef = doc(firebaseDb, USERS_STATISTICS, selectedUser);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const {
@@ -55,9 +59,9 @@ const useUserStatistics = () => {
             attemptedWords,
           };
         } else {
-          await setDoc(doc(statisticsRef, currentUser), currentStatistics);
+          await setDoc(doc(statisticsRef, selectedUser), currentStatistics);
         }
-        await dispatch(setUserStatistics({ statistics: currentStatistics }));
+        await dispatch(setUserStatistics({ statistics: currentStatistics, selectedUser }));
       } catch (err) {
         console.error(err);
       }
@@ -66,11 +70,11 @@ const useUserStatistics = () => {
     if (Object.keys(statistics).length === 0) {
       getStatistics();
     }
-  }, [currentUser, dispatch, statistics]);
+  }, [selectedUser, dispatch, statistics]);
 
   const updateStatistics = async newStatistics => {
-    await updateDoc(doc(statisticsRef, currentUser), newStatistics);
-    await dispatch(setUserStatistics({ statistics: newStatistics }));
+    await updateDoc(doc(statisticsRef, selectedUser), newStatistics);
+    await dispatch(setUserStatistics({ statistics: newStatistics, selectedUser }));
   };
 
   const maxAttemptsRound = useMemo(
@@ -83,11 +87,16 @@ const useUserStatistics = () => {
     return attemptedWordsArray.slice(0, MAX_ATTEMPTS + 1);
   }, [statistics.attemptedWords]);
 
+  const maxAttemptedWords = !!topAttemptedWords?.length ? topAttemptedWords[0][1] : 0;
+
   return {
     statistics,
     updateStatistics,
     maxAttemptsRound,
+    maxAttemptedWords,
     topAttemptedWords,
+    profilePhoto,
+    userName,
   };
 };
 

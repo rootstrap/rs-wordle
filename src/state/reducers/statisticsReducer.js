@@ -6,8 +6,8 @@ const initialState = {
   statistics: {},
 };
 
-const handleSetUsersStatistics = (state, { payload: { statistics } }) => {
-  state.statistics = statistics;
+const handleSetUsersStatistics = (state, { payload: { statistics, selectedUser } }) => {
+  state.statistics = { ...state.statistics, [selectedUser]: statistics };
 };
 
 export default createReducer(initialState, {

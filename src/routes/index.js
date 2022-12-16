@@ -45,6 +45,12 @@ const routes = [
     private: true,
   },
   {
+    path: routesPaths.usersStatistics,
+    component: <Statistics />,
+    exact: true,
+    private: true,
+  },
+  {
     path: routesPaths.login,
     component: <Login />,
   },

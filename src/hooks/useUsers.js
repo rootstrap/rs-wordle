@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 import { USERS } from 'firebase/collections';
@@ -12,29 +12,38 @@ const useUsers = () => {
 
   const { username } = filters;
 
-  useEffect(() => {
-    (async function () {
-      if (!usersList) {
-        try {
-          const q = query(collection(firebaseDb, USERS), orderBy('name'));
-          const docs = await getDocs(q);
-          const newUsersList = [];
-          docs.forEach(doc => {
-            const { email, name, photo, uid } = doc.data();
-            if (name.toUpperCase().includes(username.toUpperCase())) {
-              newUsersList.push({ email, name, photo, id: uid });
-            }
-          });
-          setUsersList(newUsersList);
-        } catch (err) {
-          console.log('err: ', err);
+  const getUsers = useCallback(async () => {
+    try {
+      const q = query(collection(firebaseDb, USERS), orderBy('name'));
+      const docs = await getDocs(q);
+      const newUsersList = [];
+      docs.forEach(doc => {
+        const { email, name, photo, uid } = doc.data();
+        if (name.toUpperCase().includes(username.toUpperCase())) {
+          newUsersList.push({ email, name, photo, id: uid });
         }
-      }
-    })();
-  }, [username, usersList]);
+      });
+      setUsersList(newUsersList);
+    } catch (err) {
+      console.log('err: ', err);
+    }
+  }, [username]);
+
+  const changeFilter = async (key, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [key]: value,
+    }));
+    getUsers();
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
 
   return {
-    setFilters,
+    filters,
+    changeFilter,
     usersList,
   };
 };

@@ -7,13 +7,22 @@ import useUsers from 'hooks/useUsers';
 import './styles.css';
 
 const Users = () => {
-  // TODO: add name filter
-  const { /* setFilters, */ usersList } = useUsers();
+  const { filters, changeFilter, usersList } = useUsers();
+  const { username } = filters;
   const { push } = useHistory();
 
   return (
     <div className="users">
       <h1 className="section-title">Users</h1>
+      <div className="users-filters-container">
+        <span className="users-filter-label">Filter by name</span>
+        <input
+          className="users-filter-input"
+          type="text"
+          value={username}
+          onChange={({ target: { value: newValue } }) => changeFilter('username', newValue)}
+        />
+      </div>
       <div className="users-list-container">
         {usersList?.map(({ email, id, name, photo }, index) => (
           <ListRow

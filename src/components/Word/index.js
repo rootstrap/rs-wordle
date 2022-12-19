@@ -1,5 +1,6 @@
 import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
+import Loading from 'components/common/Loading';
 import Keyboard from 'components/Keyboard';
 import { LETTER_STATUS } from 'constants/types';
 import useUsersAttempts from 'hooks/useUsersAttempts';
@@ -31,11 +32,7 @@ const Word = () => {
   });
 
   if (loading) {
-    return (
-      <div>
-        <p className="loading">LOADING DATA...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

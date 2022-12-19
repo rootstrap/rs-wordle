@@ -302,12 +302,15 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         const newAttempt = [...usersAttempts];
         const wasEmpty = !newAttempt[currentRound][letterIndex];
         newAttempt[currentRound][letterIndex] = isDelete ? '' : key.toUpperCase();
-        setUsersAttempts(newAttempt);
         if (isDelete) {
-          wasEmpty && focusBefore(letterIndex);
+          if (wasEmpty && letterIndex > 0) {
+            focusBefore(letterIndex);
+            newAttempt[currentRound][letterIndex - 1] = '';
+          }
         } else {
           focusNext(letterIndex);
         }
+        setUsersAttempts(newAttempt);
       }
     },
     [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts]

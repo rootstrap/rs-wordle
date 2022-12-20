@@ -25,6 +25,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
     "react-tabs": "^5.1.0",
+    "reactjs-flip-card": "^2.0.0",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "word-exists": "^1.0.0",

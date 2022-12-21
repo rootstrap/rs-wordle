@@ -25,14 +25,20 @@ const SideNav = () => {
         </button>
         {navData.map(item =>
           item.id !== settingsIndex ? (
-            <NavLink key={item.id} className="sideitem" to={item.link}>
+            <NavLink
+              key={item.id}
+              className="sideitem"
+              activeClassName="selected-item"
+              to={item.link}
+              exact={item.exact}
+            >
               {item.icon}
               <span className={cn('sidenav-link-text', { closed: !open })}>{item.text}</span>
             </NavLink>
           ) : null
         )}
       </div>
-      <NavLink className="sideitem" to={settings.link}>
+      <NavLink className="sideitem" activeClassName="selected-item" to={settings.link}>
         {settings.icon}
         <span className={cn('sidenav-link-text', { closed: !open })}>{settings.text}</span>
       </NavLink>

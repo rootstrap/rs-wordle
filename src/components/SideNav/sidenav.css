@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 250px;
   transition: width 0.3s ease-in-out;
-  background-color: #538d4e;
+  background-color: var(--color-green);
   padding: 28px 0 18px;
 }
 
@@ -17,7 +17,7 @@
   align-items: center;
   padding: 10px 20px;
   cursor: pointer;
-  color: white;
+  color: var(--color-white);
   text-decoration: none;
 }
 
@@ -30,12 +30,16 @@
 }
 
 .sideitem:hover {
-  background-color: #244f7d1c;
+  background-color: var(--color-background);
+}
+
+.selected-item {
+  background-color: var(--color-background);
 }
 
 .menuBtn {
-  color: white;
-  background-color: transparent;
+  color: var(--color-white);
+  background-color: var(--color-transparent);
   border: none;
   cursor: pointer;
   padding-left: 20px;

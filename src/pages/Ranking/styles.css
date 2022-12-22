@@ -85,8 +85,10 @@
 
 .daily-data-word {
   border-radius: 10px;
+  height: 18px;
   margin: 5px;
   padding: 5px 10px;
+  width: 12px;
 }
 
 .daily-data-words.isExpanded {

@@ -18,18 +18,21 @@ export const navData = [
     icon: <LeaderboardIcon />,
     text: 'Ranking',
     link: '/ranking',
+    exact: true,
   },
   {
     id: 2,
     icon: <ShowChartIcon />,
     text: 'Statistics',
     link: '/statistics',
+    exact: true,
   },
   {
     id: 3,
     icon: <GroupIcon />,
     text: 'Users',
     link: '/users',
+    exact: true,
   },
   {
     id: 4,

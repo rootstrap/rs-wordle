@@ -39,11 +39,13 @@ export const navData = [
     icon: <InfoIcon />,
     text: 'Rules',
     link: '/rules',
+    exact: true,
   },
   {
     id: 5,
     icon: <SettingsIcon />,
     text: 'Settings',
     link: '/settings',
+    exact: true,
   },
 ];

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import cn from 'classnames';
@@ -14,16 +13,22 @@ import './styles.css';
 const WORD_HEIGHT = 40;
 
 const Ranking = () => {
-  const { currentUser, currentUserPlayed, dailyResults, expandedUser, setExpandedUser } =
-    useRankingData();
+  const {
+    currentUser,
+    currentUserPlayed,
+    currentStreakRankingData,
+    dailyResults,
+    expandedUser,
+    setExpandedUser,
+  } = useRankingData();
 
   return (
     <div className="ranking">
       <h1 className="section-title">Ranking</h1>
       <Tabs className="Tabs">
         <TabList>
-          <Tab>Today</Tab>
-          <Tab>All Time Average</Tab>
+          <Tab>{`Today (${dailyResults.length})`}</Tab>
+          <Tab>{`Current Streak (${currentStreakRankingData.length})`}</Tab>
         </TabList>
         <TabPanel>
           {dailyResults.map(
@@ -78,7 +83,24 @@ const Ranking = () => {
           )}
         </TabPanel>
         <TabPanel>
-          <h2>In Progress...</h2>
+          {currentStreakRankingData.map(
+            ({ currentStreak, lastDatePlayed, position, user: { email, name, photo } }) => {
+              const isCurrentUser = email === currentUser;
+              return (
+                <ListRow
+                  key={`${email}-${currentStreak}-current-streak`}
+                  classProps={{ isCurrentUser }}
+                  disabled
+                  name={name}
+                  photo={photo}
+                  leftText={position}
+                  rightText={`${currentStreak} 🔥`}
+                  suffix={`(${lastDatePlayed})`}
+                  showIcon={false}
+                />
+              );
+            }
+          )}
         </TabPanel>
       </Tabs>
     </div>

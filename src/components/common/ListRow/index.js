@@ -13,6 +13,7 @@ const ListRow = ({
   rightText,
   icon,
   showIcon,
+  suffix,
   children,
 }) => (
   <Fragment>
@@ -27,6 +28,7 @@ const ListRow = ({
         <span className="list-row-name">{name}</span>
       </div>
       <span className="list-row-right-text">{rightText}</span>
+      {suffix && <span>{suffix}</span>}
       {showIcon && <div className="list-row-icon">{icon}</div>}
     </button>
     {children}

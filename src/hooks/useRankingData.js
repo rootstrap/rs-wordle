@@ -19,11 +19,13 @@ const useRankingData = () => {
   const [expandedUser, setExpandedUser] = useState();
   const [currentStreakRankingData, setCurrentStreakRankingData] = useState([]);
   const [users, setUsers] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const today = getTodaysDate();
 
   useEffect(() => {
     (async function () {
+      setLoading(true);
       const q = query(collection(firebaseDb, USERS));
       const docs = await getDocs(q);
       const results = {};
@@ -93,6 +95,7 @@ const useRankingData = () => {
         }
       });
       setCurrentStreakRankingData(results);
+      setLoading(false);
     })();
   }, [users]);
 
@@ -105,6 +108,7 @@ const useRankingData = () => {
     dailyResults,
     expandedUser,
     setExpandedUser,
+    loading,
   };
 };
 

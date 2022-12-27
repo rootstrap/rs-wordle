@@ -1,17 +1,19 @@
 import React from 'react';
 import SelectReact from 'react-select';
 
-import './styles.css';
-
-const activeColor = '#3d6b39';
+const activeColor = '#1f1f1f';
 const backgroundColor = '#538d4e';
 const color = 'white';
-const focusedColor = '#3d6b39';
+const focusedColor = '#1f1f1f';
 const hoverColor = '#c6d4c5';
-const selectedColor = '#1f1f1f';
+const selectedColor = '#3d6b39';
 
 const Select = ({ ...props }) => {
   const colorStyles = {
+    container: styles => ({
+      ...styles,
+      marginBottom: 35,
+    }),
     control: (styles, { isFocused }) => ({
       ...styles,
       backgroundColor: backgroundColor,

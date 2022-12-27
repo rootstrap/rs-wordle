@@ -21,11 +21,13 @@ const Ranking = () => {
   const {
     currentUser,
     currentUserPlayed,
-    currentStreakRankingData,
+    rankingData,
     dailyResults,
     expandedUser,
     setExpandedUser,
     loading,
+    selectedRanking,
+    onChangeSelectedRanking,
   } = useRankingData();
 
   return (
@@ -37,7 +39,7 @@ const Ranking = () => {
         <Tabs className="Tabs">
           <TabList>
             <Tab>{`Today (${dailyResults.length})`}</Tab>
-            <Tab>{`Current Streak (${currentStreakRankingData.length})`}</Tab>
+            <Tab>{`All Time (${rankingData.length})`}</Tab>
           </TabList>
           <TabPanel>
             {dailyResults.map(
@@ -93,23 +95,23 @@ const Ranking = () => {
           </TabPanel>
           <TabPanel>
             <>
-              <Select options={RANKING_VALUES} defaultValue={RANKING_VALUES[0]} />
-              {currentStreakRankingData.map(
-                ({
-                  currentStreak,
-                  lastDatePlayed,
-                  position,
-                  user: { email, name, photo, uid },
-                }) => {
+              <Select
+                options={RANKING_VALUES}
+                onChange={onChangeSelectedRanking}
+                value={selectedRanking}
+              />
+              {rankingData.map(
+                ({ displayValue, lastDatePlayed, position, user: { email, name, photo, uid } }) => {
                   const isCurrentUser = email === currentUser;
+
                   return (
                     <ListRow
-                      key={`${email}-${currentStreak}-current-streak`}
+                      key={`${email}-${displayValue}-${selectedRanking}`}
                       classProps={{ isCurrentUser }}
                       name={name}
                       photo={photo}
                       leftText={position}
-                      rightText={`${currentStreak} 🔥`}
+                      rightText={`${displayValue} 🔥`}
                       suffix={`(${lastDatePlayed})`}
                       showIcon={false}
                       onClick={() =>

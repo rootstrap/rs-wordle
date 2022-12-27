@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
-import { GAME_STATUS } from 'constants/types';
+import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
 import { DAILY_RESULTS, USERS, USERS_STATISTICS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getTodaysDate } from 'utils/helpers';
@@ -17,9 +17,10 @@ const useRankingData = () => {
 
   const [dailyResults, setDailyResults] = useState([]);
   const [expandedUser, setExpandedUser] = useState();
-  const [currentStreakRankingData, setCurrentStreakRankingData] = useState([]);
+  const [rankingData, setRankingData] = useState([]);
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(false);
+  const [selectedRanking, setSelectedRanking] = useState(RANKING_VALUES[0]);
 
   const today = getTodaysDate();
 
@@ -80,35 +81,68 @@ const useRankingData = () => {
       let currentStreakValue = Number.MAX_SAFE_INTEGER;
       docs.forEach(async doc => {
         const { id: userEmail } = doc;
-        const { currentStreak, lastDatePlayed, totalGames } = doc.data();
+        const { currentStreak, totalGames, ...restStatistics } = doc.data();
         if (!!totalGames) {
           if (currentStreak !== currentStreakValue) {
             currentStreakValue = currentStreak;
             position += 1;
           }
           results.push({
+            ...restStatistics,
             currentStreak,
-            lastDatePlayed,
+            displayValue: currentStreak,
             position,
             user: users[userEmail] || { email: userEmail, name: userEmail.split('@')[0] },
           });
         }
       });
-      setCurrentStreakRankingData(results);
+      setRankingData(results);
       setLoading(false);
     })();
   }, [users]);
 
   const currentUserPlayed = dailyResults.find(item => item.user.email === currentUser);
 
+  const onChangeSelectedRanking = newValue => {
+    if (newValue !== selectedRanking) {
+      setSelectedRanking(newValue);
+      var newRankingData = [...rankingData];
+      let position = 0;
+      let currentValue = Number.MAX_SAFE_INTEGER;
+      newRankingData = newRankingData
+        .sort((firstValue, secondValue) => {
+          if (secondValue[newValue.value] === firstValue[newValue.value]) {
+            if (firstValue.user.name < secondValue.user.name) return -1;
+            return firstValue.user.name > secondValue.user.name ? 1 : 0;
+          }
+          return secondValue[newValue.value] - firstValue[newValue.value];
+        })
+        .map(item => {
+          if (item[newValue.value] !== currentValue) {
+            currentValue = item[newValue.value];
+            position += 1;
+          }
+          return {
+            ...item,
+            displayValue: item[newValue.value],
+            position,
+          };
+        });
+
+      setRankingData(newRankingData);
+    }
+  };
+
   return {
     currentUser,
     currentUserPlayed,
-    currentStreakRankingData,
+    rankingData,
     dailyResults,
     expandedUser,
     setExpandedUser,
     loading,
+    selectedRanking,
+    onChangeSelectedRanking,
   };
 };
 

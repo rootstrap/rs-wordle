@@ -7,7 +7,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import ListRow from 'components/common/ListRow';
 import Loading from 'components/common/Loading';
-import { GAME_STATUS } from 'constants/types';
+import Select from 'components/common/Select';
+import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
 import useRankingData from 'hooks/useRankingData';
 
 import './styles.css';
@@ -91,29 +92,37 @@ const Ranking = () => {
             )}
           </TabPanel>
           <TabPanel>
-            {currentStreakRankingData.map(
-              ({ currentStreak, lastDatePlayed, position, user: { email, name, photo, uid } }) => {
-                const isCurrentUser = email === currentUser;
-                return (
-                  <ListRow
-                    key={`${email}-${currentStreak}-current-streak`}
-                    classProps={{ isCurrentUser }}
-                    name={name}
-                    photo={photo}
-                    leftText={position}
-                    rightText={`${currentStreak} 🔥`}
-                    suffix={`(${lastDatePlayed})`}
-                    showIcon={false}
-                    onClick={() =>
-                      push({
-                        pathname: `/statistics/${uid}`,
-                        state: { email, name, photo },
-                      })
-                    }
-                  />
-                );
-              }
-            )}
+            <>
+              <Select options={RANKING_VALUES} defaultValue={RANKING_VALUES[0]} />
+              {currentStreakRankingData.map(
+                ({
+                  currentStreak,
+                  lastDatePlayed,
+                  position,
+                  user: { email, name, photo, uid },
+                }) => {
+                  const isCurrentUser = email === currentUser;
+                  return (
+                    <ListRow
+                      key={`${email}-${currentStreak}-current-streak`}
+                      classProps={{ isCurrentUser }}
+                      name={name}
+                      photo={photo}
+                      leftText={position}
+                      rightText={`${currentStreak} 🔥`}
+                      suffix={`(${lastDatePlayed})`}
+                      showIcon={false}
+                      onClick={() =>
+                        push({
+                          pathname: `/statistics/${uid}`,
+                          state: { email, name, photo },
+                        })
+                      }
+                    />
+                  );
+                }
+              )}
+            </>
           </TabPanel>
         </Tabs>
       )}

@@ -16,3 +16,18 @@ export const GAME_STATUS = {
   playing: 'playing',
   won: 'won',
 };
+
+export const RANKING_VALUES = [
+  {
+    value: 'currentStreak',
+    label: 'Current Streak',
+    getValueToShow: currentStreak => currentStreak,
+    color: 'green',
+  },
+  {
+    value: 'longestStreak',
+    label: 'Longest Streak',
+    getValueToShow: longestStreak => longestStreak,
+    color: 'green',
+  },
+];

@@ -21,11 +21,11 @@ export const RANKING_VALUES = [
   {
     value: 'currentStreak',
     label: 'Current Streak',
-    getValueToShow: currentStreak => currentStreak,
+    getDisplayValue: ({ currentStreak }) => currentStreak,
   },
   {
     value: 'longestStreak',
     label: 'Longest Streak',
-    getValueToShow: longestStreak => longestStreak,
+    getDisplayValue: ({ longestStreak }) => longestStreak,
   },
 ];

@@ -111,20 +111,23 @@ const useRankingData = () => {
       let currentValue = Number.MAX_SAFE_INTEGER;
       newRankingData = newRankingData
         .sort((firstValue, secondValue) => {
-          if (secondValue[newValue.value] === firstValue[newValue.value]) {
+          const firstDisplayValue = newValue.getDisplayValue(firstValue);
+          const secondDisplayValue = newValue.getDisplayValue(secondValue);
+          if (firstDisplayValue === secondDisplayValue) {
             if (firstValue.user.name < secondValue.user.name) return -1;
             return firstValue.user.name > secondValue.user.name ? 1 : 0;
           }
-          return secondValue[newValue.value] - firstValue[newValue.value];
+          return secondDisplayValue - firstDisplayValue;
         })
         .map(item => {
-          if (item[newValue.value] !== currentValue) {
-            currentValue = item[newValue.value];
+          const displayValue = newValue.getDisplayValue(item);
+          if (displayValue !== currentValue) {
+            currentValue = displayValue;
             position += 1;
           }
           return {
             ...item,
-            displayValue: item[newValue.value],
+            displayValue,
             position,
           };
         });

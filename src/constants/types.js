@@ -24,6 +24,7 @@ export const RANKING_VALUES = [
     getNumericValue: ({ currentStreak }) => currentStreak,
     getRightText: ({ currentStreak }) => `${currentStreak} 🔥`,
     getSuffix: ({ lastDatePlayed }) => `(${lastDatePlayed})`,
+    sort: (firstValue, secondValue) => secondValue - firstValue,
   },
   {
     value: 'longestStreak',
@@ -31,6 +32,7 @@ export const RANKING_VALUES = [
     getNumericValue: ({ longestStreak }) => longestStreak,
     getRightText: ({ longestStreak }) => `${longestStreak} 🔥`,
     getSuffix: ({ longestStreakDate }) => `(${longestStreakDate})`,
+    sort: (firstValue, secondValue) => secondValue - firstValue,
   },
   {
     value: 'numberOfGames',
@@ -38,6 +40,7 @@ export const RANKING_VALUES = [
     getNumericValue: ({ totalGames }) => totalGames,
     getRightText: ({ totalGames }) => totalGames,
     getSuffix: () => '',
+    sort: (firstValue, secondValue) => secondValue - firstValue,
   },
   {
     value: 'totalWins',
@@ -45,6 +48,7 @@ export const RANKING_VALUES = [
     getNumericValue: ({ totalWins }) => totalWins,
     getRightText: ({ totalWins }) => `${totalWins} 🎉`,
     getSuffix: () => '',
+    sort: (firstValue, secondValue) => secondValue - firstValue,
   },
   {
     value: 'totalLosses',
@@ -53,6 +57,7 @@ export const RANKING_VALUES = [
     getRightText: ({ totalGames, totalWins }) =>
       `${totalGames - totalWins} ${totalGames > totalWins ? '😢' : '😌'}`,
     getSuffix: () => '',
+    sort: (firstValue, secondValue) => firstValue - secondValue,
   },
   {
     value: 'winsPercentage',
@@ -62,5 +67,6 @@ export const RANKING_VALUES = [
     getRightText: ({ totalGames, totalWins }) =>
       `${totalGames ? ((totalWins * 100) / totalGames).toFixed(0) : 0} %`,
     getSuffix: () => '',
+    sort: (firstValue, secondValue) => secondValue - firstValue,
   },
 ];

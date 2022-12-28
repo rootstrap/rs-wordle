@@ -36,28 +36,15 @@ const useUserStatistics = ({ email, name, photo } = {}) => {
           totalWins: 0,
           totalAttempts: Array(MAX_ATTEMPTS + 1).fill(0),
           currentStreak: 0,
+          lastDatePlayed: '',
           longestStreak: 0,
+          longestStreakDate: '',
           attemptedWords: {},
         };
         const docRef = doc(firebaseDb, USERS_STATISTICS, selectedUser);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const {
-            totalGames,
-            totalWins,
-            totalAttempts,
-            currentStreak,
-            longestStreak,
-            attemptedWords,
-          } = docSnap.data();
-          currentStatistics = {
-            totalGames,
-            totalWins,
-            totalAttempts,
-            currentStreak,
-            longestStreak,
-            attemptedWords,
-          };
+          currentStatistics = docSnap.data();
         } else {
           await setDoc(doc(statisticsRef, selectedUser), currentStatistics);
         }

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import cn from 'classnames';
 
 import './styles.css';
@@ -13,9 +12,10 @@ const ListRow = ({
   rightText,
   icon,
   showIcon,
+  suffix,
   children,
 }) => (
-  <Fragment>
+  <>
     <button
       className={cn('list-row-container', { ...classProps, isEnabled: !classProps?.isDisabled })}
       onClick={onClick}
@@ -27,10 +27,11 @@ const ListRow = ({
         <span className="list-row-name">{name}</span>
       </div>
       <span className="list-row-right-text">{rightText}</span>
+      {suffix && <span>{suffix}</span>}
       {showIcon && <div className="list-row-icon">{icon}</div>}
     </button>
     {children}
-  </Fragment>
+  </>
 );
 
 export default ListRow;

@@ -73,16 +73,6 @@
   background: transparent;
 }
 
-.daily-data-words {
-  opacity: 0;
-  transition: height 0.7s, opacity 0.7s;
-}
-
-.daily-data-word-container {
-  display: flex;
-  justify-content: center;
-}
-
 .daily-data-word {
   border-radius: 10px;
   height: 18px;
@@ -91,6 +81,7 @@
   width: 12px;
 }
 
-.daily-data-words.isExpanded {
-  opacity: 1;
+.daily-data-word-container {
+  display: flex;
+  justify-content: center;
 }

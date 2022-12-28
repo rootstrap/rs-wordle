@@ -19,7 +19,6 @@ const useRankingData = () => {
   const { push } = useHistory();
 
   const [dailyResults, setDailyResults] = useState([]);
-  const [expandedUser, setExpandedUser] = useState();
   const [rankingData, setRankingData] = useState([]);
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(false);
@@ -157,8 +156,6 @@ const useRankingData = () => {
     currentUserPlayed,
     rankingData,
     dailyResults,
-    expandedUser,
-    setExpandedUser,
     loading,
     selectedRanking,
     onChangeSelectedRanking,

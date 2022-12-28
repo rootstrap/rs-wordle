@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
@@ -14,6 +15,8 @@ const useRankingData = () => {
   const {
     user: { email: currentUser },
   } = useAuth();
+
+  const { push } = useHistory();
 
   const [dailyResults, setDailyResults] = useState([]);
   const [expandedUser, setExpandedUser] = useState();
@@ -101,7 +104,16 @@ const useRankingData = () => {
     })();
   }, [users]);
 
-  const currentUserPlayed = dailyResults.find(item => item.user.email === currentUser);
+  const currentUserPlayed = useMemo(
+    () => dailyResults.find(item => item.user.email === currentUser),
+    [currentUser, dailyResults]
+  );
+
+  const goToUsersStatistics = ({ email, name, photo, uid }) =>
+    push({
+      pathname: `/statistics/${uid}`,
+      state: { email, name, photo },
+    });
 
   const onChangeSelectedRanking = newValue => {
     if (newValue !== selectedRanking) {
@@ -146,6 +158,7 @@ const useRankingData = () => {
     loading,
     selectedRanking,
     onChangeSelectedRanking,
+    goToUsersStatistics,
   };
 };
 

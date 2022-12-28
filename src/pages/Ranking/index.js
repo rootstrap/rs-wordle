@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import cn from 'classnames';
@@ -16,8 +15,6 @@ import './styles.css';
 const WORD_HEIGHT = 40;
 
 const Ranking = () => {
-  const { push } = useHistory();
-
   const {
     currentUser,
     currentUserPlayed,
@@ -28,6 +25,7 @@ const Ranking = () => {
     loading,
     selectedRanking,
     onChangeSelectedRanking,
+    goToUsersStatistics,
   } = useRankingData();
 
   return (
@@ -101,12 +99,18 @@ const Ranking = () => {
                 value={selectedRanking}
               />
               {rankingData.map(
-                ({ displayValue, lastDatePlayed, position, user: { email, name, photo, uid } }) => {
+                ({
+                  displayValue,
+                  lastDatePlayed,
+                  position,
+                  user: { email, name, photo },
+                  user,
+                }) => {
                   const isCurrentUser = email === currentUser;
 
                   return (
                     <ListRow
-                      key={`${email}-${displayValue}-${selectedRanking}`}
+                      key={email}
                       classProps={{ isCurrentUser }}
                       name={name}
                       photo={photo}
@@ -114,12 +118,7 @@ const Ranking = () => {
                       rightText={`${displayValue} 🔥`}
                       suffix={`(${lastDatePlayed})`}
                       showIcon={false}
-                      onClick={() =>
-                        push({
-                          pathname: `/statistics/${uid}`,
-                          state: { email, name, photo },
-                        })
-                      }
+                      onClick={() => goToUsersStatistics(user)}
                     />
                   );
                 }

@@ -32,6 +32,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
   const today = getTodaysDate();
+
   const {
     statistics: {
       totalGames,
@@ -40,6 +41,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       currentStreak,
       longestStreak,
       attemptedWords,
+      longestStreakDate,
     },
     updateStatistics,
   } = useUserStatistics();
@@ -192,6 +194,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           const currentValue = newAttemptedWords[word] ?? 0;
           newAttemptedWords[word] = currentValue + 1;
         });
+        const todaysDisplayDate = getTodaysDisplayDate();
 
         const newStatistics = {
           totalGames: totalGames + 1,
@@ -200,6 +203,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           currentStreak: newCurrentStreak,
           longestStreak: newCurrentStreak > longestStreak ? newCurrentStreak : longestStreak,
           attemptedWords: newAttemptedWords,
+          lastDatePlayed: todaysDisplayDate,
+          longestStreakDate:
+            newCurrentStreak >= longestStreak ? todaysDisplayDate : longestStreakDate,
         };
 
         updateStatistics(newStatistics);
@@ -221,6 +227,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       keyboardLetters,
       letters,
       longestStreak,
+      longestStreakDate,
       name,
       photo,
       roundsResults,

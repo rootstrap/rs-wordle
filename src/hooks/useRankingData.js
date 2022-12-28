@@ -131,12 +131,12 @@ const useRankingData = () => {
             if (firstValue.user.name < secondValue.user.name) return -1;
             return firstValue.user.name > secondValue.user.name ? 1 : 0;
           }
-          return secondRightText - firstRightText;
+          return newSelectedRanking.sort(firstRightText, secondRightText);
         })
         .map(item => {
-          const rightText = newSelectedRanking.getNumericValue(item);
-          if (rightText !== currentValue) {
-            currentValue = rightText;
+          const numericValue = newSelectedRanking.getNumericValue(item);
+          if (numericValue !== currentValue) {
+            currentValue = numericValue;
             position += 1;
           }
           return {

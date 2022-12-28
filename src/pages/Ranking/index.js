@@ -99,13 +99,7 @@ const Ranking = () => {
                 value={selectedRanking}
               />
               {rankingData.map(
-                ({
-                  displayValue,
-                  lastDatePlayed,
-                  position,
-                  user: { email, name, photo },
-                  user,
-                }) => {
+                ({ position, rightText, suffix, user: { email, name, photo }, user }) => {
                   const isCurrentUser = email === currentUser;
 
                   return (
@@ -115,8 +109,8 @@ const Ranking = () => {
                       name={name}
                       photo={photo}
                       leftText={position}
-                      rightText={`${displayValue} 🔥`}
-                      suffix={`(${lastDatePlayed})`}
+                      rightText={rightText}
+                      suffix={suffix}
                       showIcon={false}
                       onClick={() => goToUsersStatistics(user)}
                     />

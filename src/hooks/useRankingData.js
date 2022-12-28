@@ -84,7 +84,7 @@ const useRankingData = () => {
       let currentStreakValue = Number.MAX_SAFE_INTEGER;
       docs.forEach(async doc => {
         const { id: userEmail } = doc;
-        const { currentStreak, totalGames, ...restStatistics } = doc.data();
+        const { currentStreak, lastDatePlayed, totalGames, ...restStatistics } = doc.data();
         if (!!totalGames) {
           if (currentStreak !== currentStreakValue) {
             currentStreakValue = currentStreak;
@@ -93,7 +93,10 @@ const useRankingData = () => {
           results.push({
             ...restStatistics,
             currentStreak,
-            displayValue: currentStreak,
+            lastDatePlayed,
+            rightText: RANKING_VALUES[0].getRightText({ currentStreak }),
+            suffix: RANKING_VALUES[0].getSuffix({ lastDatePlayed }),
+            totalGames,
             position,
             user: users[userEmail] || { email: userEmail, name: userEmail.split('@')[0] },
           });
@@ -115,31 +118,32 @@ const useRankingData = () => {
       state: { email, name, photo },
     });
 
-  const onChangeSelectedRanking = newValue => {
-    if (newValue !== selectedRanking) {
-      setSelectedRanking(newValue);
+  const onChangeSelectedRanking = newSelectedRanking => {
+    if (newSelectedRanking !== selectedRanking) {
+      setSelectedRanking(newSelectedRanking);
       var newRankingData = [...rankingData];
       let position = 0;
       let currentValue = Number.MAX_SAFE_INTEGER;
       newRankingData = newRankingData
         .sort((firstValue, secondValue) => {
-          const firstDisplayValue = newValue.getDisplayValue(firstValue);
-          const secondDisplayValue = newValue.getDisplayValue(secondValue);
-          if (firstDisplayValue === secondDisplayValue) {
+          const firstRightText = newSelectedRanking.getNumericValue(firstValue);
+          const secondRightText = newSelectedRanking.getNumericValue(secondValue);
+          if (firstRightText === secondRightText) {
             if (firstValue.user.name < secondValue.user.name) return -1;
             return firstValue.user.name > secondValue.user.name ? 1 : 0;
           }
-          return secondDisplayValue - firstDisplayValue;
+          return secondRightText - firstRightText;
         })
         .map(item => {
-          const displayValue = newValue.getDisplayValue(item);
-          if (displayValue !== currentValue) {
-            currentValue = displayValue;
+          const rightText = newSelectedRanking.getNumericValue(item);
+          if (rightText !== currentValue) {
+            currentValue = rightText;
             position += 1;
           }
           return {
             ...item,
-            displayValue,
+            rightText: newSelectedRanking.getRightText(item),
+            suffix: newSelectedRanking.getSuffix(item),
             position,
           };
         });

@@ -38,7 +38,7 @@ const ListRow = ({
           <span className="list-row-name">{name}</span>
         </div>
         <span className="list-row-right-text">{rightText}</span>
-        {suffix && <span>{suffix}</span>}
+        {suffix && <span className="list-row-suffix">{suffix}</span>}
         {showIcon && <div className="list-row-icon">{handleExpansion ? expandedIcon : icon}</div>}
       </button>
       <div

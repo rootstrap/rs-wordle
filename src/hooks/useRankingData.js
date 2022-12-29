@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
-import { GAME_STATUS } from 'constants/types';
+import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
 import { DAILY_RESULTS, USERS, USERS_STATISTICS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getTodaysDate } from 'utils/helpers';
@@ -20,9 +20,10 @@ const useRankingData = () => {
 
   const [dailyResults, setDailyResults] = useState([]);
   const [expandedUser, setExpandedUser] = useState();
-  const [currentStreakRankingData, setCurrentStreakRankingData] = useState([]);
+  const [rankingData, setRankingData] = useState([]);
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(false);
+  const [selectedRanking, setSelectedRanking] = useState(RANKING_VALUES[0]);
 
   const today = getTodaysDate();
 
@@ -83,21 +84,25 @@ const useRankingData = () => {
       let currentStreakValue = Number.MAX_SAFE_INTEGER;
       docs.forEach(async doc => {
         const { id: userEmail } = doc;
-        const { currentStreak, lastDatePlayed, totalGames } = doc.data();
+        const { currentStreak, lastDatePlayed, totalGames, ...restStatistics } = doc.data();
         if (!!totalGames) {
           if (currentStreak !== currentStreakValue) {
             currentStreakValue = currentStreak;
             position += 1;
           }
           results.push({
+            ...restStatistics,
             currentStreak,
             lastDatePlayed,
+            rightText: RANKING_VALUES[0].getRightText({ currentStreak }),
+            suffix: RANKING_VALUES[0].getSuffix({ lastDatePlayed }),
+            totalGames,
             position,
             user: users[userEmail] || { email: userEmail, name: userEmail.split('@')[0] },
           });
         }
       });
-      setCurrentStreakRankingData(results);
+      setRankingData(results);
       setLoading(false);
     })();
   }, [users]);
@@ -113,14 +118,50 @@ const useRankingData = () => {
       state: { email, name, photo },
     });
 
+  const onChangeSelectedRanking = newSelectedRanking => {
+    if (newSelectedRanking !== selectedRanking) {
+      setSelectedRanking(newSelectedRanking);
+      let newRankingData = [...rankingData];
+      let position = 0;
+      let currentValue = Number.MAX_SAFE_INTEGER;
+      newRankingData = newRankingData
+        .sort((firstValue, secondValue) => {
+          const firstRightText = newSelectedRanking.getNumericValue(firstValue);
+          const secondRightText = newSelectedRanking.getNumericValue(secondValue);
+          if (firstRightText === secondRightText) {
+            if (firstValue.user.name < secondValue.user.name) return -1;
+            return firstValue.user.name > secondValue.user.name ? 1 : 0;
+          }
+          return newSelectedRanking.sort(firstRightText, secondRightText);
+        })
+        .map(item => {
+          const numericValue = newSelectedRanking.getNumericValue(item);
+          if (numericValue !== currentValue) {
+            currentValue = numericValue;
+            position += 1;
+          }
+          return {
+            ...item,
+            rightText: newSelectedRanking.getRightText(item),
+            suffix: newSelectedRanking.getSuffix(item),
+            position,
+          };
+        });
+
+      setRankingData(newRankingData);
+    }
+  };
+
   return {
     currentUser,
     currentUserPlayed,
-    currentStreakRankingData,
+    rankingData,
     dailyResults,
     expandedUser,
     setExpandedUser,
     loading,
+    selectedRanking,
+    onChangeSelectedRanking,
     goToUsersStatistics,
   };
 };

@@ -6,7 +6,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import ListRow from 'components/common/ListRow';
 import Loading from 'components/common/Loading';
-import { GAME_STATUS } from 'constants/types';
+import Select from 'components/common/Select';
+import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
 import useRankingData from 'hooks/useRankingData';
 
 import './styles.css';
@@ -17,11 +18,13 @@ const Ranking = () => {
   const {
     currentUser,
     currentUserPlayed,
-    currentStreakRankingData,
+    rankingData,
     dailyResults,
     expandedUser,
     setExpandedUser,
     loading,
+    selectedRanking,
+    onChangeSelectedRanking,
     goToUsersStatistics,
   } = useRankingData();
 
@@ -34,7 +37,7 @@ const Ranking = () => {
         <Tabs className="Tabs">
           <TabList>
             <Tab>{`Today (${dailyResults.length})`}</Tab>
-            <Tab>{`Current Streak (${currentStreakRankingData.length})`}</Tab>
+            <Tab>{`All Time (${rankingData.length})`}</Tab>
           </TabList>
           <TabPanel>
             {dailyResults.map(
@@ -89,24 +92,32 @@ const Ranking = () => {
             )}
           </TabPanel>
           <TabPanel>
-            {currentStreakRankingData.map(
-              ({ currentStreak, lastDatePlayed, position, user: { email, name, photo }, user }) => {
-                const isCurrentUser = email === currentUser;
-                return (
-                  <ListRow
-                    key={email}
-                    classProps={{ isCurrentUser }}
-                    name={name}
-                    photo={photo}
-                    leftText={position}
-                    rightText={`${currentStreak} 🔥`}
-                    suffix={`(${lastDatePlayed})`}
-                    showIcon={false}
-                    onClick={() => goToUsersStatistics(user)}
-                  />
-                );
-              }
-            )}
+            <>
+              <Select
+                options={RANKING_VALUES}
+                onChange={onChangeSelectedRanking}
+                value={selectedRanking}
+              />
+              {rankingData.map(
+                ({ position, rightText, suffix, user: { email, name, photo }, user }) => {
+                  const isCurrentUser = email === currentUser;
+
+                  return (
+                    <ListRow
+                      key={email}
+                      classProps={{ isCurrentUser }}
+                      name={name}
+                      photo={photo}
+                      leftText={position}
+                      rightText={rightText}
+                      suffix={suffix}
+                      showIcon={false}
+                      onClick={() => goToUsersStatistics(user)}
+                    />
+                  );
+                }
+              )}
+            </>
           </TabPanel>
         </Tabs>
       )}

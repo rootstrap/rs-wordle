@@ -69,3 +69,12 @@
 .list-row-icon {
   display: flex;
 }
+
+.list-row-expanded-container {
+  opacity: 0;
+  transition: height 0.7s, opacity 0.7s;
+}
+
+.list-row-expanded-container.isExpanded {
+  opacity: 1;
+}

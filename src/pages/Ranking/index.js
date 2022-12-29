@@ -1,8 +1,5 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import cn from 'classnames';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import ListRow from 'components/common/ListRow';
 import Loading from 'components/common/Loading';
@@ -20,8 +17,6 @@ const Ranking = () => {
     currentUserPlayed,
     rankingData,
     dailyResults,
-    expandedUser,
-    setExpandedUser,
     loading,
     selectedRanking,
     onChangeSelectedRanking,
@@ -44,48 +39,33 @@ const Ranking = () => {
               ({ attemptedWords, attempts, position, status, user: { email, name, photo } }) => {
                 const isCurrentUser = email === currentUser;
                 const lost = status === GAME_STATUS.lost;
-                const isExpanded = email === expandedUser;
                 const isDisabled = !currentUserPlayed;
 
                 return (
                   <ListRow
                     key={email}
                     classProps={{ isCurrentUser, lost, isDisabled }}
-                    onClick={() => setExpandedUser(isExpanded ? '' : email)}
                     disabled={!currentUserPlayed}
                     name={name}
                     photo={photo}
                     leftText={position}
                     rightText={lost ? 'X' : attempts}
-                    icon={isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     showIcon={currentUserPlayed}
+                    expandedHeight={attemptedWords.length * WORD_HEIGHT}
                   >
-                    {currentUserPlayed && (
-                      <div
-                        className={cn('daily-data-words', { isExpanded })}
-                        style={{
-                          height: isExpanded ? attemptedWords.length * WORD_HEIGHT : 0,
-                        }}
-                      >
-                        {isExpanded && (
-                          <>
-                            {attemptedWords.map(({ word = '', results }) => (
-                              <div key={word} className="daily-data-word-container">
-                                {word.split('').map((letter, index) => (
-                                  <span
-                                    key={`${word}-${index}`}
-                                    className="daily-data-word"
-                                    style={{ backgroundColor: results[index] }}
-                                  >
-                                    {letter}
-                                  </span>
-                                ))}
-                              </div>
-                            ))}
-                          </>
-                        )}
+                    {attemptedWords.map(({ word = '', results }) => (
+                      <div key={word} className="daily-data-word-container">
+                        {word.split('').map((letter, index) => (
+                          <span
+                            key={`${word}-${index}`}
+                            className="daily-data-word"
+                            style={{ backgroundColor: results[index] }}
+                          >
+                            {letter}
+                          </span>
+                        ))}
                       </div>
-                    )}
+                    ))}
                   </ListRow>
                 );
               }

@@ -93,7 +93,7 @@ const useRankingData = () => {
             ...restStatistics,
             currentStreak,
             lastDatePlayed,
-            rightText: RANKING_VALUES[0].getRightText({ currentStreak }),
+            rightText: RANKING_VALUES[0].getRightText({ currentStreak, isFirst: position === 1 }),
             suffix: RANKING_VALUES[0].getSuffix({ lastDatePlayed }),
             totalGames,
             position,
@@ -141,7 +141,10 @@ const useRankingData = () => {
           }
           return {
             ...item,
-            rightText: newSelectedRanking.getRightText(item),
+            rightText: newSelectedRanking.getRightText({
+              ...item,
+              isFirst: position === 1,
+            }),
             suffix: newSelectedRanking.getSuffix(item),
             position,
           };

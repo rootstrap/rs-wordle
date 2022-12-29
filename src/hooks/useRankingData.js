@@ -121,7 +121,7 @@ const useRankingData = () => {
   const onChangeSelectedRanking = newSelectedRanking => {
     if (newSelectedRanking !== selectedRanking) {
       setSelectedRanking(newSelectedRanking);
-      var newRankingData = [...rankingData];
+      let newRankingData = [...rankingData];
       let position = 0;
       let currentValue = Number.MAX_SAFE_INTEGER;
       newRankingData = newRankingData

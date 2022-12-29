@@ -66,6 +66,11 @@
   padding-right: 7px;
 }
 
+.list-row-suffix {
+  flex: 0.16 1;
+  text-align: left;
+}
+
 .list-row-icon {
   display: flex;
 }

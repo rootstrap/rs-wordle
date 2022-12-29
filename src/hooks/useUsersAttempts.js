@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
 import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, LETTER_STATUS_ICON, GAME_STATUS } from 'constants/types';
-import { USERS_ATTEMPTS, DAILY_RESULTS } from 'firebase/collections';
+import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getTodaysDate, getTodaysDisplayDate } from 'utils/helpers';
 
@@ -13,10 +13,11 @@ import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
 
 const { firebaseDb } = firebaseData;
+const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
 
 const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
-    user: { email: currentUser, name, photo },
+    user: { email: currentUser, name, photo, uid },
   } = useAuth();
 
   const [wordDate, setWordDate] = useState(null);
@@ -24,6 +25,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const [currentRound, setCurrentRound] = useState(0);
   const [usersAttempts, setUsersAttempts] = useState([Array(wordLength).fill('')]);
   const [roundsResults, setRoundsResults] = useState([Array(wordLength).fill('')]);
+  const [dailyResults, setDailyResults] = useState({});
+  const [dailyResultsId, setDailyResultsId] = useState();
   const [error, setError] = useState('');
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.playing);
   const [keyboardLetters, setKeyboardLetters] = useState(KEYBOARD_LETTERS);
@@ -54,10 +57,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         setRoundsResults([Array(wordLength).fill('')]);
         try {
           const q = query(
-            collection(firebaseDb, USERS_ATTEMPTS),
-            where('user', '==', currentUser),
-            where('date', '==', today),
-            orderBy('round')
+            collection(firebaseDb, DAILY_RESULTS),
+            where('user.email', '==', currentUser),
+            where('date', '==', today)
           );
           const docs = await getDocs(q);
           const newUsersAttempts = [];
@@ -65,23 +67,33 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           const newKeyboardLetters = { ...keyboardLetters };
           let roundCount = 0;
           let won = false;
+
           docs.forEach(doc => {
-            const { result, word } = doc.data();
-            const wordAttempt = word.split('');
-            newUsersAttempts.push(wordAttempt);
-            newRoundsResults.push(result);
-            result.forEach((color, index) => {
-              const letter = wordAttempt[index];
-              const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
-              const newColorOrder = COLOR_ORDER[color];
-              if (newColorOrder > currentColorOrder) {
-                newKeyboardLetters[letter] = color;
+            const { attemptedWords, ...restDailyResults } = doc.data();
+
+            attemptedWords.forEach(({ results, word }) => {
+              const wordAttempt = word.split('');
+              newUsersAttempts.push(wordAttempt);
+              newRoundsResults.push(results);
+              results.forEach((color, index) => {
+                const letter = wordAttempt[index];
+                const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
+                const newColorOrder = COLOR_ORDER[color];
+                if (newColorOrder > currentColorOrder) {
+                  newKeyboardLetters[letter] = color;
+                }
+              });
+              won = word.toUpperCase() === correctWord.toUpperCase();
+              if (!won) {
+                roundCount++;
               }
             });
-            won = word.toUpperCase() === correctWord.toUpperCase();
-            if (!won) {
-              roundCount++;
-            }
+
+            setDailyResults({
+              attemptedWords,
+              ...restDailyResults,
+            });
+            setDailyResultsId(doc.id);
           });
           setCurrentRound(roundCount);
           const lost = newUsersAttempts.length === MAX_ATTEMPTS;
@@ -151,39 +163,63 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         }
       });
 
-      await addDoc(collection(firebaseDb, USERS_ATTEMPTS), {
-        date: today,
-        result: currentRoundResult,
-        round: currentRound,
-        user: currentUser,
-        word: attemptedWord.toUpperCase(),
-      });
+      const won = correctCount === wordLength;
+      const lost = usersAttempts.length === MAX_ATTEMPTS && !won;
+      const newStatus = won ? GAME_STATUS.won : lost ? GAME_STATUS.lost : GAME_STATUS.playing;
+
+      if (!currentRound) {
+        const newDailyResults = {
+          attemptedWords: [
+            {
+              results: currentRoundResult,
+              word: attemptedWord.toUpperCase(),
+            },
+          ],
+          attempts: 1,
+          startTime: '',
+          endTime: '',
+          date: today,
+          status: won ? GAME_STATUS.won : GAME_STATUS.playing,
+          user: {
+            uid,
+            name,
+            email: currentUser,
+            photo,
+          },
+        };
+        const { id: dailyResultsId } = await addDoc(
+          collection(firebaseDb, DAILY_RESULTS),
+          newDailyResults
+        );
+
+        setDailyResultsId(dailyResultsId);
+        setDailyResults(newDailyResults);
+      } else {
+        const newAttemptedWords = [
+          ...dailyResults.attemptedWords,
+          {
+            results: currentRoundResult,
+            word: attemptedWord.toUpperCase(),
+          },
+        ];
+        const newDailyResults = {
+          ...dailyResults,
+          attemptedWords: newAttemptedWords,
+          attempts: currentRound + 1,
+          // endTime: '',
+          status: newStatus,
+        };
+
+        await updateDoc(doc(dailyResultsRef, dailyResultsId), newDailyResults);
+
+        setDailyResults(newDailyResults);
+      }
 
       newRoundsResults.push(currentRoundResult);
       setKeyboardLetters(newKeyboardLetters);
       setRoundsResults(newRoundsResults);
 
-      if (correctCount === wordLength || usersAttempts.length === MAX_ATTEMPTS) {
-        const newStatus = correctCount === wordLength ? GAME_STATUS.won : GAME_STATUS.lost;
-        const won = newStatus === GAME_STATUS.won;
-        const currentAttemptedWords = usersAttempts.map((attempt, index) => ({
-          word: attempt.join(''),
-          results: newRoundsResults[index],
-        }));
-
-        await addDoc(collection(firebaseDb, DAILY_RESULTS), {
-          attempts: currentRound + 1,
-          attemptedWords: currentAttemptedWords,
-          date: getTodaysDate(false),
-          formattedDate: today,
-          status: newStatus,
-          user: {
-            email: currentUser,
-            name,
-            photo,
-          },
-        });
-
+      if (won || lost) {
         const totalAttemptsIndex = won ? currentRound : currentRound + 1;
         const newCurrentStreak = won ? currentStreak + 1 : 0;
         const newTotalAttempts = [...totalAttempts];
@@ -224,6 +260,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       currentRound,
       currentStreak,
       currentUser,
+      dailyResults,
+      dailyResultsId,
       keyboardLetters,
       letters,
       longestStreak,
@@ -235,6 +273,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       totalAttempts,
       totalGames,
       totalWins,
+      uid,
       updateStatistics,
       usersAttempts,
       wordLength,

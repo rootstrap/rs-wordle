@@ -51,25 +51,23 @@ const useRankingData = () => {
         orderBy('user.name')
       );
       const docs = await getDocs(q);
-      console.log('docs: ', docs.docs);
+
       const results = [];
       let position = 0;
       let currentAttempts = 0;
       let currentStatus = GAME_STATUS.won;
       docs.forEach(doc => {
-        const { attemptedWords, attempts, date, status, user } = doc.data();
+        const { attempts, status, ...restDailyResults } = doc.data();
         if (currentAttempts !== attempts || currentStatus !== status) {
           currentAttempts = attempts;
           currentStatus = status;
           position += 1;
         }
         results.push({
-          attemptedWords,
           attempts,
-          date,
-          position,
           status,
-          user,
+          ...restDailyResults,
+          position,
         });
       });
       setDailyResults(results);

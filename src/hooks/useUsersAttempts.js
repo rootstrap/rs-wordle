@@ -166,6 +166,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       const won = correctCount === wordLength;
       const lost = usersAttempts.length === MAX_ATTEMPTS && !won;
       const newStatus = won ? GAME_STATUS.won : lost ? GAME_STATUS.lost : GAME_STATUS.playing;
+      const currentTime = getTodaysDate(false);
 
       if (!currentRound) {
         const newDailyResults = {
@@ -176,8 +177,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
             },
           ],
           attempts: 1,
-          startTime: '',
-          endTime: '',
+          startTime: currentTime,
+          endTime: currentTime,
           date: today,
           status: won ? GAME_STATUS.won : GAME_STATUS.playing,
           user: {
@@ -206,7 +207,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           ...dailyResults,
           attemptedWords: newAttemptedWords,
           attempts: currentRound + 1,
-          // endTime: '',
+          endTime: currentTime,
           status: newStatus,
         };
 

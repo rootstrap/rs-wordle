@@ -7,7 +7,7 @@ import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKey
 import { LETTER_STATUS, LETTER_STATUS_ICON, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
-import { getTodaysDate, getTodaysDisplayDate } from 'utils/helpers';
+import { getTodaysDate, getTodaysDisplayDate, getTimeDiff } from 'utils/helpers';
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
@@ -45,6 +45,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       longestStreak,
       attemptedWords,
       longestStreakDate,
+      timeAverage,
+      minTime,
+      maxTime,
     },
     updateStatistics,
   } = useUserStatistics();
@@ -167,6 +170,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       const lost = usersAttempts.length === MAX_ATTEMPTS && !won;
       const newStatus = won ? GAME_STATUS.won : lost ? GAME_STATUS.lost : GAME_STATUS.playing;
       const currentTime = getTodaysDate(false);
+      const solveTime = getTimeDiff(dailyResults.startTime, currentTime);
 
       if (!currentRound) {
         const newDailyResults = {
@@ -179,6 +183,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           attempts: 1,
           startTime: currentTime,
           endTime: currentTime,
+          solveTime: 0,
           date: today,
           status: won ? GAME_STATUS.won : GAME_STATUS.playing,
           user: {
@@ -208,6 +213,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           attemptedWords: newAttemptedWords,
           attempts: currentRound + 1,
           endTime: currentTime,
+          solveTime,
           status: newStatus,
         };
 
@@ -243,6 +249,9 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           lastDatePlayed: todaysDisplayDate,
           longestStreakDate:
             newCurrentStreak >= longestStreak ? todaysDisplayDate : longestStreakDate,
+          timeAverage: Math.round((timeAverage * totalGames + solveTime) / (totalGames + 1)),
+          minTime: solveTime < minTime ? solveTime : minTime,
+          maxTime: solveTime > maxTime ? solveTime : maxTime,
         };
 
         updateStatistics(newStatistics);
@@ -267,9 +276,12 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       letters,
       longestStreak,
       longestStreakDate,
+      maxTime,
+      minTime,
       name,
       photo,
       roundsResults,
+      timeAverage,
       today,
       totalAttempts,
       totalGames,

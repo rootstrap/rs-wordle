@@ -40,6 +40,9 @@ const useUserStatistics = ({ email, name, photo } = {}) => {
           longestStreak: 0,
           longestStreakDate: '',
           attemptedWords: {},
+          timeAverage: 0,
+          minTime: 0,
+          maxTime: 0,
         };
         const docRef = doc(firebaseDb, USERS_STATISTICS, selectedUser);
         const docSnap = await getDoc(docRef);

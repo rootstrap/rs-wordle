@@ -44,30 +44,30 @@ const useRankingData = () => {
     (async function () {
       const q = query(
         collection(firebaseDb, DAILY_RESULTS),
-        where('formattedDate', '==', today),
-        orderBy('attempts'),
+        where('date', '==', today),
+        where('status', '!=', GAME_STATUS.playing),
         orderBy('status', 'desc'),
+        orderBy('attempts'),
         orderBy('user.name')
       );
       const docs = await getDocs(q);
+
       const results = [];
       let position = 0;
       let currentAttempts = 0;
       let currentStatus = GAME_STATUS.won;
       docs.forEach(doc => {
-        const { attemptedWords, attempts, formattedDate, status, user } = doc.data();
+        const { attempts, status, ...restDailyResults } = doc.data();
         if (currentAttempts !== attempts || currentStatus !== status) {
           currentAttempts = attempts;
           currentStatus = status;
           position += 1;
         }
         results.push({
-          attemptedWords,
           attempts,
-          formattedDate,
-          position,
           status,
-          user,
+          ...restDailyResults,
+          position,
         });
       });
       setDailyResults(results);

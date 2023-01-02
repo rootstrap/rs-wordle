@@ -7,7 +7,7 @@ const formatDate = dateTime => {
 };
 
 export const getTodaysDate = (shouldFormat = true) => {
-  const today = new Date().toISOString();
+  const today = new Date().toJSON();
 
   return shouldFormat ? formatDate(today) : today;
 };

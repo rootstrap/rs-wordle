@@ -1,14 +1,28 @@
 export const LETTER_STATUS = {
-  correct: '#538d4e',
-  misplaced: '#b59f3b',
-  nothing: '#818384',
-  incorrect: '#3a3a3c',
-};
-
-export const LETTER_STATUS_ICON = {
-  [LETTER_STATUS.correct]: '🟩',
-  [LETTER_STATUS.misplaced]: '🟨',
-  [LETTER_STATUS.incorrect]: '⬜',
+  correct: {
+    id: 'correct',
+    color: '#538d4e',
+    colorOrder: 3,
+    icon: '🟩',
+  },
+  misplaced: {
+    id: 'misplaced',
+    color: '#b59f3b',
+    colorOrder: 2,
+    icon: '🟨',
+  },
+  nothing: {
+    id: 'nothing',
+    color: '#818384',
+    colorOrder: 0,
+    icon: '⬛️',
+  },
+  incorrect: {
+    id: 'incorrect',
+    color: '#3a3a3c',
+    colorOrder: 1,
+    icon: '⬜',
+  },
 };
 
 export const GAME_STATUS = {

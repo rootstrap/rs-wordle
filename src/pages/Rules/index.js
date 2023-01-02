@@ -31,14 +31,17 @@ const Rules = () => (
           in the correct position.
           <div className="rules-letters-container">
             {printLetterExplanation(
-              LETTER_STATUS.correct,
+              LETTER_STATUS.correct.color,
               ' is in the word and in the correct position'
             )}
             {printLetterExplanation(
-              LETTER_STATUS.misplaced,
+              LETTER_STATUS.misplaced.color,
               ' is in the word but in the wrong position'
             )}
-            {printLetterExplanation(LETTER_STATUS.incorrect, ' is not in the word in any position')}
+            {printLetterExplanation(
+              LETTER_STATUS.incorrect.color,
+              ' is not in the word in any position'
+            )}
           </div>
         </li>
         <li>

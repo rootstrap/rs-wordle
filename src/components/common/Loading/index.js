@@ -8,9 +8,9 @@ import LetterInput from '../LetterInput';
 
 const styles = {
   container: { height: '50px', width: '50px' },
-  correct: { backgroundColor: LETTER_STATUS.correct },
-  incorrect: { backgroundColor: LETTER_STATUS.incorrect },
-  misplaced: { backgroundColor: LETTER_STATUS.misplaced },
+  correct: { backgroundColor: LETTER_STATUS.correct.color },
+  incorrect: { backgroundColor: LETTER_STATUS.incorrect.color },
+  misplaced: { backgroundColor: LETTER_STATUS.misplaced.color },
 };
 
 const loadingWords = [

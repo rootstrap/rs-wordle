@@ -7,7 +7,12 @@ import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKey
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
-import { getTodaysDate, getTodaysDisplayDate, getTimeDiff } from 'utils/helpers';
+import {
+  getCurrentStreakIcon,
+  getTodaysDate,
+  getTodaysDisplayDate,
+  getTimeDiff,
+} from 'utils/helpers';
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
@@ -398,6 +403,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       });
       textResult += '\n';
     });
+    textResult += `\nCurrent Streak: ${currentStreak} ${getCurrentStreakIcon(currentStreak)}\n`;
     textResult += `\n${WORDLE_URL}`;
     await navigator.clipboard.writeText(textResult);
     alert('Copied to Clipboard: \n \n' + textResult);

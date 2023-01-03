@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
@@ -16,6 +16,7 @@ import {
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
+import { CUSTOM_CONFETTI } from 'constants/customConfetti';
 
 const { firebaseDb } = firebaseData;
 const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
@@ -409,6 +410,26 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     alert('Copied to Clipboard: \n \n' + textResult);
   };
 
+  const isTodaySpecial = useMemo(() => {
+    const todaysDate = today.slice(4);
+    return CUSTOM_CONFETTI.hasOwnProperty(todaysDate);
+  }, [today]);
+
+  const customMessage = useMemo(() => {
+    const todaysDate = today.slice(4);
+    const { customMessage } = CUSTOM_CONFETTI[todaysDate] || {};
+    return customMessage || '';
+  }, [today]);
+
+  const drawShape = useCallback(
+    ctx => {
+      const todaysDate = today.slice(4);
+      const { getCustomConfettiShape } = CUSTOM_CONFETTI[todaysDate];
+      getCustomConfettiShape(ctx);
+    },
+    [today]
+  );
+
   return {
     currentRound,
     usersAttempts,
@@ -422,6 +443,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     onKeyPress,
     wordProcessing,
     shareResults,
+    confettiExtraParams: isTodaySpecial ? { drawShape } : {},
+    customMessage,
     won: gameStatus === GAME_STATUS.won,
   };
 };

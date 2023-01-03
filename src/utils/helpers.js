@@ -1,15 +1,17 @@
 export const getRandomInt = max => Math.floor(Math.random() * max);
 
-const formatDate = dateTime => {
-  const [date] = dateTime.split('T');
+const formatDate = date => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-  return date.split('-').join('');
+  return `${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
 };
 
 export const getTodaysDate = (shouldFormat = true) => {
-  const today = new Date().toJSON();
+  const today = new Date();
 
-  return shouldFormat ? formatDate(today) : today;
+  return shouldFormat ? formatDate(today) : today.toString();
 };
 
 export const getTodaysDisplayDate = () => new Date().toLocaleString('en').split(',')[0];

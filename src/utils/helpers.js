@@ -1,6 +1,7 @@
 export const getCurrentStreakIcon = currentStreak => {
   let icon = '';
-  if (currentStreak < 10) icon = '🤍';
+  if (currentStreak < 1) icon = '💔';
+  else if (currentStreak < 10) icon = '🤍';
   else if (currentStreak < 20) icon = '💛';
   else if (currentStreak < 30) icon = '🧡';
   else if (currentStreak < 40) icon = '💚';

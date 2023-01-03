@@ -1,3 +1,5 @@
+import Confetti from 'react-confetti';
+
 import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
@@ -24,6 +26,9 @@ const Word = () => {
     wordProcessing,
     setLetterIndex,
     shareResults,
+    confettiExtraParams,
+    customMessage,
+    won,
   } = useUsersAttempts({
     wordLength: word.length,
     correctWord: word,
@@ -65,9 +70,18 @@ const Word = () => {
         <>
           <p className="game-status">You {gameStatus.toUpperCase()}</p>
           <p className="game-status">The word was {word}</p>
+          <p className="game-status">{customMessage}</p>
           <div className="share-results-button">
             <Button handleClick={shareResults}>Share Results</Button>
           </div>
+          {won && (
+            <Confetti
+              recycle={false}
+              numberOfPieces={1000}
+              tweenDuration={7000}
+              {...confettiExtraParams}
+            />
+          )}
         </>
       )}
       <Keyboard

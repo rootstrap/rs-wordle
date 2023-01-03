@@ -33,7 +33,7 @@ const Statistics = () => {
               value={totalGames ? ((totalWins * 100) / totalGames).toFixed(0) : 0}
             />
             <StatBox label="Current Streak" value={currentStreak} />
-            <StatBox label="Max Streak" value={longestStreak} />
+            <StatBox label="Longest Streak" value={longestStreak} />
           </div>
           <div className="statistics-charts-container">
             <HorizontalBarChart data={totalAttempts} maxValue={maxAttemptsRound} />

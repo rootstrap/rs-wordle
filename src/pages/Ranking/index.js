@@ -8,6 +8,7 @@ import { GAME_STATUS, RANKING_VALUES, LETTER_STATUS } from 'constants/types';
 import useRankingData from 'hooks/useRankingData';
 
 import './styles.css';
+import { pluralize } from 'utils/helpers';
 
 const WORD_HEIGHT = 40;
 
@@ -36,7 +37,14 @@ const Ranking = () => {
           </TabList>
           <TabPanel>
             {dailyResults.map(
-              ({ attemptedWords, attempts, position, status, user: { email, name, photo } }) => {
+              ({
+                attemptedWords,
+                attempts,
+                position,
+                solveTime,
+                status,
+                user: { email, name, photo },
+              }) => {
                 const isCurrentUser = email === currentUser;
                 const lost = status === GAME_STATUS.lost;
                 const isDisabled = !currentUserPlayed;
@@ -50,6 +58,7 @@ const Ranking = () => {
                     photo={photo}
                     leftText={position}
                     rightText={lost ? 'X' : attempts}
+                    suffix={`(${pluralize(solveTime, 'min')})`}
                     showIcon={currentUserPlayed}
                     expandedHeight={attemptedWords.length * WORD_HEIGHT}
                   >

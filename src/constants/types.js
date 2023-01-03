@@ -1,3 +1,5 @@
+import { pluralize } from 'utils/helpers';
+
 export const LETTER_STATUS = {
   correct: {
     id: 'correct',
@@ -113,8 +115,7 @@ export const RANKING_VALUES = [
     },
     getSuffix: ({ totalAttempts }) => {
       const { commonAttemptValue } = getCommonAttempt({ totalAttempts });
-      const timesText = commonAttemptValue > 1 ? 'times' : 'time';
-      return `(${commonAttemptValue} ${timesText})`;
+      return `(${pluralize(commonAttemptValue, 'time')})`;
     },
     sort: (firstValue, secondValue) => firstValue - secondValue,
   },

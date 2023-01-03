@@ -47,3 +47,6 @@ export const getTimeDiff = (startDate, endDate, timeFormat = 'minutes') => {
       return Math.round(timeDiff / 1000 / 60);
   }
 };
+
+export const pluralize = (count, noun, suffix = 's') =>
+  `${count} ${noun}${count !== 1 ? suffix : ''}`;

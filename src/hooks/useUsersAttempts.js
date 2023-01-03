@@ -410,25 +410,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     alert('Copied to Clipboard: \n \n' + textResult);
   };
 
-  const isTodaySpecial = useMemo(() => {
-    const todaysDate = today.slice(4);
-    return CUSTOM_CONFETTI.hasOwnProperty(todaysDate);
-  }, [today]);
-
   const customMessage = useMemo(() => {
     const todaysDate = today.slice(4);
     const { customMessage } = CUSTOM_CONFETTI[todaysDate] || {};
     return customMessage || '';
   }, [today]);
 
-  const drawShape = useCallback(
-    ctx => {
-      const todaysDate = today.slice(4);
-      const { getCustomConfettiShape } = CUSTOM_CONFETTI[todaysDate];
-      getCustomConfettiShape(ctx);
-    },
-    [today]
-  );
+  const confettiExtraParams = useMemo(() => {
+    const todaysDate = today.slice(4);
+    return CUSTOM_CONFETTI[todaysDate]?.confettiExtraParams || {};
+  }, [today]);
 
   return {
     currentRound,
@@ -443,7 +434,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     onKeyPress,
     wordProcessing,
     shareResults,
-    confettiExtraParams: isTodaySpecial ? { drawShape } : {},
+    confettiExtraParams,
     customMessage,
     won: gameStatus === GAME_STATUS.won,
   };

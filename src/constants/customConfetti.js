@@ -1,5 +1,3 @@
-export const SPECIAL_DATES = ['0103', '0106'];
-
 const heartShape = ctx => {
   ctx.beginPath();
   let w = 20;
@@ -38,17 +36,65 @@ const spiralShape = ctx => {
   ctx.closePath();
 };
 
+const starShape = ctx => {
+  const numPoints = 5;
+  const outerRadius = 10;
+  const innerRadius = outerRadius / 2;
+  ctx.beginPath();
+  ctx.moveTo(0, 0 - outerRadius);
+
+  for (let n = 1; n < numPoints * 2; n++) {
+    const radius = n % 2 === 0 ? outerRadius : innerRadius;
+    const x = radius * Math.sin((n * Math.PI) / numPoints);
+    const y = -1 * radius * Math.cos((n * Math.PI) / numPoints);
+    ctx.lineTo(x, y);
+  }
+  ctx.fill();
+  ctx.closePath();
+};
+
+const snowflakeShape = ctx => {
+  const numPoints = 8;
+  const innerRadius = 2 * 0.2;
+  const outerRadius = 2 * 0.8;
+  ctx.beginPath();
+  ctx.moveTo(0, 0 - outerRadius);
+
+  for (let n = 1; n < numPoints * 2; n++) {
+    const radius = n % 2 === 0 ? outerRadius : innerRadius;
+    const x = radius * Math.sin((n * Math.PI) / numPoints);
+    const y = -1 * radius * Math.cos((n * Math.PI) / numPoints);
+    ctx.lineTo(x, y);
+  }
+  ctx.fill();
+  ctx.stroke();
+  ctx.closePath();
+};
+
 export const CUSTOM_CONFETTI = {
-  '0103': {
-    getCustomConfettiShape: heartShape,
-    customMessage: 'Happy Day! 🎉',
-  },
   '0104': {
-    getCustomConfettiShape: spiralShape,
+    confettiExtraParams: {
+      drawShape: spiralShape,
+    },
     customMessage: 'Happy Hypnosis Day! 🎉',
   },
   '0106': {
-    getCustomConfettiShape: spiralShape,
+    confettiExtraParams: {
+      drawShape: starShape,
+    },
     customMessage: 'Happy Three Wise Men Day! 🎉',
+  },
+  '0214': {
+    confettiExtraParams: {
+      drawShape: heartShape,
+    },
+    customMessage: "Happy Valentine's Day! 🎉",
+  },
+  '0621': {
+    confettiExtraParams: {
+      drawShape: snowflakeShape,
+      colors: ['#AEE1FF', '#CBDDF8'],
+    },
+    customMessage: 'Happy Winter! 🎉',
   },
 };

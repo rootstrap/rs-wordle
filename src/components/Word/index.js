@@ -36,8 +36,6 @@ const Word = () => {
     setLoading,
   });
 
-  console.log('confettiExtraParams: ', confettiExtraParams);
-
   if (loading) {
     return <Loading />;
   }

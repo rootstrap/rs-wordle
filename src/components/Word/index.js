@@ -48,8 +48,8 @@ const Word = () => {
                   style={{
                     backgroundColor:
                       round !== currentRound || gameEnded
-                        ? roundsResults[round][index]
-                        : LETTER_STATUS.nothing,
+                        ? LETTER_STATUS[roundsResults[round][index]].color
+                        : LETTER_STATUS.nothing.color,
                   }}
                   isSelected={index === letterIndex && round === currentRound}
                   onClick={() => setLetterIndex(index)}

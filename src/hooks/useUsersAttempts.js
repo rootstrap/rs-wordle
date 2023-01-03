@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
-import { COLOR_ORDER, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
-import { LETTER_STATUS, LETTER_STATUS_ICON, GAME_STATUS } from 'constants/types';
+import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getTodaysDate, getTodaysDisplayDate, getTimeDiff } from 'utils/helpers';
@@ -78,12 +78,13 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
               const wordAttempt = word.split('');
               newUsersAttempts.push(wordAttempt);
               newRoundsResults.push(results);
-              results.forEach((color, index) => {
+              results.forEach((statusId, index) => {
                 const letter = wordAttempt[index];
-                const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
-                const newColorOrder = COLOR_ORDER[color];
-                if (newColorOrder > currentColorOrder) {
-                  newKeyboardLetters[letter] = color;
+                const currentStatusOrder = LETTER_STATUS[newKeyboardLetters[letter]].colorOrder;
+                const newStatusOrder = LETTER_STATUS[statusId].colorOrder;
+
+                if (newStatusOrder > currentStatusOrder) {
+                  newKeyboardLetters[letter] = statusId;
                 }
               });
               won = word.toUpperCase() === correctWord.toUpperCase();
@@ -132,7 +133,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         }
 
         if (indexes.includes(index)) {
-          currentRoundResult.push(LETTER_STATUS.correct);
+          currentRoundResult.push(LETTER_STATUS.correct.id);
           correctCount++;
         } else if (indexes.length > 0) {
           const allCurrentAttemptIndexes = [];
@@ -147,22 +148,23 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           }
           const occurrenceIndex = allCurrentAttemptIndexes.indexOf(index);
           if (occurrenceIndex < indexes.length) {
-            currentRoundResult.push(LETTER_STATUS.misplaced);
+            currentRoundResult.push(LETTER_STATUS.misplaced.id);
           } else {
-            currentRoundResult.push(LETTER_STATUS.incorrect);
+            currentRoundResult.push(LETTER_STATUS.incorrect.id);
           }
         } else {
-          currentRoundResult.push(LETTER_STATUS.incorrect);
+          currentRoundResult.push(LETTER_STATUS.incorrect.id);
         }
       });
 
       const newKeyboardLetters = { ...keyboardLetters };
-      currentRoundResult.forEach((color, index) => {
+      currentRoundResult.forEach((statusId, index) => {
         const letter = currentAttempt[index].toUpperCase();
-        const currentColorOrder = COLOR_ORDER[newKeyboardLetters[letter]];
-        const newColorOrder = COLOR_ORDER[color];
-        if (newColorOrder > currentColorOrder) {
-          newKeyboardLetters[letter] = color;
+        const currentStatusOrder = LETTER_STATUS[newKeyboardLetters[letter]].colorOrder;
+        const newStatusOrder = LETTER_STATUS[statusId].colorOrder;
+
+        if (newStatusOrder > currentStatusOrder) {
+          newKeyboardLetters[letter] = statusId;
         }
       });
 
@@ -392,7 +394,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     let textResult = `RS Wordle ${resultsDate} ${resultsRatio} \n \n`;
     roundsResults.forEach(lineResult => {
       lineResult.forEach(result => {
-        textResult += LETTER_STATUS_ICON[result];
+        textResult += LETTER_STATUS[result].icon;
       });
       textResult += '\n';
     });

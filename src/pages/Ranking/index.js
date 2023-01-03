@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import ListRow from 'components/common/ListRow';
 import Loading from 'components/common/Loading';
 import Select from 'components/common/Select';
-import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
+import { GAME_STATUS, RANKING_VALUES, LETTER_STATUS } from 'constants/types';
 import useRankingData from 'hooks/useRankingData';
 
 import './styles.css';
@@ -59,7 +59,9 @@ const Ranking = () => {
                           <span
                             key={`${word}-${index}`}
                             className="daily-data-word"
-                            style={{ backgroundColor: results[index] }}
+                            style={{
+                              backgroundColor: LETTER_STATUS[results[index]]?.color,
+                            }}
                           >
                             {letter}
                           </span>

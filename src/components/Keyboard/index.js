@@ -1,14 +1,15 @@
 import KeyboardLetter from 'components/common/KeyboardLetter';
 import { CHANGE_LINES_VALUES } from 'constants/constants';
+import { LETTER_STATUS } from 'constants/types';
 
 import './styles.css';
 
 const Keyboard = ({ keyboardLetters, onKeyPress, disabled }) => {
-  const renderKeyboardLetter = ([letter, color]) => (
+  const renderKeyboardLetter = ([letter, statusId]) => (
     <KeyboardLetter
       key={letter}
       value={letter}
-      color={color}
+      color={LETTER_STATUS[statusId].color}
       onKeyPress={() => onKeyPress({ key: letter })}
       disabled={disabled}
     />

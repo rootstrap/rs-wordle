@@ -1,6 +1,7 @@
 export const getCurrentStreakIcon = currentStreak => {
   let icon = '';
-  if (currentStreak < 10) icon = '🤍';
+  if (currentStreak < 1) icon = '💔';
+  else if (currentStreak < 10) icon = '🤍';
   else if (currentStreak < 20) icon = '💛';
   else if (currentStreak < 30) icon = '🧡';
   else if (currentStreak < 40) icon = '💚';
@@ -47,3 +48,6 @@ export const getTimeDiff = (startDate, endDate, timeFormat = 'minutes') => {
       return Math.round(timeDiff / 1000 / 60);
   }
 };
+
+export const pluralize = (count, noun, suffix = 's') =>
+  `${count} ${noun}${count !== 1 ? suffix : ''}`;

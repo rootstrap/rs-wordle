@@ -37,8 +37,11 @@ const ListRow = ({
           <img src={photo} className="list-row-photo" alt={`user-${name}`} />
           <span className="list-row-name">{name}</span>
         </div>
-        <span className="list-row-right-text">{rightText}</span>
-        {suffix && <span className="list-row-suffix">{suffix}</span>}
+        <div className="list-row-right-text-container">
+          <span className="list-row-right-text">{rightText}</span>
+          {suffix && showIcon && <span className="list-row-right-text-suffix">{suffix}</span>}
+        </div>
+        {suffix && !showIcon && <span className="list-row-suffix">{suffix}</span>}
         {showIcon && <div className="list-row-icon">{handleExpansion ? expandedIcon : icon}</div>}
       </button>
       <div

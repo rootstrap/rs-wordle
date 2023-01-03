@@ -60,10 +60,20 @@
   font-size: 20px;
 }
 
-.list-row-right-text {
+.list-row-right-text-container {
+  align-items: center;
+  display: flex;
   flex: 0.1;
+}
+
+.list-row-right-text {
   font-size: 18px;
   padding-right: 7px;
+}
+
+.list-row-right-text-suffix {
+  align-self: center;
+  width: 100%;
 }
 
 .list-row-suffix {

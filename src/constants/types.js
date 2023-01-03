@@ -1,3 +1,5 @@
+import { getCurrentStreakIcon, pluralize } from 'utils/helpers';
+
 export const LETTER_STATUS = {
   correct: {
     id: 'correct',
@@ -64,8 +66,7 @@ export const RANKING_VALUES = [
     value: 'currentStreak',
     label: 'Current Streak',
     getNumericValue: ({ currentStreak }) => currentStreak,
-    getRightText: ({ currentStreak, isFirst }) =>
-      `${currentStreak} ${isFirst ? FIRST_EMOJI : '🔥'}`,
+    getRightText: ({ currentStreak }) => `${currentStreak} ${getCurrentStreakIcon(currentStreak)}`,
     getSuffix: ({ lastDatePlayed }) => `(${lastDatePlayed})`,
     sort: (firstValue, secondValue) => secondValue - firstValue,
   },
@@ -73,8 +74,7 @@ export const RANKING_VALUES = [
     value: 'longestStreak',
     label: 'Longest Streak',
     getNumericValue: ({ longestStreak }) => longestStreak,
-    getRightText: ({ isFirst, longestStreak }) =>
-      `${longestStreak} ${isFirst ? FIRST_EMOJI : '🔥'}`,
+    getRightText: ({ longestStreak }) => `${longestStreak} ${getCurrentStreakIcon(longestStreak)}`,
     getSuffix: ({ longestStreakDate }) => `(${longestStreakDate})`,
     sort: (firstValue, secondValue) => secondValue - firstValue,
   },
@@ -113,8 +113,7 @@ export const RANKING_VALUES = [
     },
     getSuffix: ({ totalAttempts }) => {
       const { commonAttemptValue } = getCommonAttempt({ totalAttempts });
-      const timesText = commonAttemptValue > 1 ? 'times' : 'time';
-      return `(${commonAttemptValue} ${timesText})`;
+      return `(${pluralize(commonAttemptValue, 'time')})`;
     },
     sort: (firstValue, secondValue) => firstValue - secondValue,
   },

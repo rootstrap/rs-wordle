@@ -48,6 +48,7 @@ const useRankingData = () => {
         where('status', '!=', GAME_STATUS.playing),
         orderBy('status', 'desc'),
         orderBy('attempts'),
+        orderBy('solveTime'),
         orderBy('user.name')
       );
       const docs = await getDocs(q);
@@ -56,15 +57,22 @@ const useRankingData = () => {
       let position = 0;
       let currentAttempts = 0;
       let currentStatus = GAME_STATUS.won;
+      let currentSolveTime = 0;
       docs.forEach(doc => {
-        const { attempts, status, ...restDailyResults } = doc.data();
-        if (currentAttempts !== attempts || currentStatus !== status) {
+        const { attempts, solveTime, status, ...restDailyResults } = doc.data();
+        if (
+          currentAttempts !== attempts ||
+          solveTime !== currentSolveTime ||
+          currentStatus !== status
+        ) {
           currentAttempts = attempts;
+          currentSolveTime = solveTime;
           currentStatus = status;
           position += 1;
         }
         results.push({
           attempts,
+          solveTime,
           status,
           ...restDailyResults,
           position,

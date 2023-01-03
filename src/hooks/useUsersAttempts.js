@@ -403,9 +403,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       });
       textResult += '\n';
     });
-    textResult += '\n';
-    textResult += `Current Streak: ${currentStreak} ${getCurrentStreakIcon(currentStreak)}`;
-    textResult += '\n';
+    textResult += `\nCurrent Streak: ${currentStreak} ${getCurrentStreakIcon(currentStreak)}\n`;
     textResult += `\n${WORDLE_URL}`;
     await navigator.clipboard.writeText(textResult);
     alert('Copied to Clipboard: \n \n' + textResult);

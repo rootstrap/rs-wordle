@@ -422,6 +422,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     onKeyPress,
     wordProcessing,
     shareResults,
+    won: gameStatus === GAME_STATUS.won,
   };
 };
 

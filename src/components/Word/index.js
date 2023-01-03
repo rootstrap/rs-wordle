@@ -1,3 +1,5 @@
+import Confetti from 'react-confetti';
+
 import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
@@ -24,6 +26,7 @@ const Word = () => {
     wordProcessing,
     setLetterIndex,
     shareResults,
+    won,
   } = useUsersAttempts({
     wordLength: word.length,
     correctWord: word,
@@ -68,6 +71,7 @@ const Word = () => {
           <div className="share-results-button">
             <Button handleClick={shareResults}>Share Results</Button>
           </div>
+          {won && <Confetti recycle={false} numberOfPieces={1000} tweenDuration={7000} />}
         </>
       )}
       <Keyboard

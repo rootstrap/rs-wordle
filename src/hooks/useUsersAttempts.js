@@ -352,7 +352,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const onKeyPress = useCallback(
     ({ key }) => {
       setError('');
-      if (gameEnded) return;
+      if (gameEnded || wordProcessing) return;
       const isArrowLeft = key === ARROW_LEFT;
       const isArrowRight = key === ARROW_RIGHT;
       const isDelete = key === BACKSPACE;

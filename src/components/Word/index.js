@@ -66,6 +66,7 @@ const Word = () => {
         ))}
         {!!error && <p className="error-message">{error}</p>}
       </div>
+      {wordProcessing && <Loading />}
       {gameEnded && (
         <>
           <p className="game-status">You {gameStatus.toUpperCase()}</p>

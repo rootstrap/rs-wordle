@@ -1,0 +1,44 @@
+.tabs-container {
+  width: 80%;
+  padding: 2rem 1rem;
+}
+
+.tab-list {
+  width: 60%;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 0;
+}
+
+.tab {
+  bottom: 0;
+  background-color: var(--color-background);
+  border-color: var(--color-green);
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  color: var(--color-white);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.7s;
+  width: 49%;
+}
+
+.tab.isSelected {
+  background: var(--color-green);
+  border-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.tab:hover {
+  background: rgba(48, 96, 44, 0.75);
+}
+
+.tab-panel {
+  color: var(--color-white);
+  font-weight: 800;
+}

@@ -39,6 +39,10 @@
   background: var(--color-very-dark-green);
 }
 
+.tab:focus {
+  outline: 2px solid var(--color-white);
+}
+
 .tab-panel {
   color: var(--color-white);
   font-weight: 800;

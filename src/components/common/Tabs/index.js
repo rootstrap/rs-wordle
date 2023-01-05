@@ -74,7 +74,6 @@ const Tabs = ({ tabsConfig, defaultIndex }) => {
             role="tabpanel"
             aria-labelledby={`tab-id${index}`}
             id={`panel-id-${index}`}
-            tabIndex={0}
           >
             {tab.content}
           </section>

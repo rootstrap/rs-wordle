@@ -19,3 +19,7 @@
   background-color: var(--color-light-grey);
   cursor: unset;
 }
+
+.button:focus {
+  outline: 2px solid var(--color-white);
+}

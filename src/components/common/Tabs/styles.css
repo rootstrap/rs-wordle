@@ -21,6 +21,7 @@
   border-width: 2px;
   color: var(--color-white);
   cursor: pointer;
+  font-size: 18px;
   font-weight: 800;
   padding: 1rem;
   text-align: center;
@@ -35,7 +36,7 @@
 }
 
 .tab:hover {
-  background: rgba(48, 96, 44, 0.75);
+  background: var(--color-very-dark-green);
 }
 
 .tab-panel {

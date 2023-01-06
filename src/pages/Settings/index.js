@@ -4,7 +4,7 @@ import './styles.css';
 
 const Settings = () => (
   <div className="settings">
-    <h1 className="section-title">Settings in progress...</h1>
+    <h1 className="section-title">Settings</h1>
     <LogoutButton />
   </div>
 );

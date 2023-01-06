@@ -13,7 +13,7 @@ const InvalidUser = () => {
   return (
     <div className="invalid-user">
       <p className="invalid-user-message">
-        {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}{' '}
+        {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}
       </p>
       <p className="invalid-user-message">
         Por favor cerrá sesión y volvé a ingresar con un email "@rootstrap.com"

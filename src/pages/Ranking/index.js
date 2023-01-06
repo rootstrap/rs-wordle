@@ -1,4 +1,5 @@
 import Loading from 'components/common/Loading';
+import Logo from 'components/Logo';
 import Tabs from 'components/common/Tabs';
 import useRankingData from 'hooks/useRankingData';
 
@@ -45,8 +46,11 @@ const Ranking = () => {
 
   return (
     <div className="ranking">
-      <h1 className="section-title">Ranking</h1>
-      {loading ? <Loading /> : <Tabs tabsConfig={tabsConfig} />}
+      <Logo />
+      <div className="ranking-container">
+        <h1 className="section-title">Ranking</h1>
+        {loading ? <Loading /> : <Tabs tabsConfig={tabsConfig} />}
+      </div>
     </div>
   );
 };

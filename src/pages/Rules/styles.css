@@ -3,11 +3,17 @@
   color: white;
   display: flex;
   flex-direction: column;
-  text-align: center;
   min-height: 100vh;
 }
 
-.rules-container {
+.rules-first-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+}
+
+.rules-second-container {
   margin: 0 60px;
   text-align: left;
 }

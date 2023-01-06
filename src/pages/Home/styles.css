@@ -2,7 +2,6 @@
   background-color: #1a1a1b;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: center;
   min-height: 100vh;
 }

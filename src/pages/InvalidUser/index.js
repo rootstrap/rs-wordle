@@ -1,3 +1,4 @@
+import Logo from 'components/Logo';
 import LogoutButton from 'components/LogoutButton';
 import useAuth from 'hooks/useAuth';
 
@@ -12,13 +13,16 @@ const InvalidUser = () => {
 
   return (
     <div className="invalid-user">
-      <p className="invalid-user-message">
-        {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}
-      </p>
-      <p className="invalid-user-message">
-        Por favor cerrá sesión y volvé a ingresar con un email "@rootstrap.com"
-      </p>
-      <LogoutButton />
+      <Logo />
+      <div className="invalid-user-message-container">
+        <p className="invalid-user-message">
+          {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}
+        </p>
+        <p className="invalid-user-message">
+          Por favor cerrá sesión y volvé a ingresar con un email "@rootstrap.com"
+        </p>
+        <LogoutButton />
+      </div>
     </div>
   );
 };

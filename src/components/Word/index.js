@@ -1,5 +1,6 @@
 import Confetti from 'react-confetti';
 
+import Logo from 'components/Logo';
 import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
@@ -37,11 +38,17 @@ const Word = () => {
   });
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Logo />
+        <Loading />
+      </>
+    );
   }
 
   return (
     <div className="word-container">
+      <Logo />
       <div>
         {usersAttempts.map((attempt, round) => (
           <div className="word" key={`word-attempt-${round}`}>

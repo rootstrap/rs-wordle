@@ -1,6 +1,6 @@
 .rules {
-  background-color: #1a1a1b;
-  color: white;
+  background-color: var(--color-background);
+  color: var(--color-white);
   display: flex;
   flex-direction: column;
   min-height: 100vh;

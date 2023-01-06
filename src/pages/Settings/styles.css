@@ -1,5 +1,5 @@
 .settings {
-  background-color: #1a1a1b;
+  background-color: var(--color-background);
   display: flex;
   flex-direction: column;
   text-align: center;

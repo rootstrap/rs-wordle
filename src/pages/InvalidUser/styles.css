@@ -1,0 +1,15 @@
+.invalid-user {
+  align-items: center;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.invalid-user-message {
+  color: var(--color-white);
+  font-size: 20px;
+  font-weight: 600;
+}

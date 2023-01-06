@@ -1,5 +1,6 @@
 import routesPaths from './routesPaths';
 import Home from 'pages/Home';
+import InvalidUser from 'pages/InvalidUser';
 import Login from 'pages/Login';
 import Ranking from 'pages/Ranking';
 import Rules from 'pages/Rules';
@@ -53,6 +54,10 @@ const routes = [
   {
     path: routesPaths.login,
     component: <Login />,
+  },
+  {
+    path: routesPaths.invalidUser,
+    component: <InvalidUser />,
   },
 ];
 

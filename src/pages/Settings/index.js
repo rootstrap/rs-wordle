@@ -1,14 +1,10 @@
-import Logo from 'components/Logo';
 import LogoutButton from 'components/LogoutButton';
-
-import './styles.css';
+import PageWrapper from 'components/common/PageWrapper';
 
 const Settings = () => (
-  <div className="settings">
-    <Logo />
-    <h1 className="section-title">Settings</h1>
+  <PageWrapper title="Settings (more coming soon 👀)">
     <LogoutButton />
-  </div>
+  </PageWrapper>
 );
 
 export default Settings;

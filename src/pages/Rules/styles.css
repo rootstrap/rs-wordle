@@ -1,19 +1,4 @@
-.rules {
-  background-color: var(--color-background);
-  color: var(--color-white);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.rules-first-container {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  text-align: center;
-}
-
-.rules-second-container {
+.rules-container {
   margin: 0 60px;
   text-align: left;
 }

@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import ListRow from 'components/common/ListRow';
-import Logo from 'components/Logo';
+import PageWrapper from 'components/common/PageWrapper';
 import useUsers from 'hooks/useUsers';
 
 import './styles.css';
@@ -13,10 +13,8 @@ const Users = () => {
   const { push } = useHistory();
 
   return (
-    <div className="users">
-      <Logo />
+    <PageWrapper title="Users">
       <div className="users-container">
-        <h1 className="section-title">Users</h1>
         <div className="users-filters-container">
           <span className="users-filter-label">Filter by name</span>
           <input
@@ -44,7 +42,7 @@ const Users = () => {
           ))}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

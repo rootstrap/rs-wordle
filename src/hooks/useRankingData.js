@@ -21,7 +21,7 @@ const useRankingData = () => {
   const [dailyResults, setDailyResults] = useState([]);
   const [rankingData, setRankingData] = useState([]);
   const [users, setUsers] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedRanking, setSelectedRanking] = useState(RANKING_VALUES[0]);
 
   const today = getTodaysDate();

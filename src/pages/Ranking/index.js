@@ -1,5 +1,5 @@
-import Loading from 'components/common/Loading';
-import Logo from 'components/Logo';
+import FullPageLoading from 'components/common/FullPageLoading';
+import PageWrapper from 'components/common/PageWrapper';
 import Tabs from 'components/common/Tabs';
 import useRankingData from 'hooks/useRankingData';
 
@@ -44,14 +44,14 @@ const Ranking = () => {
     },
   ];
 
+  if (loading) return <FullPageLoading />;
+
   return (
-    <div className="ranking">
-      <Logo />
+    <PageWrapper title="Ranking">
       <div className="ranking-container">
-        <h1 className="section-title">Ranking</h1>
-        {loading ? <Loading /> : <Tabs tabsConfig={tabsConfig} />}
+        <Tabs tabsConfig={tabsConfig} />
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

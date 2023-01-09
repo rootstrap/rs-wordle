@@ -1,0 +1,19 @@
+.page-container {
+  background-color: var(--color-background);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.titles-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-title {
+  font-family: 'Caveat Brush', cursive;
+  text-transform: uppercase;
+  margin-top: -45px;
+}

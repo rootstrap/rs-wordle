@@ -32,10 +32,15 @@
   margin-left: 15px;
   padding: 5px 10px;
   text-align: right;
+  min-width: 90px;
 }
 
-.bar-chart-value-lost {
+.bar-chart-value.isLostRow {
   background-color: var(--color-red);
+}
+
+.bar-chart-value.isEmptyValue {
+  min-width: 0px;
 }
 
 .bar-chart-display-value {

@@ -1,4 +1,7 @@
+import cn from 'classnames';
+
 import { MAX_ATTEMPTS } from 'constants/constants';
+
 import './styles.css';
 
 const HorizontalBarChart = ({ data, maxValue, words = false }) => (
@@ -15,15 +18,14 @@ const HorizontalBarChart = ({ data, maxValue, words = false }) => (
         key = value[0];
       }
       const widthPercentage = (numericValue * 100) / maxValue ?? 10;
+      const isEmptyValue = !numericValue;
 
       return (
         <div className="bar-container" key={key}>
           <span className="font-frijole bar-chart-position">{isLostRow ? 'X' : index + 1}</span>
           <div className="bar-chart-value-container">
             <div
-              className={`font-caveat-brush bar-chart-value${
-                isLostRow ? ' bar-chart-value-lost' : ''
-              }`}
+              className={cn('font-caveat-brush bar-chart-value', { isLostRow, isEmptyValue })}
               style={{ width: widthPercentage ? `${widthPercentage}%` : 'fit-content' }}
             >
               {numericValue}

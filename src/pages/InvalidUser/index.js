@@ -1,5 +1,5 @@
-import Logo from 'components/Logo';
 import LogoutButton from 'components/LogoutButton';
+import PageWrapper from 'components/common/PageWrapper';
 import useAuth from 'hooks/useAuth';
 
 import './styles.css';
@@ -12,8 +12,7 @@ const InvalidUser = () => {
   const name = completeName?.split(' ')[0];
 
   return (
-    <div className="invalid-user">
-      <Logo />
+    <PageWrapper>
       <div className="invalid-user-message-container">
         <p className="invalid-user-message">
           {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}
@@ -23,7 +22,7 @@ const InvalidUser = () => {
         </p>
         <LogoutButton />
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

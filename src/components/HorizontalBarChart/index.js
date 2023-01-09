@@ -12,20 +12,21 @@ const HorizontalBarChart = ({ data, maxValue, words = false }) => (
       let numericValue = value;
       let displayValue;
       let key = index;
+      let isLongValue = false;
       if (typeof value !== 'number') {
+        isLongValue = true;
         numericValue = value[1];
         displayValue = value[0];
         key = value[0];
       }
       const widthPercentage = (numericValue * 100) / maxValue ?? 10;
-      const isEmptyValue = !numericValue;
 
       return (
         <div className="bar-container" key={key}>
           <span className="font-frijole bar-chart-position">{isLostRow ? 'X' : index + 1}</span>
           <div className="bar-chart-value-container">
             <div
-              className={cn('font-caveat-brush bar-chart-value', { isLostRow, isEmptyValue })}
+              className={cn('font-caveat-brush bar-chart-value', { isLostRow, isLongValue })}
               style={{ width: widthPercentage ? `${widthPercentage}%` : 'fit-content' }}
             >
               {numericValue}

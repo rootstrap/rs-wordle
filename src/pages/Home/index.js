@@ -42,54 +42,56 @@ const Home = () => {
 
   return (
     <PageWrapper>
-      <div>
-        {usersAttempts.map((attempt, round) => (
-          <div className="word" key={`word-attempt-${round}`}>
-            <>
-              {attempt.map((c, index) => (
-                <LetterInput
-                  key={`${c}-${round}-${index}`}
-                  value={usersAttempts[round][index]}
-                  style={{
-                    backgroundColor:
-                      round !== currentRound || gameEnded
-                        ? LETTER_STATUS[roundsResults[round][index]].color
-                        : LETTER_STATUS.nothing.color,
-                  }}
-                  isSelected={index === letterIndex && round === currentRound}
-                  onClick={() => setLetterIndex(index)}
-                  disabled={round !== currentRound || gameEnded}
-                />
-              ))}
-            </>
-          </div>
-        ))}
-        {!!error && <p className="error-message">{error}</p>}
+      <div className="home-container">
+        <div>
+          {usersAttempts.map((attempt, round) => (
+            <div className="word" key={`word-attempt-${round}`}>
+              <>
+                {attempt.map((c, index) => (
+                  <LetterInput
+                    key={`${c}-${round}-${index}`}
+                    value={usersAttempts[round][index]}
+                    style={{
+                      backgroundColor:
+                        round !== currentRound || gameEnded
+                          ? LETTER_STATUS[roundsResults[round][index]].color
+                          : LETTER_STATUS.nothing.color,
+                    }}
+                    isSelected={index === letterIndex && round === currentRound}
+                    onClick={() => setLetterIndex(index)}
+                    disabled={round !== currentRound || gameEnded}
+                  />
+                ))}
+              </>
+            </div>
+          ))}
+          {!!error && <p className="error-message">{error}</p>}
+        </div>
+        {wordProcessing && <Loading />}
+        {gameEnded && (
+          <>
+            <p className="game-status">You {gameStatus.toUpperCase()}</p>
+            <p className="game-status">The word was {word}</p>
+            <p className="game-status">{customMessage}</p>
+            <div className="share-results-button">
+              <Button handleClick={shareResults}>Share Results</Button>
+            </div>
+            {won && (
+              <Confetti
+                recycle={false}
+                numberOfPieces={1000}
+                tweenDuration={7000}
+                {...confettiExtraParams}
+              />
+            )}
+          </>
+        )}
+        <Keyboard
+          keyboardLetters={keyboardLetters}
+          onKeyPress={onKeyPress}
+          disabled={wordProcessing || gameEnded}
+        />
       </div>
-      {wordProcessing && <Loading />}
-      {gameEnded && (
-        <>
-          <p className="game-status">You {gameStatus.toUpperCase()}</p>
-          <p className="game-status">The word was {word}</p>
-          <p className="game-status">{customMessage}</p>
-          <div className="share-results-button">
-            <Button handleClick={shareResults}>Share Results</Button>
-          </div>
-          {won && (
-            <Confetti
-              recycle={false}
-              numberOfPieces={1000}
-              tweenDuration={7000}
-              {...confettiExtraParams}
-            />
-          )}
-        </>
-      )}
-      <Keyboard
-        keyboardLetters={keyboardLetters}
-        onKeyPress={onKeyPress}
-        disabled={wordProcessing || gameEnded}
-      />
     </PageWrapper>
   );
 };

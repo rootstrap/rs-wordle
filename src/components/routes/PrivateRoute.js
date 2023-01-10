@@ -3,13 +3,24 @@ import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import routesPaths from '../../routes/routesPaths';
 
-const PrivateRoute = ({ children, exact = false, path, authenticated }) => {
+const PrivateRoute = ({ children, exact = false, path, authenticated, isRootstrapDomain }) => {
   const location = useLocation();
 
   return authenticated ? (
-    <Route exact={exact} path={path}>
-      {children}
-    </Route>
+    <>
+      {isRootstrapDomain || path === routesPaths.invalidUser ? (
+        <Route exact={exact} path={path}>
+          {children}
+        </Route>
+      ) : (
+        <Redirect
+          to={{
+            pathname: routesPaths.invalidUser,
+            state: { from: location },
+          }}
+        />
+      )}
+    </>
   ) : (
     <Redirect
       to={{

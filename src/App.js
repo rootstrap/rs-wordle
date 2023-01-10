@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 
 import RouteFromPath from 'components/routes/RouteFromPath';
 import SideNav from 'components/SideNav';
-import SkipToMainContent from 'components/SkipToMainContent';
 import useTranslation from 'hooks/useTranslation';
 import useAuth from 'hooks/useAuth';
 import routes from 'routes';
@@ -21,7 +20,6 @@ function App() {
         <title>{t('global.pageTitle')}</title>
       </Helmet>
       <BrowserRouter>
-        <SkipToMainContent />
         {authenticated && <SideNav />}
         <main id="main">
           <Switch>

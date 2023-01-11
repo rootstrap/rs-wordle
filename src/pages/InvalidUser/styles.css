@@ -1,0 +1,13 @@
+.invalid-user-message-container {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.invalid-user-message {
+  color: var(--color-white);
+  font-size: 20px;
+  font-weight: 600;
+}

@@ -37,6 +37,10 @@
   cursor: default;
 }
 
+.list-row-container:focus {
+  outline: 2px solid var(--color-white);
+}
+
 .list-row-left-text {
   flex: 0.15;
   font-size: 24px;

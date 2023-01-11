@@ -1,8 +1,26 @@
-.home {
-  background-color: #1a1a1b;
+.home-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-align: center;
-  min-height: 100vh;
+  min-height: 85vh;
+}
+
+.word {
+  display: flex;
+  justify-content: center;
+}
+
+.error-message {
+  color: var(--color-red);
+}
+
+.game-status {
+  align-self: center;
+  color: var(--color-white);
+  font-weight: 800;
+}
+
+.share-results-button {
+  align-self: center;
+  max-width: 100px;
 }

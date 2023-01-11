@@ -11,7 +11,7 @@ import routesPaths from 'routes/routesPaths';
 import Button from 'components/common/Button';
 import { login } from 'state/actions/userActions';
 
-import '../../styles/form.css';
+import './styles.css';
 
 const Login = () => {
   // eslint-disable-next-line
@@ -45,12 +45,14 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <Button disabled={loading} handleClick={signInWithGoogle}>
-        Login with Google
-      </Button>
+    <>
+      <div className="login-button">
+        <Button disabled={loading} handleClick={signInWithGoogle}>
+          Login with Google
+        </Button>
+      </div>
       {fbError && <p className="error-message">{fbError}</p>}
-    </div>
+    </>
   );
 };
 

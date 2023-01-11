@@ -19,3 +19,7 @@
 .keyboard-letter.disabled {
   cursor: default;
 }
+
+.keyboard-letter:focus {
+  outline: 2px solid var(--color-white);
+}

@@ -12,8 +12,7 @@ const Users = () => {
   const { push } = useHistory();
 
   return (
-    <div className="users">
-      <h1 className="section-title">Users</h1>
+    <div className="users-container">
       <div className="users-filters-container">
         <span className="users-filter-label">Filter by name</span>
         <input

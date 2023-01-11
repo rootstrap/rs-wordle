@@ -34,8 +34,12 @@
   text-align: right;
 }
 
-.bar-chart-value-lost {
+.bar-chart-value.isLostRow {
   background-color: var(--color-red);
+}
+
+.bar-chart-value.isLongValue {
+  min-width: 95px;
 }
 
 .bar-chart-display-value {

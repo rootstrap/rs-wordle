@@ -17,7 +17,7 @@ const wordsRef = collection(firebaseDb, WORDS_COLLECTION);
 const useWordDb = () => {
   const [word, setWord] = useState('');
   const [wordDate, setWordDate] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const today = getTodaysDate();
 

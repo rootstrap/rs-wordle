@@ -9,7 +9,6 @@ import useAuth from 'hooks/useAuth';
 import useTranslation from 'hooks/useTranslation';
 import routesPaths from 'routes/routesPaths';
 import Button from 'components/common/Button';
-import PageWrapper from 'components/common/PageWrapper';
 import { login } from 'state/actions/userActions';
 
 import './styles.css';
@@ -46,14 +45,14 @@ const Login = () => {
   }
 
   return (
-    <PageWrapper>
+    <>
       <div className="login-button">
         <Button disabled={loading} handleClick={signInWithGoogle}>
           Login with Google
         </Button>
       </div>
       {fbError && <p className="error-message">{fbError}</p>}
-    </PageWrapper>
+    </>
   );
 };
 

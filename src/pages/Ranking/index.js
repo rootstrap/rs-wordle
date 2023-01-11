@@ -1,5 +1,4 @@
-import FullPageLoading from 'components/common/FullPageLoading';
-import PageWrapper from 'components/common/PageWrapper';
+import Loading from 'components/common/Loading';
 import Tabs from 'components/common/Tabs';
 import useRankingData from 'hooks/useRankingData';
 
@@ -21,14 +20,12 @@ const Ranking = () => {
     },
   ];
 
-  if (loading) return <FullPageLoading />;
+  if (loading) return <Loading />;
 
   return (
-    <PageWrapper title="Ranking">
-      <div className="ranking-container">
-        <Tabs tabsConfig={tabsConfig} />
-      </div>
-    </PageWrapper>
+    <div className="ranking-container">
+      <Tabs tabsConfig={tabsConfig} />
+    </div>
   );
 };
 

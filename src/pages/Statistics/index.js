@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 
-import PageWrapper from 'components/common/PageWrapper';
 import HorizontalBarChart from 'components/HorizontalBarChart';
 import StatBox from 'components/StatBox';
 import useUserStatistics from 'hooks/useUsersStatistics';
@@ -21,8 +20,9 @@ const Statistics = () => {
   } = useUserStatistics(location?.state ?? {});
 
   return (
-    <PageWrapper title={`${userName} Statistics`}>
+    <>
       <div className="statistics-container">
+        <h1 className="page-title">{`${userName} Statistics`}</h1>
         <img src={profilePhoto} className="statistics-photo" alt={`user-${userName}`} />
         {!!Object.keys(statistics).length && (
           <>
@@ -43,7 +43,7 @@ const Statistics = () => {
           </>
         )}
       </div>
-    </PageWrapper>
+    </>
   );
 };
 

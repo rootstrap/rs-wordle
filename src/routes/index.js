@@ -20,18 +20,22 @@ const routes = [
     component: <Ranking />,
     exact: true,
     private: true,
+    title: 'Ranking',
   },
   {
     path: routesPaths.rules,
     component: <Rules />,
     exact: true,
     private: true,
+    title: 'RULES',
+    subtitle: 'Can you guess the word before other Rootstrappers do?',
   },
   {
     path: routesPaths.settings,
     component: <Settings />,
     exact: true,
     private: true,
+    title: 'Settings (more coming soon 👀)',
   },
   {
     path: routesPaths.statistics,
@@ -44,6 +48,7 @@ const routes = [
     component: <Users />,
     exact: true,
     private: true,
+    title: 'Users',
   },
   {
     path: routesPaths.usersStatistics,
@@ -58,6 +63,8 @@ const routes = [
   {
     path: routesPaths.invalidUser,
     component: <InvalidUser />,
+    exact: true,
+    private: true,
   },
 ];
 

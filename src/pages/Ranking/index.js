@@ -20,10 +20,11 @@ const Ranking = () => {
     },
   ];
 
+  if (loading) return <Loading />;
+
   return (
-    <div className="ranking">
-      <h1 className="section-title">Ranking</h1>
-      {loading ? <Loading /> : <Tabs tabsConfig={tabsConfig} />}
+    <div className="ranking-container">
+      <Tabs tabsConfig={tabsConfig} />
     </div>
   );
 };

@@ -11,7 +11,7 @@ const InvalidUser = () => {
   const name = completeName?.split(' ')[0];
 
   return (
-    <div className="invalid-user">
+    <div className="invalid-user-message-container">
       <p className="invalid-user-message">
         {`Lo siento ${name} pero tu email "${email}" no pertenece a Rootstrap.`}
       </p>

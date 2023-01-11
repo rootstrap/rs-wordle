@@ -1,0 +1,11 @@
+.rs-wordle-logo-container {
+  background-color: var(--color-background);
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30px;
+  padding-top: 20px;
+}
+
+.rs-wordle-logo {
+  height: 50px;
+}

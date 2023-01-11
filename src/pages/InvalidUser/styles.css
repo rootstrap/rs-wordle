@@ -1,11 +1,9 @@
-.invalid-user {
+.invalid-user-message-container {
   align-items: center;
-  background-color: var(--color-background);
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
-  min-height: 100vh;
 }
 
 .invalid-user-message {

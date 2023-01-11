@@ -18,9 +18,3 @@ main {
 .font-caveat-brush {
   font-family: 'Caveat Brush', cursive;
 }
-
-.section-title {
-  color: white;
-  font-family: 'Caveat Brush', cursive;
-  text-transform: uppercase;
-}

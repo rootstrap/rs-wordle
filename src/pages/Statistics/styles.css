@@ -1,14 +1,9 @@
-.statistics {
+.statistics-container {
   align-items: center;
-  background-color: #1a1a1b;
   display: flex;
+  flex: 1;
   flex-direction: column;
   text-align: center;
-  min-height: 100vh;
-}
-
-.statistics-title {
-  color: white;
 }
 
 .statistics-photo {

@@ -355,16 +355,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const onKeyPress = useCallback(
     ({ key }) => {
       setError('');
-      if (
-        gameEnded ||
-        wordProcessing ||
-        IGNORE_KEYBOARD_COMPONENTS_IDS.includes(focusedElement?.id)
-      )
-        return;
       const isArrowLeft = key === ARROW_LEFT;
       const isArrowRight = key === ARROW_RIGHT;
       const isDelete = key === BACKSPACE;
       const isEnter = key === ENTER;
+
+      const ignoreEnter = isEnter && IGNORE_KEYBOARD_COMPONENTS_IDS.includes(focusedElement?.id);
+
+      if (gameEnded || wordProcessing || ignoreEnter) return;
 
       if (key.length > 1 && !isDelete) {
         isEnter && onSubmitWord();

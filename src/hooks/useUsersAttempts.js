@@ -3,6 +3,7 @@ import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'fireb
 import wordExists from 'word-exists';
 
 import { KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
@@ -16,7 +17,6 @@ import {
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
-import { CUSTOM_CONFETTI } from 'constants/customConfetti';
 
 const { firebaseDb } = firebaseData;
 const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
@@ -412,13 +412,17 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
   const customMessage = useMemo(() => {
     const todaysDate = today.slice(4);
-    const { customMessage } = CUSTOM_CONFETTI[todaysDate] || {};
+    const { customMessage } = CUSTOM_CONFETTI_ANNUAL[todaysDate] || CUSTOM_CONFETTI[today] || {};
     return customMessage || '';
   }, [today]);
 
   const confettiExtraParams = useMemo(() => {
     const todaysDate = today.slice(4);
-    return CUSTOM_CONFETTI[todaysDate]?.confettiExtraParams || {};
+    return (
+      CUSTOM_CONFETTI_ANNUAL[todaysDate]?.confettiExtraParams ||
+      CUSTOM_CONFETTI[today]?.confettiExtraParams ||
+      {}
+    );
   }, [today]);
 
   return {

@@ -73,16 +73,23 @@ const Home = () => {
           <div className="share-results-button">
             <Button handleClick={shareResults}>Share Results</Button>
           </div>
-          {won && (
+          {/* {won && (
             <Confetti
               recycle={false}
               numberOfPieces={1000}
               tweenDuration={7000}
               {...confettiExtraParams}
             />
-          )}
+          )} */}
         </>
       )}
+      <p className="game-status">{customMessage}</p>
+      <Confetti
+        recycle={false}
+        numberOfPieces={1000}
+        tweenDuration={7000}
+        {...confettiExtraParams}
+      />
       <Keyboard
         keyboardLetters={keyboardLetters}
         onKeyPress={onKeyPress}

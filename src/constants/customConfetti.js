@@ -1,3 +1,39 @@
+const ghostShape = (ctx, eyesColor) => {
+  const x = 0;
+  const y = 0;
+  const scale = 0.6;
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'black';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.quadraticCurveTo((x + 19) * scale, (y - 90) * scale, (x + 40) * scale, y * scale);
+  ctx.moveTo(x, y);
+  ctx.quadraticCurveTo((x + 3) * scale, (y + 4) * scale, (x + 10) * scale, y * scale);
+  ctx.moveTo((x + 10) * scale, y * scale);
+  ctx.quadraticCurveTo((x + 12) * scale, (y - 2) * scale, (x + 20) * scale, y * scale);
+  ctx.moveTo((x + 20) * scale, y * scale);
+  ctx.quadraticCurveTo((x + 22) * scale, (y + 4) * scale, (x + 30) * scale, y * scale);
+  ctx.moveTo((x + 30) * scale, y * scale);
+  ctx.quadraticCurveTo((x + 35) * scale, (y - 2) * scale, (x + 40) * scale, y * scale);
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+  ctx.fill();
+  ctx.closePath();
+  ctx.fillStyle = eyesColor;
+  ctx.beginPath();
+  ctx.arc((x + 14) * scale, (y - 29) * scale, 2 * scale, 0, Math.PI * 8, true);
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc((x + 25) * scale, (y - 29) * scale, 2 * scale, 0, Math.PI * 8, true);
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+  ctx.fill();
+};
+
 const heartShape = ctx => {
   ctx.beginPath();
   let w = 20;
@@ -9,7 +45,7 @@ const heartShape = ctx => {
   ctx.lineWidth = 5;
   ctx.fillStyle = 'red';
   let d = Math.min(w, h);
-  let k = 20;
+  let k = 0;
   ctx.moveTo(k, k + d / 4);
   ctx.quadraticCurveTo(k, k, k + d / 4, k);
   ctx.quadraticCurveTo(k + d / 2, k, k + d / 2, k + d / 4);
@@ -22,6 +58,19 @@ const heartShape = ctx => {
   ctx.stroke();
   ctx.fill();
   ctx.closePath();
+};
+
+const houseShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.strokeRect(0, 0, 16, 16);
+  ctx.fillRect(5, 8, 5, 8);
+  ctx.moveTo(-5, 0);
+  ctx.lineTo(8, -10);
+  ctx.lineTo(21, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
 };
 
 const spiralShape = ctx => {
@@ -71,7 +120,7 @@ const snowflakeShape = ctx => {
   ctx.closePath();
 };
 
-export const CUSTOM_CONFETTI = {
+export const CUSTOM_CONFETTI_ANNUAL = {
   '0104': {
     confettiExtraParams: {
       drawShape: spiralShape,
@@ -96,5 +145,26 @@ export const CUSTOM_CONFETTI = {
       colors: ['#AEE1FF', '#CBDDF8'],
     },
     customMessage: 'Happy Winter! 🎉',
+  },
+  1031: {
+    confettiExtraParams: {
+      drawShape: ctx => ghostShape(ctx, 'red'),
+    },
+    customMessage: 'Happy Halloween! 👻 🎃',
+  },
+};
+
+export const CUSTOM_CONFETTI = {
+  20230113: {
+    confettiExtraParams: {
+      drawShape: ctx => ghostShape(ctx, 'black'),
+      numberOfPieces: 1000,
+    },
+    customMessage: 'Happy Friday the 13th! 👻',
+  },
+  20230118: {
+    confettiExtraParams: {
+      drawShape: houseShape,
+    },
   },
 };

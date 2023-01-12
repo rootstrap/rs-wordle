@@ -5,44 +5,53 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
 
+import {
+  HOME_ID,
+  RANKING_ID,
+  STATISTICS_ID,
+  USERS_ID,
+  RULES_ID,
+  SETTINGS_ID,
+} from 'constants/componentsIds';
+
 export const navData = [
   {
-    id: 0,
+    id: HOME_ID,
     icon: <HomeIcon />,
     text: 'Home',
     link: '/',
     exact: true,
   },
   {
-    id: 1,
+    id: RANKING_ID,
     icon: <LeaderboardIcon />,
     text: 'Ranking',
     link: '/ranking',
     exact: true,
   },
   {
-    id: 2,
+    id: STATISTICS_ID,
     icon: <ShowChartIcon />,
     text: 'Statistics',
     link: '/statistics',
     exact: true,
   },
   {
-    id: 3,
+    id: USERS_ID,
     icon: <GroupIcon />,
     text: 'Users',
     link: '/users',
     exact: true,
   },
   {
-    id: 4,
+    id: RULES_ID,
     icon: <InfoIcon />,
     text: 'Rules',
     link: '/rules',
     exact: true,
   },
   {
-    id: 5,
+    id: SETTINGS_ID,
     icon: <SettingsIcon />,
     text: 'Settings',
     link: '/settings',

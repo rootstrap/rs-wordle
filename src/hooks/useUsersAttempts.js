@@ -2,11 +2,14 @@ import { useCallback, useEffect, useState, useMemo } from 'react';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
+import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
 import { KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
+import useActiveElement from 'hooks/useActiveElement';
 import {
   getCurrentStreakIcon,
   getTodaysDate,
@@ -16,7 +19,6 @@ import {
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
-import { CUSTOM_CONFETTI } from 'constants/customConfetti';
 
 const { firebaseDb } = firebaseData;
 const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
@@ -41,6 +43,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
   const today = getTodaysDate();
+  const focusedElement = useActiveElement();
 
   const {
     statistics: {
@@ -352,7 +355,12 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const onKeyPress = useCallback(
     ({ key }) => {
       setError('');
-      if (gameEnded || wordProcessing) return;
+      if (
+        gameEnded ||
+        wordProcessing ||
+        IGNORE_KEYBOARD_COMPONENTS_IDS.includes(focusedElement?.id)
+      )
+        return;
       const isArrowLeft = key === ARROW_LEFT;
       const isArrowRight = key === ARROW_RIGHT;
       const isDelete = key === BACKSPACE;
@@ -381,7 +389,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         setUsersAttempts(newAttempt);
       }
     },
-    [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts]
+    [
+      currentRound,
+      focusNext,
+      focusedElement?.id,
+      gameEnded,
+      letterIndex,
+      onSubmitWord,
+      usersAttempts,
+      wordProcessing,
+    ]
   );
 
   useEffect(() => {

@@ -327,7 +327,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
     const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
     const isTodaysWords = attemptedWord === correctWord;
-    const existsWord = wordExists(attemptedWord) || isAcceptedWord || isTodaysWords;
+    const existsWord = isTodaysWords || isAcceptedWord || wordExists(attemptedWord);
     if (!existsWord) {
       setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
     } else {

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useMemo } from 'react';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
-import { KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
@@ -336,7 +336,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       return;
     }
 
-    const existsWord = wordExists(attemptedWord);
+    const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
+    const existsWord = wordExists(attemptedWord) || isAcceptedWord;
     if (!existsWord) {
       const errorMessage = t('errors.doesntExist', {
         attemptedWord: attemptedWordUpperCase,

@@ -19,20 +19,18 @@
   },
   "ranking": {
     "allTime": "All Time ({total})",
-    "today": "Today ({total})",
-    "values": {
-      "currentStreak": "Current Streak",
-      "longestStreak": "Longest Streak",
-      "attemptsAverage": "Attempts Average",
-      "bestAttempt": "Best Attempt",
-      "commonAttempt": "Common Attempt",
-      "fastest": "Fastest (mins)",
-      "slowest": "Slowest (mins)",
-      "timeAverage": "Time Average (mins)",
-      "numberOfGames": "Number of Games",
-      "totalLosses": "Total Losses",
-      "totalWins": "Total Wins",
-      "winsPercentage": "Wins (%)"
-    }
+    "today": "Today ({total})"
+  },
+  "statistics": {
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "played": "Played",
+    "topAttemptedWordsLabel": "Top Used Words",
+    "totalAttemptsLabel": "Guess Distribution",
+    "wins": "Wins",
+    "winsPercentage": "Wins (%)"
+  },
+  "users": {
+    "filterByName": "Filter by name"
   }
 }

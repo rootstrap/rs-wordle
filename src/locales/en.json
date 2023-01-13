@@ -1,6 +1,6 @@
 {
   "errors": {
-    "alreadyAttemptedWord": "You already tried with {attemptedWord}`",
+    "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",
     "lettersAmount": "{attemptedWord} doesn't have {wordLength} letters"
   },

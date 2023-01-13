@@ -3,7 +3,7 @@ import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'fireb
 import wordExists from 'word-exists';
 
 import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
-import { KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
@@ -328,7 +328,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       return;
     }
 
-    const existsWord = wordExists(attemptedWord);
+    const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
+    const existsWord = wordExists(attemptedWord) || isAcceptedWord;
     if (!existsWord) {
       setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
     } else {

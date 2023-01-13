@@ -326,14 +326,15 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     }
 
     const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
-    const existsWord = wordExists(attemptedWord) || isAcceptedWord;
+    const isTodaysWords = attemptedWord === correctWord;
+    const existsWord = wordExists(attemptedWord) || isAcceptedWord || isTodaysWords;
     if (!existsWord) {
       setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
     } else {
       await compareWithWord(currentAttempt, attemptedWord);
     }
     setWordProcessing(false);
-  }, [compareWithWord, currentRound, usersAttempts, wordLength]);
+  }, [compareWithWord, correctWord, currentRound, usersAttempts, wordLength]);
 
   const focusBefore = letterIndex => {
     if (letterIndex > 0) {

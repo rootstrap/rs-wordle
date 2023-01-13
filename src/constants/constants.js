@@ -46,3 +46,5 @@ export const KEYBOARD_LETTERS = {
 };
 
 export const MAX_ATTEMPTS = 6;
+
+export const ACCEPTED_WORDS = ['MONDAY', 'TUESDAY', 'FRIDAY', 'SUNDAY', 'ROOTSTRAP'];

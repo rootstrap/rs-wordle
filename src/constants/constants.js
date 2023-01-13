@@ -46,3 +46,4 @@ export const KEYBOARD_LETTERS = {
 };
 
 export const MAX_ATTEMPTS = 6;
+export const ADMITTED_WORDS_SIZES = [4, 5, 6];

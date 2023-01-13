@@ -1,5 +1,7 @@
 import LetterInput from 'components/common/LetterInput';
+import { ADMITTED_WORDS_SIZES, MAX_ATTEMPTS } from 'constants/constants';
 import { LETTER_STATUS } from 'constants/types';
+import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
 
@@ -12,41 +14,44 @@ const printLetterExplanation = (backgroundColor, text) => (
   </div>
 );
 
-const Rules = () => (
-  <div className="rules-container">
-    <ul className="rules-bullet">
-      <li>Guess a word in 6 attempts or less</li>
-      <li>The word could have between 4 and 6 letters</li>
-      <li>
-        Every day you will have a different word to guess and it will be the same for everyone
-      </li>
-      <li>Each guess must be a valid English word</li>
-      <li>To write the word you can use either your keyboard or the virtual keyboard provided</li>
-      <li>To submit the word use the Enter key (of either keyboard)</li>
-      <li>
-        The color of the letters will change to show you if the letter is or not in the word and in
-        the correct position.
-        <div className="rules-letters-container">
-          {printLetterExplanation(
-            LETTER_STATUS.correct.color,
-            ' is in the word and in the correct position'
-          )}
-          {printLetterExplanation(
-            LETTER_STATUS.misplaced.color,
-            ' is in the word but in the wrong position'
-          )}
-          {printLetterExplanation(
-            LETTER_STATUS.incorrect.color,
-            ' is not in the word in any position'
-          )}
-        </div>
-      </li>
-      <li>
-        Take into account that the word could have repeated letters, meaning you could have the same
-        letter in different positions both painted in their corresponding color
-      </li>
-    </ul>
-  </div>
-);
+const Rules = () => {
+  const minLetters = ADMITTED_WORDS_SIZES[0];
+  const maxLetters = ADMITTED_WORDS_SIZES[ADMITTED_WORDS_SIZES.length - 1];
+
+  const t = useTranslation();
+  const maxAttemptsMessage = t('rules.maxAttemptsMessage', { maxAttempts: MAX_ATTEMPTS });
+  const lettersAmountMessage = t('rules.lettersAmountMessage', { minLetters, maxLetters });
+  const dailyWordMessage = t('rules.dailyWordMessage');
+  const validWordMessage = t('rules.validWordMessage');
+  const keyboardMessage = t('rules.keyboardMessage');
+  const submitMessage = t('rules.submitMessage');
+  const colorExplanation = t('rules.colorExplanation');
+  const correctExplanation = t('rules.correctExplanation');
+  const misplacedExplanation = t('rules.misplacedExplanation');
+  const incorrectExplanation = t('rules.incorrectExplanation');
+  const repeatedLettersMessage = t('rules.repeatedLettersMessage');
+
+  return (
+    <div className="rules-container">
+      <ul className="rules-bullet">
+        <li>{maxAttemptsMessage}</li>
+        <li>{lettersAmountMessage}</li>
+        <li>{dailyWordMessage}</li>
+        <li>{validWordMessage}</li>
+        <li>{keyboardMessage}</li>
+        <li>{submitMessage}</li>
+        <li>
+          {colorExplanation}
+          <div className="rules-letters-container">
+            {printLetterExplanation(LETTER_STATUS.correct.color, correctExplanation)}
+            {printLetterExplanation(LETTER_STATUS.misplaced.color, misplacedExplanation)}
+            {printLetterExplanation(LETTER_STATUS.incorrect.color, incorrectExplanation)}
+          </div>
+        </li>
+        <li>{repeatedLettersMessage}</li>
+      </ul>
+    </div>
+  );
+};
 
 export default Rules;

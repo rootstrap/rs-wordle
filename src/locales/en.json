@@ -8,8 +8,8 @@
     "shareResults": "Share Results"
   },
   "invalidUser": {
-    "firstMessage": "Lo siento {name} pero tu email \"{email}\" no pertenece a Rootstrap.",
-    "secondMessage": "Por favor cerrá sesión y volvé a ingresar con un email \"@rootstrap.com\""
+    "firstMessage": "I'm sorry {name} but your email \"{email}\" is not from Rootstrap.",
+    "secondMessage": "Please logout and login again with an \"@rootstrap.com\" email"
   },
   "login": {
     "title": "Login with Google"
@@ -20,6 +20,19 @@
   "ranking": {
     "allTime": "All Time ({total})",
     "today": "Today ({total})"
+  },
+  "rules": {
+    "maxAttemptsMessage": "Guess a word in {maxAttempts} attempts or less",
+    "lettersAmountMessage": "The word could have between {minLetters} and {maxLetters} letters",
+    "dailyWordMessage": "Every day you will have a different word to guess and it will be the same for everyone",
+    "validWordMessage": "Each guess must be a valid English word",
+    "keyboardMessage": "To write the word you can use either your keyboard or the virtual keyboard provided",
+    "submitMessage": "To submit the word use the Enter key (of either keyboard)",
+    "colorExplanation": "The color of the letters will change to show you if the letter is or not in the word and in the correct position.",
+    "correctExplanation": " is in the word and in the correct position",
+    "misplacedExplanation": " is in the word but in the wrong position",
+    "incorrectExplanation": " is not in the word in any position",
+    "repeatedLettersMessage": "Take into account that the word could have repeated letters, meaning you could have the same letter in different positions both painted in their corresponding color"
   },
   "statistics": {
     "currentStreak": "Current Streak",

@@ -1,8 +1,14 @@
 {
+  "errors": {
+    "alreadyAttemptedWord": "You already tried with {attemptedWord}`",
+    "doesntExist": "{attemptedWord} doesn't exist in English",
+    "lettersAmount": "{attemptedWord} doesn't have {wordLength} letters"
+  },
   "global": {
     "pageTitle": "RS Wordle"
   },
   "home": {
+    "copiedToClipboard": "Copied to Clipboard",
     "correctWordMessage": "The word was {word}",
     "gameStatusMessage": "You {gameStatus}",
     "shareResults": "Share Results"

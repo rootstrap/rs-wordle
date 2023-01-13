@@ -1,3 +1,4 @@
+export const MAIN_ID = 'main';
 export const SKIP_TO_MAIN_CONTENT_ID = 'skipToMainContentId';
 
 // side nav items

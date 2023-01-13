@@ -3,34 +3,36 @@
     "pageTitle": "RS Wordle"
   },
   "home": {
-    "welcomeMsg": "Welcome to React Redux Base",
-    "logoAltMsg": "React logo",
-    "logoutBtn": "Logout"
+    "correctWordMessage": "The word was {word}",
+    "gameStatusMessage": "You {gameStatus}",
+    "shareResults": "Share Results"
   },
-  "signup": {
-    "title": "Sign up",
-    "alreadyHaveAccount": "Already have an account? Log in",
-    "labels": {
-      "email": "Email",
-      "password": "Password",
-      "passwordConfirmation": "Confirm password"
-    },
-    "errors": {
-      "emailMsg": "Must provide an email",
-      "passwordMsg": "Password must have at least 8 characters, a letter and a number",
-      "passwordConfirmationMsg": "Passwords must match"
-    }
+  "invalidUser": {
+    "firstMessage": "Lo siento {name} pero tu email \"{email}\" no pertenece a Rootstrap.",
+    "secondMessage": "Por favor cerrá sesión y volvé a ingresar con un email \"@rootstrap.com\""
   },
   "login": {
-    "title": "Log in",
-    "dontHaveAccountMsg": "Don't have an account? Sign up",
-    "labels": {
-      "email": "Email",
-      "password": "Password"
-    },
-    "errors": {
-      "emailMsg": "Must provide an email",
-      "passwordMsg": "Must provide a password"
+    "title": "Login with Google"
+  },
+  "logout": {
+    "logoutBtn": "Logout"
+  },
+  "ranking": {
+    "allTime": "All Time ({total})",
+    "today": "Today ({total})",
+    "values": {
+      "currentStreak": "Current Streak",
+      "longestStreak": "Longest Streak",
+      "attemptsAverage": "Attempts Average",
+      "bestAttempt": "Best Attempt",
+      "commonAttempt": "Common Attempt",
+      "fastest": "Fastest (mins)",
+      "slowest": "Slowest (mins)",
+      "timeAverage": "Time Average (mins)",
+      "numberOfGames": "Number of Games",
+      "totalLosses": "Total Losses",
+      "totalWins": "Total Wins",
+      "winsPercentage": "Wins (%)"
     }
   }
 }

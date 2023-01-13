@@ -5,6 +5,7 @@ import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
 import Keyboard from 'components/Keyboard';
 import { LETTER_STATUS } from 'constants/types';
+import useTranslation from 'hooks/useTranslation';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 
@@ -35,6 +36,11 @@ const Home = () => {
     letters,
     setLoading,
   });
+
+  const t = useTranslation();
+  const gameStatusMessage = t('home.gameStatusMessage', { gameStatus: gameStatus.toUpperCase() });
+  const correctWordMessage = t('home.correctWordMessage', { word });
+  const shareResultsMessage = t('home.shareResults');
 
   if (loading) return <Loading />;
 
@@ -67,11 +73,11 @@ const Home = () => {
       {wordProcessing && <Loading />}
       {gameEnded && (
         <>
-          <p className="game-status">You {gameStatus.toUpperCase()}</p>
-          <p className="game-status">The word was {word}</p>
+          <p className="game-status">{gameStatusMessage}</p>
+          <p className="game-status">{correctWordMessage} </p>
           <p className="game-status">{customMessage}</p>
           <div className="share-results-button">
-            <Button handleClick={shareResults}>Share Results</Button>
+            <Button handleClick={shareResults}>{shareResultsMessage}</Button>
           </div>
           {won && (
             <Confetti

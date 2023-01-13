@@ -1,6 +1,7 @@
 import Loading from 'components/common/Loading';
 import Tabs from 'components/common/Tabs';
 import useRankingData from 'hooks/useRankingData';
+import useTranslation from 'hooks/useTranslation';
 
 import AllTime from './AllTime';
 import Today from './Today';
@@ -9,13 +10,17 @@ import './styles.css';
 const Ranking = () => {
   const { rankingData, dailyResults, loading } = useRankingData();
 
+  const t = useTranslation();
+  const allTimeLabel = t('ranking.allTime', { total: rankingData.length });
+  const todayLabel = t('ranking.today', { total: dailyResults.length });
+
   const tabsConfig = [
     {
-      label: `Today (${dailyResults.length})`,
+      label: todayLabel,
       content: <Today />,
     },
     {
-      label: `All Time (${rankingData.length})`,
+      label: allTimeLabel,
       content: <AllTime />,
     },
   ];

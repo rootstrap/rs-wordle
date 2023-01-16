@@ -1,9 +1,15 @@
+import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 const useTranslation = () => {
   const intl = useIntl();
 
-  return (message, values) => intl.formatMessage({ id: message }, values);
+  const translation = useCallback(
+    (message, values) => intl.formatMessage({ id: message }, values),
+    [intl]
+  );
+
+  return translation;
 };
 
 export default useTranslation;

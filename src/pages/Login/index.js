@@ -48,7 +48,7 @@ const Login = () => {
     <>
       <div className="login-button">
         <Button disabled={loading} handleClick={signInWithGoogle}>
-          Login with Google
+          {t('login.title')}
         </Button>
       </div>
       {fbError && <p className="error-message">{fbError}</p>}

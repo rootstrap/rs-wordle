@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import LogoutButton from 'components/LogoutButton';
 import useAuth from 'hooks/useAuth';
 import useTranslation from 'hooks/useTranslation';
@@ -10,7 +12,10 @@ const InvalidUser = () => {
   const name = completeName?.split(' ')[0];
 
   const t = useTranslation();
-  const firstMessage = t('invalidUser.firstMessage', { name, email });
+  const firstMessage = useMemo(
+    () => t('invalidUser.firstMessage', { name, email }),
+    [email, name, t]
+  );
   const secondMessage = t('invalidUser.secondMessage');
 
   return (

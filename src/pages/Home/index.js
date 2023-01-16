@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Confetti from 'react-confetti';
 
 import Button from 'components/common/Button';
@@ -38,8 +39,11 @@ const Home = () => {
   });
 
   const t = useTranslation();
-  const gameStatusMessage = t('home.gameStatusMessage', { gameStatus: gameStatus.toUpperCase() });
-  const correctWordMessage = t('home.correctWordMessage', { word });
+  const gameStatusMessage = useMemo(
+    () => t('home.gameStatusMessage', { gameStatus: gameStatus.toUpperCase() }),
+    [gameStatus, t]
+  );
+  const correctWordMessage = useMemo(() => t('home.correctWordMessage', { word }), [t, word]);
   const shareResultsMessage = t('home.shareResults');
 
   if (loading) return <Loading />;

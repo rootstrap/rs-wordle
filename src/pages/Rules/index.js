@@ -4,6 +4,7 @@ import { LETTER_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
+import { useMemo } from 'react';
 
 const printLetterExplanation = (backgroundColor, text) => (
   <div>
@@ -19,8 +20,14 @@ const Rules = () => {
   const maxLetters = ADMITTED_WORDS_SIZES[ADMITTED_WORDS_SIZES.length - 1];
 
   const t = useTranslation();
-  const maxAttemptsMessage = t('rules.maxAttemptsMessage', { maxAttempts: MAX_ATTEMPTS });
-  const lettersAmountMessage = t('rules.lettersAmountMessage', { minLetters, maxLetters });
+  const maxAttemptsMessage = useMemo(
+    () => t('rules.maxAttemptsMessage', { maxAttempts: MAX_ATTEMPTS }),
+    [t]
+  );
+  const lettersAmountMessage = useMemo(
+    () => t('rules.lettersAmountMessage', { minLetters, maxLetters }),
+    [maxLetters, minLetters, t]
+  );
   const dailyWordMessage = t('rules.dailyWordMessage');
   const validWordMessage = t('rules.validWordMessage');
   const keyboardMessage = t('rules.keyboardMessage');

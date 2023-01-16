@@ -23,7 +23,7 @@ const LogoutButton = () => {
 
   return (
     <div className="home-logout">
-      <Button handleClick={handleLogout}>{t('home.logoutBtn')}</Button>
+      <Button handleClick={handleLogout}>{t('logout.logoutBtn')}</Button>
     </div>
   );
 };

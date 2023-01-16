@@ -4,11 +4,11 @@ import { MAX_ATTEMPTS } from 'constants/constants';
 
 import './styles.css';
 
-const HorizontalBarChart = ({ data, maxValue, words = false }) => (
+const HorizontalBarChart = ({ data, maxValue, title, isWords = false }) => (
   <div className="bar-chart-container ">
-    <h2 className="bar-chart-title">{words ? 'Top Used Words' : 'Guess Distribution'}</h2>
+    <h2 className="bar-chart-title">{title}</h2>
     {data.map((value, index) => {
-      const isLostRow = index === MAX_ATTEMPTS && !words;
+      const isLostRow = index === MAX_ATTEMPTS && !isWords;
       let numericValue = value;
       let displayValue;
       let key = index;

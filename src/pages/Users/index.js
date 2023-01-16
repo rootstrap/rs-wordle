@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import ListRow from 'components/common/ListRow';
+import useTranslation from 'hooks/useTranslation';
 import useUsers from 'hooks/useUsers';
 
 import './styles.css';
@@ -11,10 +12,13 @@ const Users = () => {
   const { username } = filters;
   const { push } = useHistory();
 
+  const t = useTranslation();
+  const filterByName = t('users.filterByName');
+
   return (
     <div className="users-container">
       <div className="users-filters-container">
-        <span className="users-filter-label">Filter by name</span>
+        <span className="users-filter-label">{filterByName}</span>
         <input
           className="users-filter-input"
           type="text"

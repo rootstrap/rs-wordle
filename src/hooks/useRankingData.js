@@ -162,11 +162,16 @@ const useRankingData = () => {
     }
   };
 
+  const rankingDataLength = useMemo(() => rankingData.length, [rankingData.length]);
+  const dailyResultsLength = useMemo(() => dailyResults.length, [dailyResults.length]);
+
   return {
     currentUser,
     currentUserPlayed,
     rankingData,
+    rankingDataLength,
     dailyResults,
+    dailyResultsLength,
     loading,
     selectedRanking,
     onChangeSelectedRanking,

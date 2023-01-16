@@ -8,6 +8,7 @@ import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKey
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
+import useTranslation from 'hooks/useTranslation';
 import {
   getCurrentStreakIcon,
   getTodaysDate,
@@ -25,6 +26,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
     user: { email: currentUser, name, photo, uid },
   } = useAuth();
+
+  const t = useTranslation();
 
   const [wordDate, setWordDate] = useState(null);
   const [letterIndex, setLetterIndex] = useState(0);
@@ -306,9 +309,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     setError('');
     const currentAttempt = usersAttempts[currentRound];
     const attemptedWord = currentAttempt.join('');
+    const attemptedWordUpperCase = attemptedWord.toUpperCase();
 
     if (attemptedWord.length !== wordLength) {
-      setError(`${attemptedWord.toUpperCase()} doesn't have ${wordLength} letters`);
+      const errorMessage = t('errors.lettersAmount', {
+        attemptedWord: attemptedWordUpperCase,
+        wordLength,
+      });
+      setError(errorMessage);
       setWordProcessing(false);
       return;
     }
@@ -320,7 +328,10 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     );
 
     if (alreadyAttemptedWord) {
-      setError(`You already tried with ${attemptedWord.toUpperCase()}`);
+      const errorMessage = t('errors.alreadyAttemptedWord', {
+        attemptedWord: attemptedWordUpperCase,
+      });
+      setError(errorMessage);
       setWordProcessing(false);
       return;
     }
@@ -328,12 +339,15 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
     const existsWord = wordExists(attemptedWord) || isAcceptedWord;
     if (!existsWord) {
-      setError(`${attemptedWord.toUpperCase()} doesn't exist in English`);
+      const errorMessage = t('errors.doesntExist', {
+        attemptedWord: attemptedWordUpperCase,
+      });
+      setError(errorMessage);
     } else {
       await compareWithWord(currentAttempt, attemptedWord);
     }
     setWordProcessing(false);
-  }, [compareWithWord, currentRound, usersAttempts, wordLength]);
+  }, [compareWithWord, currentRound, t, usersAttempts, wordLength]);
 
   const focusBefore = letterIndex => {
     if (letterIndex > 0) {
@@ -382,7 +396,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         setUsersAttempts(newAttempt);
       }
     },
-    [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts]
+    [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts, wordProcessing]
   );
 
   useEffect(() => {
@@ -398,17 +412,19 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     const resultsRatio = `${
       gameStatus === GAME_STATUS.won ? roundsResults.length : 'X'
     }/${MAX_ATTEMPTS}`;
-    let textResult = `RS Wordle ${resultsDate} ${resultsRatio} \n \n`;
+    let textResult = `${t('global.pageTitle')} ${resultsDate} ${resultsRatio} \n \n`;
     roundsResults.forEach(lineResult => {
       lineResult.forEach(result => {
         textResult += LETTER_STATUS[result].icon;
       });
       textResult += '\n';
     });
-    textResult += `\nCurrent Streak: ${currentStreak} ${getCurrentStreakIcon(currentStreak)}\n`;
+    textResult += `\n${t('statistics.currentStreak')}: ${currentStreak} ${getCurrentStreakIcon(
+      currentStreak
+    )}\n`;
     textResult += `\n${WORDLE_URL}`;
     await navigator.clipboard.writeText(textResult);
-    alert('Copied to Clipboard: \n \n' + textResult);
+    alert(`${t('home.copiedToClipboard')}: \n \n` + textResult);
   };
 
   const customMessage = useMemo(() => {

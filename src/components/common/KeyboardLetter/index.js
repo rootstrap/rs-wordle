@@ -1,9 +1,11 @@
 import cn from 'classnames';
 
+import { ENTER, BACKSPACE } from 'constants/keyboardKeys';
+
 import './styles.css';
 
 const KeyboardLetter = ({ value, color, onKeyPress, disabled }) => {
-  const isSmall = value !== 'Enter' && value !== 'Backspace';
+  const isSmall = value !== ENTER && value !== BACKSPACE;
 
   return (
     <button

@@ -4,11 +4,11 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 // import { initialize } from '@paunovic/random-words';
 import randomWords from 'random-words';
 
+import { ADMITTED_WORDS_SIZES } from 'constants/constants';
 import { WORDS_COLLECTION } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import { getRandomInt, getTodaysDate } from 'utils/helpers';
 
-const ADMITED_WORDS_SIZES = [4, 5, 6];
 const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS', 'DOGS', 'CATS'];
 
 const { firebaseDb } = firebaseData;
@@ -36,7 +36,7 @@ const useWordDb = () => {
             let todaysWord = '';
             const wordsCollection = randomWords({ exactly: 7, maxLength: 6 });
             const correctSizeWords = await wordsCollection.filter(word =>
-              ADMITED_WORDS_SIZES.includes(word.length)
+              ADMITTED_WORDS_SIZES.includes(word.length)
             );
             if (!!correctSizeWords.length) {
               const randomIndex = getRandomInt(correctSizeWords.length);

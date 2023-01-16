@@ -1,36 +1,55 @@
 {
+  "errors": {
+    "alreadyAttemptedWord": "You already tried with {attemptedWord}",
+    "doesntExist": "{attemptedWord} doesn't exist in English",
+    "lettersAmount": "{attemptedWord} doesn't have {wordLength} letters"
+  },
   "global": {
     "pageTitle": "RS Wordle"
   },
   "home": {
-    "welcomeMsg": "Welcome to React Redux Base",
-    "logoAltMsg": "React logo",
-    "logoutBtn": "Logout"
+    "copiedToClipboard": "Copied to Clipboard",
+    "correctWordMessage": "The word was {word}",
+    "gameStatusMessage": "You {gameStatus}",
+    "shareResults": "Share Results"
   },
-  "signup": {
-    "title": "Sign up",
-    "alreadyHaveAccount": "Already have an account? Log in",
-    "labels": {
-      "email": "Email",
-      "password": "Password",
-      "passwordConfirmation": "Confirm password"
-    },
-    "errors": {
-      "emailMsg": "Must provide an email",
-      "passwordMsg": "Password must have at least 8 characters, a letter and a number",
-      "passwordConfirmationMsg": "Passwords must match"
-    }
+  "invalidUser": {
+    "firstMessage": "I'm sorry {name} but your email \"{email}\" is not from Rootstrap.",
+    "secondMessage": "Please logout and login again with an \"@rootstrap.com\" email"
   },
   "login": {
-    "title": "Log in",
-    "dontHaveAccountMsg": "Don't have an account? Sign up",
-    "labels": {
-      "email": "Email",
-      "password": "Password"
-    },
-    "errors": {
-      "emailMsg": "Must provide an email",
-      "passwordMsg": "Must provide a password"
-    }
+    "title": "Login with Google"
+  },
+  "logout": {
+    "logoutBtn": "Logout"
+  },
+  "ranking": {
+    "allTime": "All Time ({total})",
+    "today": "Today ({total})"
+  },
+  "rules": {
+    "maxAttemptsMessage": "Guess a word in {maxAttempts} attempts or less",
+    "lettersAmountMessage": "The word could have between {minLetters} and {maxLetters} letters",
+    "dailyWordMessage": "Every day you will have a different word to guess and it will be the same for everyone",
+    "validWordMessage": "Each guess must be a valid English word",
+    "keyboardMessage": "To write the word you can use either your keyboard or the virtual keyboard provided",
+    "submitMessage": "To submit the word use the Enter key (of either keyboard)",
+    "colorExplanation": "The color of the letters will change to show you if the letter is or not in the word and in the correct position.",
+    "correctExplanation": " is in the word and in the correct position",
+    "misplacedExplanation": " is in the word but in the wrong position",
+    "incorrectExplanation": " is not in the word in any position",
+    "repeatedLettersMessage": "Take into account that the word could have repeated letters, meaning you could have the same letter in different positions both painted in their corresponding color"
+  },
+  "statistics": {
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "played": "Played",
+    "topAttemptedWordsLabel": "Top Used Words",
+    "totalAttemptsLabel": "Guess Distribution",
+    "wins": "Wins",
+    "winsPercentage": "Wins (%)"
+  },
+  "users": {
+    "filterByName": "Filter by name"
   }
 }

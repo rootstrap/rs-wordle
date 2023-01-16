@@ -337,7 +337,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     }
 
     const isAcceptedWord = ACCEPTED_WORDS.includes(attemptedWord);
-    const existsWord = wordExists(attemptedWord) || isAcceptedWord;
+    const isTodaysWords = attemptedWord === correctWord;
+    const existsWord = isTodaysWords || isAcceptedWord || wordExists(attemptedWord);
     if (!existsWord) {
       const errorMessage = t('errors.doesntExist', {
         attemptedWord: attemptedWordUpperCase,
@@ -347,7 +348,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       await compareWithWord(currentAttempt, attemptedWord);
     }
     setWordProcessing(false);
-  }, [compareWithWord, currentRound, t, usersAttempts, wordLength]);
+  }, [compareWithWord, correctWord, currentRound, t, usersAttempts, wordLength]);
 
   const focusBefore = letterIndex => {
     if (letterIndex > 0) {

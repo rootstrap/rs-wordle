@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState, useMemo } from 'react';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
+import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
 import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
+import useActiveElement from 'hooks/useActiveElement';
 import useTranslation from 'hooks/useTranslation';
 import {
   getCurrentStreakIcon,
@@ -44,6 +46,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const gameEnded = gameStatus !== GAME_STATUS.playing;
 
   const today = getTodaysDate();
+  const focusedElement = useActiveElement();
 
   const {
     statistics: {
@@ -368,11 +371,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const onKeyPress = useCallback(
     ({ key }) => {
       setError('');
-      if (gameEnded || wordProcessing) return;
       const isArrowLeft = key === ARROW_LEFT;
       const isArrowRight = key === ARROW_RIGHT;
       const isDelete = key === BACKSPACE;
       const isEnter = key === ENTER;
+
+      const ignoreEnter = isEnter && IGNORE_KEYBOARD_COMPONENTS_IDS.includes(focusedElement?.id);
+
+      if (gameEnded || wordProcessing || ignoreEnter) return;
 
       if (key.length > 1 && !isDelete) {
         isEnter && onSubmitWord();
@@ -397,7 +403,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         setUsersAttempts(newAttempt);
       }
     },
-    [currentRound, focusNext, gameEnded, letterIndex, onSubmitWord, usersAttempts, wordProcessing]
+    [
+      currentRound,
+      focusNext,
+      focusedElement?.id,
+      gameEnded,
+      letterIndex,
+      onSubmitWord,
+      usersAttempts,
+      wordProcessing,
+    ]
   );
 
   useEffect(() => {

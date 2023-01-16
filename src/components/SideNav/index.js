@@ -5,6 +5,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import cn from 'classnames';
 
 import SkipToMainContent from 'components/SkipToMainContent';
+import { SIDE_NAV_TOGGLE_ID } from 'constants/componentsIds';
 
 import { navData } from './navData';
 import './sidenav.css';
@@ -24,12 +25,13 @@ const SideNav = () => {
       <SkipToMainContent />
       <nav className={cn('sidenav', { closed: !open })}>
         <div>
-          <button className="menuBtn" onClick={toggleOpen}>
+          <button id={SIDE_NAV_TOGGLE_ID} className="menuBtn" onClick={toggleOpen}>
             {open ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
           </button>
-          {navData.map(item =>
-            item.id !== settingsIndex ? (
+          {navData.map((item, index) =>
+            index !== settingsIndex ? (
               <NavLink
+                id={item.id}
                 key={item.id}
                 className="sideitem"
                 activeClassName="selected-item"
@@ -42,7 +44,12 @@ const SideNav = () => {
             ) : null
           )}
         </div>
-        <NavLink className="sideitem" activeClassName="selected-item" to={settings.link}>
+        <NavLink
+          id={settings.id}
+          className="sideitem"
+          activeClassName="selected-item"
+          to={settings.link}
+        >
           {settings.icon}
           <span className={cn('sidenav-link-text', { closed: !open })}>{settings.text}</span>
         </NavLink>

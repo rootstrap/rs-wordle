@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import RouteFromPath from 'components/routes/RouteFromPath';
 import SideNav from 'components/SideNav';
+import { MAIN_ID } from 'constants/componentsIds';
 import useTranslation from 'hooks/useTranslation';
 import useAuth from 'hooks/useAuth';
 import useRootstrapAuth from 'hooks/useRootstrapAuth';
@@ -23,7 +24,7 @@ function App() {
       </Helmet>
       <BrowserRouter>
         {authenticated && isRootstrapDomain && <SideNav />}
-        <main id="main">
+        <main id={MAIN_ID}>
           <Switch>
             {routes.map(route => (
               <RouteFromPath

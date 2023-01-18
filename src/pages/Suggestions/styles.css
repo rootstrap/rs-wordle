@@ -1,0 +1,15 @@
+.filters-container {
+  font-weight: 600;
+  width: 80%;
+}
+
+.status-select-container {
+  padding-top: 10px;
+  width: 150px;
+}
+
+.suggestions-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

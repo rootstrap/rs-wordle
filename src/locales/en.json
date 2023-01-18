@@ -49,6 +49,10 @@
     "wins": "Wins",
     "winsPercentage": "Wins (%)"
   },
+  "suggestions": {
+    "status": "Status",
+    "suggestedBy": "Suggested by"
+  },
   "users": {
     "filterByName": "Filter by name"
   }

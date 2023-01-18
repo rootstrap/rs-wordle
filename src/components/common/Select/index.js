@@ -48,6 +48,8 @@ const colorStyles = {
   singleValue: styles => ({ ...styles, color }),
 };
 
-const Select = ({ ...props }) => <SelectReact {...props} styles={colorStyles} />;
+const Select = ({ customStyles, ...props }) => (
+  <SelectReact {...props} styles={{ ...colorStyles, ...customStyles }} />
+);
 
 export default Select;

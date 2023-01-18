@@ -9,10 +9,7 @@ import useAuth from 'hooks/useAuth';
 const { firebaseDb } = firebaseData;
 
 const useSuggestions = () => {
-  const DEFAULT_STATUS = useMemo(
-    () => SUGGESTIONS_STATUS.filter(({ isDefault }) => isDefault)[0],
-    []
-  );
+  const DEFAULT_STATUS = useMemo(() => SUGGESTIONS_STATUS.find(({ isDefault }) => isDefault), []);
   const [suggestions, setSuggestions] = useState([]);
   const [filters, setFilters] = useState({ statusFilter: DEFAULT_STATUS });
 
@@ -59,8 +56,8 @@ const useSuggestions = () => {
         const statusColor =
           SUGGESTIONS_STATUS.find(({ value }) => value === status)?.color || 'black';
         const suggestedBy = positiveVotes[0];
-        const votedNegative = !!negativeVotes.find(({ id }) => id === myId);
-        const votedPositive = !!positiveVotes.find(({ id }) => id === myId);
+        const votedNegative = negativeVotes.some(({ id }) => id === myId);
+        const votedPositive = positiveVotes.some(({ id }) => id === myId);
 
         results.push({
           description,

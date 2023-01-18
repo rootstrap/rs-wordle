@@ -1,6 +1,7 @@
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
+import { VOTED_COLOR } from 'constants/constants';
 import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
@@ -20,8 +21,6 @@ const SuggestionCard = ({
 }) => {
   const t = useTranslation();
 
-  const votedColor = 'action';
-
   return (
     <div className="suggestion-card-container">
       <div className="left-container">
@@ -40,11 +39,11 @@ const SuggestionCard = ({
         </span>
         <div className="votes-container">
           <div className="votes-item-container">
-            <ThumbUpAltIcon color={votedPositive ? votedColor : ''} />
+            <ThumbUpAltIcon color={votedPositive ? VOTED_COLOR : ''} />
             <span className="vote-count">{positiveVotesCount}</span>
           </div>
           <div className="votes-item-container">
-            <ThumbDownAltIcon color={votedNegative ? votedColor : ''} />
+            <ThumbDownAltIcon color={votedNegative ? VOTED_COLOR : ''} />
             <span className="vote-count">{negativeVotesCount}</span>
           </div>
         </div>

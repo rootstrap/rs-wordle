@@ -81,15 +81,15 @@ const useSuggestions = () => {
     })();
   }, [myId, statusFilterValue]);
 
-  const onChangeStatusFilter = newFilter =>
+  const onChangeFilter = (key, newValue) =>
     setFilters(oldFilters => ({
       ...oldFilters,
-      statusFilter: newFilter,
+      [key]: newValue,
     }));
 
   return {
     filters,
-    onChangeStatusFilter,
+    onChangeFilter,
     suggestions,
   };
 };

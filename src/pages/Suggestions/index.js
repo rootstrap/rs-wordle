@@ -32,6 +32,7 @@ const Suggestions = () => {
 
   return (
     <div className="suggestions-container">
+      <h3>{t('suggestions.slogan')}</h3>
       <div className="header-container">
         <div className="filters-container">
           <span className="status">{t('suggestions.status')}:</span>

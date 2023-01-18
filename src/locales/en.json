@@ -54,6 +54,7 @@
   "suggestions": {
     "addSuggestion": "Add Suggestion",
     "description": "Description",
+    "slogan": "Have a suggestion or want to report a bug? You are in the correct place!",
     "status": "Status",
     "suggestedBy": "Suggested by",
     "title": "Title"

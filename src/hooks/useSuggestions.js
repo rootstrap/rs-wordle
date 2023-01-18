@@ -64,6 +64,7 @@ const useSuggestions = () => {
 
         results.push({
           description,
+          id: doc.id,
           negativeVotes,
           negativeVotesCount,
           positiveVotes,

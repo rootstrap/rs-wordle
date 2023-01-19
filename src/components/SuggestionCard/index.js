@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 import Button from 'components/common/Button';
-import { VOTED_COLOR } from 'constants/constants';
+import { NOT_VOTED_COLOR, VOTED_COLOR } from 'constants/constants';
 import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
@@ -24,6 +24,7 @@ const BACKGROUND_COLOR = '#1a1a1b';
 const TEXT_COLOR = 'white';
 
 const SuggestionCard = ({
+  suggestion,
   suggestion: {
     description,
     id,
@@ -38,6 +39,7 @@ const SuggestionCard = ({
     votedPositive,
   },
   deleteSuggestion,
+  voteSuggestion,
   openEditModal,
 }) => {
   const t = useTranslation();
@@ -58,10 +60,10 @@ const SuggestionCard = ({
         {isMySuggestion && isPending && (
           <>
             <IconButton onClick={openEditModal}>
-              <EditIcon fontSize="small" />
+              <EditIcon htmlColor={VOTED_COLOR} fontSize="small" />
             </IconButton>
             <IconButton onClick={handleOpenDialog}>
-              <DeleteIcon fontSize="small" />
+              <DeleteIcon htmlColor={VOTED_COLOR} fontSize="small" />
             </IconButton>
           </>
         )}
@@ -79,11 +81,15 @@ const SuggestionCard = ({
         </span>
         <div className="votes-container">
           <div className="votes-item-container">
-            <ThumbUpAltIcon color={votedPositive ? VOTED_COLOR : ''} />
+            <IconButton disabled={isMySuggestion} onClick={() => voteSuggestion(suggestion, true)}>
+              <ThumbUpAltIcon htmlColor={votedPositive ? VOTED_COLOR : NOT_VOTED_COLOR} />
+            </IconButton>
             <span className="vote-count">{positiveVotesCount}</span>
           </div>
           <div className="votes-item-container">
-            <ThumbDownAltIcon color={votedNegative ? VOTED_COLOR : ''} />
+            <IconButton disabled={isMySuggestion} onClick={() => voteSuggestion(suggestion, false)}>
+              <ThumbDownAltIcon htmlColor={votedNegative ? VOTED_COLOR : NOT_VOTED_COLOR} />
+            </IconButton>
             <span className="vote-count">{negativeVotesCount}</span>
           </div>
         </div>

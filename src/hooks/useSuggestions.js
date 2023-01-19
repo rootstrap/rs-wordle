@@ -40,6 +40,7 @@ const useSuggestions = () => {
     () => ({
       createdDate: today,
       description: '',
+      id: '',
       negativeVotes: [],
       positiveVotes: [
         {
@@ -67,12 +68,34 @@ const useSuggestions = () => {
   } = filters;
   const { title, description } = newSuggestion;
 
+  const getDataFromSuggestion = ({
+    suggestion: {
+      createdDate,
+      description,
+      id,
+      negativeVotes,
+      positiveVotes,
+      status,
+      title,
+      voteCount,
+    },
+  }) => ({
+    createdDate,
+    description,
+    id,
+    negativeVotes,
+    positiveVotes,
+    status,
+    title,
+    voteCount,
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState(MODAL_TYPE.add);
   const handleOpenModal = (mode = MODAL_TYPE.add, suggestion = EMPTY_SUGGESTION) => {
     setIsModalOpen(true);
     setModalMode(mode);
-    setNewSuggestion(suggestion);
+    setNewSuggestion(getDataFromSuggestion({ suggestion }));
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -113,7 +136,6 @@ const useSuggestions = () => {
 
       results.push({
         description,
-        id: doc.id,
         isMySuggestion: suggestedBy.id === myId,
         negativeVotes,
         negativeVotesCount,
@@ -126,6 +148,7 @@ const useSuggestions = () => {
         votedNegative,
         votedPositive,
         ...restSuggestionsProps,
+        id: doc.id,
       });
     });
     setSuggestions(results);
@@ -187,6 +210,48 @@ const useSuggestions = () => {
     return true;
   };
 
+  const filterCurrentUser = arrayData => arrayData.filter(({ id }) => id !== myId);
+
+  const voteSuggestion = async (suggestion, isPositive) => {
+    const { votedNegative, votedPositive } = suggestion;
+    const currentSuggestion = getDataFromSuggestion({ suggestion });
+
+    if (isPositive) {
+      currentSuggestion.negativeVotes = filterCurrentUser(currentSuggestion.negativeVotes);
+      if (votedPositive) {
+        currentSuggestion.positiveVotes = filterCurrentUser(currentSuggestion.positiveVotes);
+      } else {
+        currentSuggestion.positiveVotes.push({
+          email,
+          id: myId,
+          name,
+          photo,
+        });
+      }
+    } else {
+      currentSuggestion.positiveVotes = filterCurrentUser(currentSuggestion.positiveVotes);
+      if (votedNegative) {
+        currentSuggestion.negativeVotes = filterCurrentUser(currentSuggestion.negativeVotes);
+      } else {
+        currentSuggestion.negativeVotes.push({
+          email,
+          id: myId,
+          name,
+          photo,
+        });
+      }
+    }
+
+    try {
+      await updateDoc(doc(suggestionsRef, currentSuggestion.id), currentSuggestion);
+    } catch (err) {
+      // TODO: handle errors
+      console.error(err);
+    }
+
+    getSuggestions();
+  };
+
   return {
     filters,
     onChangeFilter,
@@ -195,6 +260,7 @@ const useSuggestions = () => {
     onChangeNewSuggestion,
     addEditNewSuggestion,
     deleteSuggestion,
+    voteSuggestion,
     isModalOpen,
     modalMode,
     handleOpenModal,

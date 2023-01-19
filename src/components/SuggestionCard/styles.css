@@ -11,6 +11,7 @@
 .suggestion-title {
   font-size: 20px;
   font-weight: 800;
+  padding-right: 15px;
 }
 
 .left-container {
@@ -63,4 +64,8 @@
   font-size: 12px;
   font-weight: 600;
   padding-top: 5px;
+}
+
+.probando {
+  background-color: black;
 }

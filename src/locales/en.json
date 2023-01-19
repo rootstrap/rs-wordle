@@ -53,6 +53,11 @@
   },
   "suggestions": {
     "addSuggestion": "Add Suggestion",
+    "editSuggestion": "Edit Suggestion",
+    "cancelDelete": "Cancel",
+    "confirmDelete": "Confirm",
+    "confirmDescription": "Deleting \"{title}\" is a permanent action. Are you sure you want to delete it?",
+    "confirmTitle": "Are you sure you want to delete this suggestion?",
     "description": "Description",
     "slogan": "Have a suggestion or want to report a bug? You are in the correct place!",
     "status": "Status",

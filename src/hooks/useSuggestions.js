@@ -1,7 +1,17 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { addDoc, collection, getDocs, query, orderBy, where } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  orderBy,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 
-import { SUGGESTIONS_STATUS } from 'constants/types';
+import { MODAL_TYPE, SUGGESTIONS_STATUS } from 'constants/types';
 import { SUGGESTIONS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import useAuth from 'hooks/useAuth';
@@ -58,10 +68,16 @@ const useSuggestions = () => {
   const { title, description } = newSuggestion;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => setIsModalOpen(true);
+  const [modalMode, setModalMode] = useState(MODAL_TYPE.add);
+  const handleOpenModal = (mode = MODAL_TYPE.add, suggestion = EMPTY_SUGGESTION) => {
+    setIsModalOpen(true);
+    setModalMode(mode);
+    setNewSuggestion(suggestion);
+  };
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setErrors(EMPTY_SUGGESTION);
+    setErrors(EMPTY_ERRORS);
+    setNewSuggestion(EMPTY_SUGGESTION);
   };
 
   const getSuggestions = useCallback(async () => {
@@ -98,6 +114,7 @@ const useSuggestions = () => {
       results.push({
         description,
         id: doc.id,
+        isMySuggestion: suggestedBy.id === myId,
         negativeVotes,
         negativeVotesCount,
         positiveVotes,
@@ -122,12 +139,12 @@ const useSuggestions = () => {
 
   const onChangeNewSuggestion = (key, newValue) => {
     handleOnChangeState(setNewSuggestion, key, newValue);
-    setErrors(EMPTY_SUGGESTION);
+    setErrors(EMPTY_ERRORS);
   };
 
   const onChangeErrors = (key, newValue) => handleOnChangeState(setErrors, key, newValue);
 
-  const addNewSuggestion = async () => {
+  const addEditNewSuggestion = async () => {
     if (!title) {
       onChangeErrors('title', t('errors.emptyTitle'));
       return;
@@ -138,12 +155,16 @@ const useSuggestions = () => {
     }
 
     setIsLoading(true);
+    const isEdit = modalMode === MODAL_TYPE.edit;
 
     try {
-      await addDoc(suggestionsRef, newSuggestion);
+      if (isEdit) {
+        await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
+      } else {
+        await addDoc(suggestionsRef, newSuggestion);
+      }
+
       getSuggestions();
-      setNewSuggestion(EMPTY_SUGGESTION);
-      setErrors(EMPTY_ERRORS);
       handleCloseModal();
     } catch (err) {
       // TODO: handle errors
@@ -152,14 +173,30 @@ const useSuggestions = () => {
     setIsLoading(false);
   };
 
+  const deleteSuggestion = async id => {
+    try {
+      await deleteDoc(doc(suggestionsRef, id));
+    } catch (err) {
+      // TODO: handle errors
+      console.error(err);
+      return false;
+    }
+
+    getSuggestions();
+
+    return true;
+  };
+
   return {
     filters,
     onChangeFilter,
     suggestions,
     newSuggestion,
     onChangeNewSuggestion,
-    addNewSuggestion,
+    addEditNewSuggestion,
+    deleteSuggestion,
     isModalOpen,
+    modalMode,
     handleOpenModal,
     handleCloseModal,
     errors,

@@ -1,11 +1,10 @@
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { IconButton, Modal } from '@mui/material';
+import { IconButton } from '@mui/material';
 
-import Button from 'components/common/Button';
-import Loading from 'components/common/Loading';
 import Select from 'components/common/Select';
 import SuggestionCard from 'components/SuggestionCard';
-import { SUGGESTIONS_STATUS } from 'constants/types';
+import SuggestionModal from 'components/SuggestionModal';
+import { MODAL_TYPE, SUGGESTIONS_STATUS } from 'constants/types';
 import useSuggestions from 'hooks/useSuggestions';
 import useTranslation from 'hooks/useTranslation';
 
@@ -19,16 +18,16 @@ const Suggestions = () => {
     suggestions,
     newSuggestion,
     onChangeNewSuggestion,
-    addNewSuggestion,
+    addEditNewSuggestion,
+    deleteSuggestion,
     isModalOpen,
+    modalMode,
     handleOpenModal,
     handleCloseModal,
     errors,
     isLoading,
   } = useSuggestions();
   const { statusFilter } = filters;
-  const { title, description } = newSuggestion;
-  const { title: titleError, description: descriptionError } = errors;
 
   return (
     <div className="suggestions-container">
@@ -49,43 +48,23 @@ const Suggestions = () => {
         </IconButton>
       </div>
       {suggestions.map(suggestion => (
-        <SuggestionCard key={suggestion.id} suggestion={suggestion} />
+        <SuggestionCard
+          key={suggestion.id}
+          suggestion={suggestion}
+          deleteSuggestion={deleteSuggestion}
+          openEditModal={() => handleOpenModal(MODAL_TYPE.edit, suggestion)}
+        />
       ))}
-      <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <div className="modal-container">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              <div className="field-container">
-                <span className="field-label">{t('suggestions.title')}</span>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={({ target: { value: newValue } }) =>
-                    onChangeNewSuggestion('title', newValue)
-                  }
-                />
-                <span className="error-message">{titleError}</span>
-              </div>
-              <div className="field-container">
-                <span className="field-label">{t('suggestions.description')}</span>
-                <textarea
-                  value={description}
-                  onChange={({ target: { value: newValue } }) =>
-                    onChangeNewSuggestion('description', newValue)
-                  }
-                  rows={10}
-                />
-                <span className="error-message">{descriptionError}</span>
-              </div>
-              <div className="add-suggestion-button">
-                <Button handleClick={addNewSuggestion}>{t('suggestions.addSuggestion')}</Button>
-              </div>
-            </>
-          )}
-        </div>
-      </Modal>
+      <SuggestionModal
+        newSuggestion={newSuggestion}
+        onChangeNewSuggestion={onChangeNewSuggestion}
+        addEditNewSuggestion={addEditNewSuggestion}
+        isModalOpen={isModalOpen}
+        modalMode={modalMode}
+        handleCloseModal={handleCloseModal}
+        errors={errors}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

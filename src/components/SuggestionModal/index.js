@@ -5,6 +5,8 @@ import Loading from 'components/common/Loading';
 import { MODAL_TYPE } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 
+import './styles.css';
+
 const SuggestionModal = ({
   newSuggestion,
   onChangeNewSuggestion,

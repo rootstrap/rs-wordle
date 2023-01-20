@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Modal } from '@mui/material';
 
 import Button from 'components/common/Button';
@@ -22,7 +23,10 @@ const SuggestionModal = ({
   const { title, description } = newSuggestion;
   const { title: titleError, description: descriptionError } = errors;
   const isEdit = modalMode === MODAL_TYPE.edit;
-  const buttonText = isEdit ? t('suggestions.editSuggestion') : t('suggestions.addSuggestion');
+  const buttonText = useMemo(
+    () => (isEdit ? t('suggestions.editSuggestion') : t('suggestions.addSuggestion')),
+    [isEdit, t]
+  );
 
   return (
     <Modal open={isModalOpen} onClose={handleCloseModal}>

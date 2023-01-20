@@ -66,7 +66,7 @@ const useSuggestions = () => {
   const {
     statusFilter: { value: statusFilterValue },
   } = filters;
-  const { title, description } = newSuggestion;
+  const { title, description } = useMemo(() => newSuggestion, [newSuggestion]);
 
   const getDataFromSuggestion = ({
     suggestion: {
@@ -187,7 +187,8 @@ const useSuggestions = () => {
         await addDoc(suggestionsRef, newSuggestion);
       }
 
-      getSuggestions();
+      await getSuggestions();
+
       handleCloseModal();
     } catch (err) {
       // TODO: handle errors
@@ -205,7 +206,7 @@ const useSuggestions = () => {
       return false;
     }
 
-    getSuggestions();
+    await getSuggestions();
 
     return true;
   };

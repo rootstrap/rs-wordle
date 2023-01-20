@@ -57,6 +57,11 @@ export const SUGGESTIONS_STATUS = [
   },
 ];
 
+export const MODAL_TYPE = {
+  add: 'add',
+  edit: 'edit',
+};
+
 const FIRST_EMOJI = '🥳';
 
 const getAttemptsAverageValue = ({ totalAttempts, totalGames }) => {

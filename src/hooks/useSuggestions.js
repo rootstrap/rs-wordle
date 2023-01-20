@@ -113,7 +113,6 @@ const useSuggestions = () => {
 
       results.push({
         description,
-        id: doc.id,
         isMySuggestion: suggestedBy.id === myId,
         negativeVotes,
         negativeVotesCount,
@@ -126,6 +125,7 @@ const useSuggestions = () => {
         votedNegative,
         votedPositive,
         ...restSuggestionsProps,
+        id: doc.id,
       });
     });
     setSuggestions(results);
@@ -183,7 +183,7 @@ const useSuggestions = () => {
       return false;
     }
 
-    getSuggestions();
+    await getSuggestions();
 
     return true;
   };

@@ -55,7 +55,7 @@ const useSuggestions = () => {
   const {
     statusFilter: { value: statusFilterValue },
   } = filters;
-  const { title, description } = newSuggestion;
+  const { title, description } = useMemo(() => newSuggestion, [newSuggestion]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
@@ -141,7 +141,7 @@ const useSuggestions = () => {
 
     try {
       await addDoc(suggestionsRef, newSuggestion);
-      getSuggestions();
+      await getSuggestions();
       setNewSuggestion(EMPTY_SUGGESTION);
       setErrors(EMPTY_ERRORS);
       handleCloseModal();

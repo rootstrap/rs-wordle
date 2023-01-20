@@ -211,7 +211,7 @@ const useSuggestions = () => {
     return true;
   };
 
-  const filterCurrentUser = arrayData => arrayData.filter(({ id }) => id !== myId);
+  const filterCurrentUser = votes => votes.filter(({ id }) => id !== myId);
 
   const voteSuggestion = async (suggestion, isPositive) => {
     const { votedNegative, votedPositive } = suggestion;
@@ -250,7 +250,7 @@ const useSuggestions = () => {
       console.error(err);
     }
 
-    getSuggestions();
+    await getSuggestions();
   };
 
   return {

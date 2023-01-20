@@ -20,6 +20,7 @@ const Suggestions = () => {
     onChangeNewSuggestion,
     addEditNewSuggestion,
     deleteSuggestion,
+    voteSuggestion,
     isModalOpen,
     modalMode,
     handleOpenModal,
@@ -52,6 +53,7 @@ const Suggestions = () => {
           key={suggestion.id}
           suggestion={suggestion}
           deleteSuggestion={deleteSuggestion}
+          voteSuggestion={voteSuggestion}
           openEditModal={() => handleOpenModal(MODAL_TYPE.edit, suggestion)}
         />
       ))}

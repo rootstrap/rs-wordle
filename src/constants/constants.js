@@ -49,4 +49,5 @@ export const MAX_ATTEMPTS = 6;
 export const ADMITTED_WORDS_SIZES = [4, 5, 6];
 export const ACCEPTED_WORDS = ['MONDAY', 'TUESDAY', 'FRIDAY', 'SUNDAY', 'ROOTSTRAP'];
 
-export const VOTED_COLOR = 'action';
+export const NOT_VOTED_COLOR = 'white';
+export const VOTED_COLOR = '#ffae00';

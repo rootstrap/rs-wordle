@@ -2,6 +2,8 @@
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",
+    "emptyDescription": "Description can't be empty",
+    "emptyTitle": "Title can't be empty",
     "lettersAmount": "{attemptedWord} doesn't have {wordLength} letters"
   },
   "global": {
@@ -50,8 +52,12 @@
     "winsPercentage": "Wins (%)"
   },
   "suggestions": {
+    "addSuggestion": "Add Suggestion",
+    "description": "Description",
+    "slogan": "Have a suggestion or want to report a bug? You are in the correct place!",
     "status": "Status",
-    "suggestedBy": "Suggested by"
+    "suggestedBy": "Suggested by",
+    "title": "Title"
   },
   "users": {
     "filterByName": "Filter by name"

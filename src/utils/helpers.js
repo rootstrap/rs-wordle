@@ -51,3 +51,9 @@ export const getTimeDiff = (startDate, endDate, timeFormat = 'minutes') => {
 
 export const pluralize = (count, noun, suffix = 's') =>
   `${count} ${noun}${count !== 1 ? suffix : ''}`;
+
+export const handleOnChangeState = (setState, key, value) =>
+  setState(oldState => ({
+    ...oldState,
+    [key]: value,
+  }));

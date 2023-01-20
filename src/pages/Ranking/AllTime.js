@@ -16,7 +16,13 @@ const AllTime = () => {
 
   return (
     <>
-      <Select options={RANKING_VALUES} onChange={onChangeSelectedRanking} value={selectedRanking} />
+      <div className="ranking-values-container">
+        <Select
+          options={RANKING_VALUES}
+          onChange={onChangeSelectedRanking}
+          value={selectedRanking}
+        />
+      </div>
       {rankingData.map(({ position, rightText, suffix, user: { email, name, photo }, user }) => {
         const isCurrentUser = email === currentUser;
 

@@ -11,7 +11,7 @@ const selectedColor = '#3d6b39';
 const colorStyles = {
   container: styles => ({
     ...styles,
-    marginBottom: 35,
+    marginBottom: 10,
   }),
   control: (styles, { isFocused }) => ({
     ...styles,

@@ -6,6 +6,7 @@ import Ranking from 'pages/Ranking';
 import Rules from 'pages/Rules';
 import Settings from 'pages/Settings';
 import Statistics from 'pages/Statistics';
+import Suggestions from 'pages/Suggestions';
 import Users from 'pages/Users';
 
 const routes = [
@@ -55,6 +56,13 @@ const routes = [
     component: <Statistics />,
     exact: true,
     private: true,
+  },
+  {
+    path: routesPaths.suggestions,
+    component: <Suggestions />,
+    exact: true,
+    private: true,
+    title: 'Suggestions',
   },
   {
     path: routesPaths.login,

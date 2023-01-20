@@ -33,6 +33,35 @@ export const GAME_STATUS = {
   won: 'won',
 };
 
+export const SUGGESTIONS_STATUS = [
+  {
+    value: 'All',
+    label: 'All',
+    color: 'purple',
+    isDefault: true,
+  },
+  {
+    value: 'Pending',
+    label: 'Pending',
+    color: 'black',
+  },
+  {
+    value: 'In Progress',
+    label: 'In Progress',
+    color: '#af5706',
+  },
+  {
+    value: 'Done',
+    label: 'Done',
+    color: '#034e03',
+  },
+];
+
+export const MODAL_TYPE = {
+  add: 'add',
+  edit: 'edit',
+};
+
 const FIRST_EMOJI = '🥳';
 
 const getAttemptsAverageValue = ({ totalAttempts, totalGames }) => {

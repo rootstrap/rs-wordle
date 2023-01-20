@@ -4,12 +4,14 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 import {
   HOME_ID,
   RANKING_ID,
   STATISTICS_ID,
   USERS_ID,
+  SUGGESTIONS_ID,
   RULES_ID,
   SETTINGS_ID,
 } from 'constants/componentsIds';
@@ -41,6 +43,13 @@ export const navData = [
     icon: <GroupIcon />,
     text: 'Users',
     link: '/users',
+    exact: true,
+  },
+  {
+    id: SUGGESTIONS_ID,
+    icon: <QuestionAnswerIcon />,
+    text: 'Suggestions',
+    link: '/suggestions',
     exact: true,
   },
   {

@@ -53,6 +53,8 @@ const SuggestionCard = ({
     isOk && handleCloseDialog();
   };
 
+  const voteDisabled = isMySuggestion || !isPending;
+
   return (
     <div className="suggestion-card-container">
       <div className="left-container">
@@ -81,13 +83,13 @@ const SuggestionCard = ({
         </span>
         <div className="votes-container">
           <div className="votes-item-container">
-            <IconButton disabled={isMySuggestion} onClick={() => voteSuggestion(suggestion, true)}>
+            <IconButton disabled={voteDisabled} onClick={() => voteSuggestion(suggestion, true)}>
               <ThumbUpAltIcon htmlColor={votedPositive ? VOTED_COLOR : NOT_VOTED_COLOR} />
             </IconButton>
             <span className="vote-count">{positiveVotesCount}</span>
           </div>
           <div className="votes-item-container">
-            <IconButton disabled={isMySuggestion} onClick={() => voteSuggestion(suggestion, false)}>
+            <IconButton disabled={voteDisabled} onClick={() => voteSuggestion(suggestion, false)}>
               <ThumbDownAltIcon htmlColor={votedNegative ? VOTED_COLOR : NOT_VOTED_COLOR} />
             </IconButton>
             <span className="vote-count">{negativeVotesCount}</span>

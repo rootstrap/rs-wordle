@@ -81,7 +81,7 @@ const Home = () => {
           <p className="game-status">{correctWordMessage} </p>
           <p className="game-status">{customMessage}</p>
           <div className="share-results-button">
-            <Button handleClick={shareResults}>{shareResultsMessage}</Button>
+            <Button handleClick={() => shareResults(false)}>{shareResultsMessage}</Button>
           </div>
           {won && (
             <Confetti

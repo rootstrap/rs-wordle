@@ -13,7 +13,8 @@
     "copiedToClipboard": "Copied to Clipboard",
     "correctWordMessage": "The word was {word}",
     "gameStatusMessage": "You {gameStatus}",
-    "shareResults": "Share Results"
+    "shareResults": "Share Results",
+    "slackResult": "'s result:\n\n"
   },
   "invalidUser": {
     "firstMessage": "I'm sorry {name} but your email \"{email}\" is not from Rootstrap.",

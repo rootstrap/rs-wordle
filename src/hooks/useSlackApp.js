@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const SLACK_TOKEN = 'xoxb-3733938923-4680524309076-r6od9DLrg8OCTR2LKIm9dn92';
+const SLACK_TOKEN = 'xoxb-3733938923-4680524309076-HfyeuXfre5bmIaZTSb5ZSgd0';
 const EXCLUDE_ARCHIVED = true;
 const LIMIT = 700;
 

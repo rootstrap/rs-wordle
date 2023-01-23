@@ -7,7 +7,10 @@ const TEST_CHANNEL_ID = process.env.REACT_APP_WORDLE_TEST_CHANNEL_ID;
 const USE_TEST_CHANNEL = process.env.REACT_APP_USE_TEST_CHANNEL;
 
 const useSlackApp = () => {
-  const channelId = useMemo(() => (USE_TEST_CHANNEL ? TEST_CHANNEL_ID : CHANNEL_ID), []);
+  const channelId = useMemo(
+    () => (USE_TEST_CHANNEL === 'false' ? CHANNEL_ID : TEST_CHANNEL_ID),
+    []
+  );
 
   /*
     The ID is always the same. I use this to get the id and I leave it in case the

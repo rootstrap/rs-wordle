@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { WebClient } from '@slack/web-api';
 import axios from 'axios';
 
-const SLACK_TOKEN = 'xoxb-3733938923-4680524309076-isEgVyTeysjlQK82vRBj9zJG';
+const SLACK_TOKEN = 'xoxb-3733938923-4680524309076-UJlHUhu0j9PZ2JKWGmqscnXc';
 const EXCLUDE_ARCHIVED = true;
 const LIMIT = 700;
 
@@ -11,8 +10,6 @@ const useSlackApp = () => {
   // test-wordle channelId = C04KRFK4VJA
   const [channelId, setChannelId] = useState('C04KRFK4VJA');
   const [callFindConversation] = useState(false);
-
-  const slackBot = new WebClient(SLACK_TOKEN);
 
   const findConversation = async channelName => {
     try {
@@ -36,21 +33,12 @@ const useSlackApp = () => {
 
   const sendMessageToChannel = async message => {
     try {
-      console.log('AAAAA slackBot: ', slackBot);
-      await slackBot.chat.postMessage({
-        text: message,
-        channel: channelId,
-      });
-      console.log('DDDDD');
+      const body = `token=${SLACK_TOKEN}&channel=${channelId}&text=${message}`;
+      await axios.post('https://slack.com/api/chat.postMessage', body);
     } catch (error) {
-      console.log('CCCCCC');
-      console.error('EL ERROR es: ', error);
+      console.error(error);
     }
   };
-
-  useEffect(() => {
-    sendMessageToChannel('PROBANDO');
-  }, []);
 
   return { sendMessageToChannel };
 };

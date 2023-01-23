@@ -167,4 +167,11 @@ export const CUSTOM_CONFETTI = {
       drawShape: houseShape,
     },
   },
+  20230128: {
+    confettiExtraParams: {
+      drawShape: ctx => ghostShape(ctx, 'black'),
+      numberOfPieces: 1000,
+    },
+    customMessage: 'Happy Saturday Pablito! 👻',
+  },
 };

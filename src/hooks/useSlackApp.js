@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const SLACK_TOKEN = 'xoxb-3733938923-4680524309076-UJlHUhu0j9PZ2JKWGmqscnXc';
+const SLACK_TOKEN = process.env.REACT_APP_SLACK_TOKEN;
+const CHANNEL_ID = process.env.REACT_APP_WORDLE_CHANNEL_ID;
+const TEST_CHANNEL_ID = process.env.REACT_APP_WORDLE_TEST_CHANNEL_ID;
+const USE_TEST_CHANNEL = process.env.REACT_APP_USE_TEST_CHANNEL;
 const EXCLUDE_ARCHIVED = true;
 const LIMIT = 700;
 
 const useSlackApp = () => {
   // wordle channelId = C02U49H0VJA
   // test-wordle channelId = C04KRFK4VJA
-  const [channelId, setChannelId] = useState('C04KRFK4VJA');
-  const [callFindConversation] = useState(false);
+  const [channelId, setChannelId] = useState(USE_TEST_CHANNEL ? TEST_CHANNEL_ID : CHANNEL_ID);
+  const callFindConversation = false;
 
   const findConversation = async channelName => {
     try {

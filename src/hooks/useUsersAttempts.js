@@ -10,6 +10,7 @@ import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
 import useActiveElement from 'hooks/useActiveElement';
+import useSlackApp from 'hooks/useSlackApp';
 import useTranslation from 'hooks/useTranslation';
 import {
   getCurrentStreakIcon,
@@ -47,6 +48,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
 
   const today = getTodaysDate();
   const focusedElement = useActiveElement();
+  const { sendMessageToChannel } = useSlackApp();
 
   const {
     statistics: {
@@ -130,6 +132,41 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       }
     })();
   }, [correctWord, currentUser, keyboardLetters, setLoading, today, wordDate, wordLength]);
+
+  const shareResults = useCallback(
+    async (
+      sendToSlack,
+      {
+        newGameStatus = gameStatus,
+        newRoundsResults = roundsResults,
+        newCurrentStreak = currentStreak,
+      } = {}
+    ) => {
+      const resultsDate = getTodaysDisplayDate();
+      const resultsRatio = `${
+        newGameStatus === GAME_STATUS.won ? newRoundsResults.length : 'X'
+      }/${MAX_ATTEMPTS}`;
+      let textResult = `${t('global.pageTitle')} ${resultsDate} ${resultsRatio} \n \n`;
+      newRoundsResults.forEach(lineResult => {
+        lineResult.forEach(result => {
+          textResult += LETTER_STATUS[result].icon;
+        });
+        textResult += '\n';
+      });
+      textResult += `\n${t('statistics.currentStreak')}: ${newCurrentStreak} ${getCurrentStreakIcon(
+        newCurrentStreak
+      )}\n`;
+      textResult += `\n${WORDLE_URL}`;
+
+      if (sendToSlack) {
+        await sendMessageToChannel(`${name}${t('home.slackResult')}${textResult}`);
+      } else {
+        await navigator.clipboard.writeText(textResult);
+        alert(`${t('home.copiedToClipboard')}: \n \n` + textResult);
+      }
+    },
+    [currentStreak, gameStatus, name, roundsResults, sendMessageToChannel, t]
+  );
 
   const compareWithWord = useCallback(
     async (currentAttempt, attemptedWord) => {
@@ -271,6 +308,11 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         updateStatistics(newStatistics);
         setGameStatus(newStatus);
         setLetterIndex(-1);
+        shareResults(true, {
+          newGameStatus: newStatus,
+          newRoundsResults,
+          newCurrentStreak,
+        });
       } else {
         const attempts = [...usersAttempts];
         attempts.push(Array(wordLength).fill(''));
@@ -295,6 +337,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       name,
       photo,
       roundsResults,
+      shareResults,
       timeAverage,
       today,
       totalAttempts,
@@ -422,26 +465,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       document.removeEventListener('keydown', onKeyPress);
     };
   }, [onKeyPress]);
-
-  const shareResults = async () => {
-    const resultsDate = getTodaysDisplayDate();
-    const resultsRatio = `${
-      gameStatus === GAME_STATUS.won ? roundsResults.length : 'X'
-    }/${MAX_ATTEMPTS}`;
-    let textResult = `${t('global.pageTitle')} ${resultsDate} ${resultsRatio} \n \n`;
-    roundsResults.forEach(lineResult => {
-      lineResult.forEach(result => {
-        textResult += LETTER_STATUS[result].icon;
-      });
-      textResult += '\n';
-    });
-    textResult += `\n${t('statistics.currentStreak')}: ${currentStreak} ${getCurrentStreakIcon(
-      currentStreak
-    )}\n`;
-    textResult += `\n${WORDLE_URL}`;
-    await navigator.clipboard.writeText(textResult);
-    alert(`${t('home.copiedToClipboard')}: \n \n` + textResult);
-  };
 
   const customMessage = useMemo(() => {
     const todaysDate = today.slice(4);

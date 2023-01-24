@@ -1,3 +1,5 @@
+import { getRandomInt } from 'utils/helpers';
+
 const ghostShape = (ctx, eyesColor) => {
   const x = 0;
   const y = 0;
@@ -120,6 +122,80 @@ const snowflakeShape = ctx => {
   ctx.closePath();
 };
 
+const LShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 30, 10);
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 10, 20);
+  ctx.closePath();
+  ctx.stroke();
+};
+
+const lineShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 40, 10);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+};
+
+const squareShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 20, 20);
+  ctx.closePath();
+  ctx.stroke();
+};
+
+const TShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 30, 10);
+  ctx.moveTo(10, -10);
+  ctx.fillRect(10, -10, 10, 10);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+};
+
+const ZShape = ctx => {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.fillRect(0, 0, 20, 10);
+  ctx.moveTo(10, -10);
+  ctx.fillRect(10, -10, 20, 10);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+};
+
+function tetrisShape(ctx) {
+  if (!this.newRan) {
+    this.randomInt = getRandomInt(5);
+    this.newRan = true;
+  }
+
+  switch (this.randomInt) {
+    case 0:
+      ZShape(ctx);
+      break;
+    case 1:
+      LShape(ctx);
+      break;
+    case 2:
+      squareShape(ctx);
+      break;
+    case 3:
+      lineShape(ctx);
+      break;
+    default:
+      TShape(ctx);
+      break;
+  }
+}
+
 export const CUSTOM_CONFETTI_ANNUAL = {
   '0104': {
     confettiExtraParams: {
@@ -166,6 +242,13 @@ export const CUSTOM_CONFETTI = {
     confettiExtraParams: {
       drawShape: houseShape,
     },
+  },
+  20230125: {
+    confettiExtraParams: {
+      drawShape: tetrisShape,
+      numberOfPieces: 1000,
+    },
+    customMessage: 'Tomorrow (Jan 26) board games at Rootstrap Uruguay (office) 🎲 🃏',
   },
   20230128: {
     confettiExtraParams: {

@@ -215,6 +215,13 @@ export const CUSTOM_CONFETTI_ANNUAL = {
     },
     customMessage: "Happy Valentine's Day! 🎉",
   },
+  '0606': {
+    confettiExtraParams: {
+      drawShape: tetrisShape,
+      numberOfPieces: 1000,
+    },
+    customMessage: 'Happy Tetris day! 🎉',
+  },
   '0621': {
     confettiExtraParams: {
       drawShape: snowflakeShape,

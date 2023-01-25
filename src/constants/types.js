@@ -6,24 +6,28 @@ export const LETTER_STATUS = {
     color: '#538d4e',
     colorOrder: 3,
     icon: '🟩',
+    ariaLabel: (letter, t) => `${letter} ${t('ariaLabels.correct')}`,
   },
   misplaced: {
     id: 'misplaced',
     color: '#b59f3b',
     colorOrder: 2,
     icon: '🟨',
+    ariaLabel: (letter, t) => `${letter} ${t('ariaLabels.misplaced')}`,
   },
   nothing: {
     id: 'nothing',
     color: '#818384',
     colorOrder: 0,
     icon: '⬛️',
+    ariaLabel: (letter, t) => (!!letter ? letter : t('ariaLabels.empty')),
   },
   incorrect: {
     id: 'incorrect',
     color: '#3a3a3c',
     colorOrder: 1,
     icon: '⬜',
+    ariaLabel: (letter, t) => `${letter} ${t('ariaLabels.absent')}`,
   },
 };
 

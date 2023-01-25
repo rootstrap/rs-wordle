@@ -52,23 +52,35 @@ const Home = () => {
     <div className="home-container">
       <div className="word-container">
         {usersAttempts.map((attempt, round) => (
-          <div className="word" key={`word-attempt-${round}`}>
+          <div
+            className="word"
+            key={`word-attempt-${round}`}
+            role="group"
+            aria-label={`${attempt.join('')}`}
+            aria-roledescription={t('ariaLabels.word')}
+          >
             <>
-              {attempt.map((c, index) => (
-                <LetterInput
-                  key={`${c}-${round}-${index}`}
-                  value={usersAttempts[round][index]}
-                  style={{
-                    backgroundColor:
-                      round !== currentRound || gameEnded
-                        ? LETTER_STATUS[roundsResults[round][index]].color
-                        : LETTER_STATUS.nothing.color,
-                  }}
-                  isSelected={index === letterIndex && round === currentRound}
-                  onClick={() => setLetterIndex(index)}
-                  disabled={round !== currentRound || gameEnded}
-                />
-              ))}
+              {attempt.map((c, index) => {
+                const completedRow = round !== currentRound || gameEnded;
+                const letter = usersAttempts[round][index];
+                const letterStatus = completedRow
+                  ? LETTER_STATUS[roundsResults[round][index]]
+                  : LETTER_STATUS.nothing;
+
+                return (
+                  <LetterInput
+                    key={`${c}-${round}-${index}`}
+                    value={letter}
+                    style={{
+                      backgroundColor: letterStatus.color,
+                    }}
+                    isSelected={index === letterIndex && round === currentRound}
+                    onClick={() => setLetterIndex(index)}
+                    disabled={completedRow}
+                    ariaLabel={letterStatus.ariaLabel(letter, t)}
+                  />
+                );
+              })}
             </>
           </div>
         ))}

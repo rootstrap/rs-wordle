@@ -1,9 +1,9 @@
 {
   "ariaLabels": {
-    "absent": "absentAAA",
-    "correct": "correctAAA",
-    "empty": "emptyAAA",
-    "letter": "letterAAA",
+    "absent": "absent",
+    "correct": "correct",
+    "empty": "empty",
+    "letter": "letter",
     "misplaced": "misplaced",
     "word": "word"
   },

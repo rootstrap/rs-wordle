@@ -35,14 +35,14 @@ const Comment = ({
   const showCancelSaveIcons = isMyComment && isSelected;
 
   const enableEditComment = () => changeSelectedComment(comment);
-  const stopEdittingComment = () => changeSelectedComment();
+  const stopEditingComment = () => changeSelectedComment();
   const handleEditCommentText = newValue => {
     const newComment = { ...comment, text: newValue };
     changeSelectedComment(newComment);
   };
   const onEditComment = async () => {
     await handleUpdateComment();
-    stopEdittingComment();
+    stopEditingComment();
   };
 
   return (
@@ -73,7 +73,7 @@ const Comment = ({
           )}
           {showCancelSaveIcons && (
             <>
-              <IconButton onClick={stopEdittingComment}>
+              <IconButton onClick={stopEditingComment}>
                 <CancelIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
               <IconButton onClick={onEditComment}>

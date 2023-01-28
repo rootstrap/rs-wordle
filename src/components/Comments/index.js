@@ -7,13 +7,22 @@ import Input from 'components/common/Input';
 import Comment from './Comment';
 import './styles.css';
 
-const Comments = ({ suggestion, comments, addComment, selectedComment, changeSelectedComment }) => {
+const Comments = ({
+  suggestion,
+  comments,
+  addComment,
+  selectedComment,
+  changeSelectedComment,
+  updateComment,
+}) => {
   const [newComment, setNewComment] = useState('');
 
   const handleAddComment = async () => {
     await addComment(suggestion, newComment);
     setNewComment('');
   };
+
+  const handleUpdateComment = () => updateComment(suggestion);
 
   return (
     <div className="comments-container">
@@ -31,6 +40,7 @@ const Comments = ({ suggestion, comments, addComment, selectedComment, changeSel
           comment={comment}
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
+          handleUpdateComment={handleUpdateComment}
         />
       ))}
     </div>

@@ -1,6 +1,6 @@
 import {
   Cancel as CancelIcon,
-  CheckCircle as CheckCircleIcon,
+  CheckCircle as SaveIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
 } from '@mui/icons-material';
@@ -22,6 +22,7 @@ const Comment = ({
   comment,
   selectedComment,
   changeSelectedComment,
+  handleUpdateComment,
 }) => {
   const t = useTranslation();
   const {
@@ -38,6 +39,10 @@ const Comment = ({
   const handleEditCommentText = newValue => {
     const newComment = { ...comment, text: newValue };
     changeSelectedComment(newComment);
+  };
+  const onEditComment = async () => {
+    await handleUpdateComment();
+    stopEdittingComment();
   };
 
   return (
@@ -71,8 +76,8 @@ const Comment = ({
               <IconButton onClick={stopEdittingComment}>
                 <CancelIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={enableEditComment}>
-                <CheckCircleIcon htmlColor={VOTED_COLOR} fontSize="small" />
+              <IconButton onClick={onEditComment}>
+                <SaveIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>
           )}

@@ -47,6 +47,7 @@ const SuggestionCard = ({
   addComment,
   selectedComment,
   changeSelectedComment,
+  updateComment,
 }) => {
   const t = useTranslation();
   const isPending = status === 'Pending';
@@ -140,6 +141,7 @@ const SuggestionCard = ({
           addComment={addComment}
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
+          updateComment={updateComment}
         />
       )}
     </>

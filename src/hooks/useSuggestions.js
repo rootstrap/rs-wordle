@@ -184,8 +184,6 @@ const useSuggestions = () => {
     setIsLoading(true);
     const isEdit = modalMode === MODAL_TYPE.edit;
 
-    console.log('newSuggestion: ', newSuggestion);
-
     try {
       if (isEdit) {
         await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
@@ -284,6 +282,22 @@ const useSuggestions = () => {
 
   const changeSelectedComment = comment => setSelectedComment(comment);
 
+  const updateComment = async suggestion => {
+    const newSuggestion = { ...suggestion };
+    const newComments = newSuggestion.comments.map(comment =>
+      comment.id === selectedComment.id ? selectedComment : comment
+    );
+    newSuggestion.comments = newComments;
+
+    try {
+      await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
+      await getSuggestions();
+    } catch (err) {
+      // TODO: handle errors
+      console.error(err);
+    }
+  };
+
   return {
     filters,
     onChangeFilter,
@@ -302,6 +316,7 @@ const useSuggestions = () => {
     addComment,
     selectedComment,
     changeSelectedComment,
+    updateComment,
   };
 };
 

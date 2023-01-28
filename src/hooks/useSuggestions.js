@@ -38,6 +38,7 @@ const useSuggestions = () => {
 
   const EMPTY_SUGGESTION = useMemo(
     () => ({
+      comments: [],
       createdDate: today,
       description: '',
       id: '',
@@ -62,6 +63,7 @@ const useSuggestions = () => {
   const [errors, setErrors] = useState(EMPTY_ERRORS);
   const [newSuggestion, setNewSuggestion] = useState(EMPTY_SUGGESTION);
   const [filters, setFilters] = useState({ statusFilter: DEFAULT_STATUS });
+  const [selectedComment, setSelectedComment] = useState();
 
   const {
     statusFilter: { value: statusFilterValue },
@@ -70,6 +72,7 @@ const useSuggestions = () => {
 
   const getDataFromSuggestion = ({
     suggestion: {
+      comments,
       createdDate,
       description,
       id,
@@ -80,6 +83,7 @@ const useSuggestions = () => {
       voteCount,
     },
   }) => ({
+    comments,
     createdDate,
     description,
     id,
@@ -180,6 +184,8 @@ const useSuggestions = () => {
     setIsLoading(true);
     const isEdit = modalMode === MODAL_TYPE.edit;
 
+    console.log('newSuggestion: ', newSuggestion);
+
     try {
       if (isEdit) {
         await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
@@ -253,6 +259,31 @@ const useSuggestions = () => {
     await getSuggestions();
   };
 
+  const addComment = async (suggestion, newComment) => {
+    const newComments = [...suggestion.comments];
+    newComments.unshift({
+      id: Date.now(),
+      text: newComment,
+      user: {
+        email,
+        name,
+        photo,
+        id: myId,
+      },
+    });
+    const newSuggestion = { ...suggestion, comments: newComments };
+
+    try {
+      await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
+      await getSuggestions();
+    } catch (err) {
+      // TODO: handle errors
+      console.error(err);
+    }
+  };
+
+  const changeSelectedComment = comment => setSelectedComment(comment);
+
   return {
     filters,
     onChangeFilter,
@@ -268,6 +299,9 @@ const useSuggestions = () => {
     handleCloseModal,
     errors,
     isLoading,
+    addComment,
+    selectedComment,
+    changeSelectedComment,
   };
 };
 

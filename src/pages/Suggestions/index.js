@@ -27,6 +27,9 @@ const Suggestions = () => {
     handleCloseModal,
     errors,
     isLoading,
+    addComment,
+    selectedComment,
+    changeSelectedComment,
   } = useSuggestions();
   const { statusFilter } = filters;
 
@@ -55,6 +58,9 @@ const Suggestions = () => {
           deleteSuggestion={deleteSuggestion}
           voteSuggestion={voteSuggestion}
           openEditModal={() => handleOpenModal(MODAL_TYPE.edit, suggestion)}
+          addComment={addComment}
+          selectedComment={selectedComment}
+          changeSelectedComment={changeSelectedComment}
         />
       ))}
       <SuggestionModal

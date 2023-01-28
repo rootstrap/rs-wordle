@@ -66,7 +66,7 @@ const Comment = ({
               <IconButton onClick={enableEditComment}>
                 <EditIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={enableEditComment}>
+              <IconButton onClick={() => alert('TODO: delete comment')}>
                 <DeleteIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>

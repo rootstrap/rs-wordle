@@ -269,7 +269,8 @@ const useSuggestions = () => {
         id: myId,
       },
     });
-    const newSuggestion = { ...suggestion, comments: newComments };
+    const newSuggestion = getDataFromSuggestion({ suggestion });
+    newSuggestion.comments = newComments;
 
     try {
       await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
@@ -283,7 +284,7 @@ const useSuggestions = () => {
   const changeSelectedComment = comment => setSelectedComment(comment);
 
   const updateComment = async suggestion => {
-    const newSuggestion = { ...suggestion };
+    const newSuggestion = getDataFromSuggestion({ suggestion });
     const newComments = newSuggestion.comments.map(comment =>
       comment.id === selectedComment.id ? selectedComment : comment
     );

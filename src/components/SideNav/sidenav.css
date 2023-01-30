@@ -6,10 +6,14 @@
   transition: width 0.3s ease-in-out;
   background-color: var(--color-green);
   padding: 28px 0 18px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  box-shadow: rgb(15 15 15 / 5%) 0px 0px 0px 1px, rgb(15 15 15 / 10%) 0px 3px 6px, rgb(15 15 15 / 20%) 0px 9px 24px;
 }
 
 .sidenav.closed {
-  width: 60px;
+  width: var(--closed-side-menu);
 }
 
 .sideitem {
@@ -23,10 +27,6 @@
 
 .sidenav-link-text {
   padding-left: 16px;
-}
-
-.sidenav-link-text.closed {
-  visibility: hidden;
 }
 
 .sideitem:hover {

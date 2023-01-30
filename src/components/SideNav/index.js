@@ -39,7 +39,7 @@ const SideNav = () => {
                 exact={item.exact}
               >
                 {item.icon}
-                <span className={cn('sidenav-link-text', { closed: !open })}>{item.text}</span>
+                {open && <span className="sidenav-link-text">{item.text}</span>}
               </NavLink>
             ) : null
           )}
@@ -51,7 +51,7 @@ const SideNav = () => {
           to={settings.link}
         >
           {settings.icon}
-          <span className={cn('sidenav-link-text', { closed: !open })}>{settings.text}</span>
+          {open && <span className="sidenav-link-text">{settings.text}</span>}
         </NavLink>
       </nav>
     </>

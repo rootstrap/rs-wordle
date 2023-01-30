@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import {
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-  ModeComment as ModeCommentIcon,
-  ThumbDownAlt as ThumbDownAltIcon,
-  ThumbUpAlt as ThumbUpAltIcon,
-} from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import {
   Dialog,
   DialogActions,

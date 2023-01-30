@@ -1,9 +1,7 @@
-import {
-  Cancel as CancelIcon,
-  CheckCircle as SaveIcon,
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-} from '@mui/icons-material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SaveIcon from '@mui/icons-material/CheckCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
 import Input from 'components/common/Input';

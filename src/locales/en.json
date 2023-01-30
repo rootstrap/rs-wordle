@@ -1,4 +1,13 @@
 {
+  "ariaLabels": {
+    "absent": "absent",
+    "correct": "correct",
+    "empty": "empty",
+    "keyboard": "keyboard",
+    "letter": "letter",
+    "misplaced": "misplaced",
+    "word": "word"
+  },
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",

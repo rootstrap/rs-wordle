@@ -4,7 +4,7 @@ import { ENTER, BACKSPACE } from 'constants/keyboardKeys';
 
 import './styles.css';
 
-const KeyboardLetter = ({ value, color, onKeyPress, disabled }) => {
+const KeyboardLetter = ({ value, color, onKeyPress, disabled, ariaLabel }) => {
   const isSmall = value !== ENTER && value !== BACKSPACE;
 
   return (
@@ -13,6 +13,7 @@ const KeyboardLetter = ({ value, color, onKeyPress, disabled }) => {
       style={{ backgroundColor: color }}
       onClick={onKeyPress}
       disabled={disabled}
+      aria-label={ariaLabel}
     >
       {value}
     </button>

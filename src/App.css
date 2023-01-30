@@ -9,6 +9,7 @@ body {
 
 main {
   flex: 1;
+  margin-left: var(--closed-side-menu);
 }
 
 .font-frijole {

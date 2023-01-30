@@ -53,7 +53,7 @@ const Home = () => {
       <div className="word-container">
         {usersAttempts.map((attempt, round) => {
           const attemptedWord = attempt.join('');
-          const wordAriaLabel = !!attemptedWord.length ? attemptedWord : t('ariaLabels.empty');
+          const wordAriaLabel = attemptedWord || t('ariaLabels.empty');
 
           return (
             <div

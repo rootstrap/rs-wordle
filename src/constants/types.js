@@ -20,7 +20,7 @@ export const LETTER_STATUS = {
     color: '#818384',
     colorOrder: 0,
     icon: '⬛️',
-    ariaLabel: (letter, t) => (!!letter ? letter : t('ariaLabels.empty')),
+    ariaLabel: (letter, t) => letter || t('ariaLabels.empty'),
   },
   incorrect: {
     id: 'incorrect',

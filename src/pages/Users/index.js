@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
+import Input from 'components/common/Input';
 import ListRow from 'components/common/ListRow';
 import useTranslation from 'hooks/useTranslation';
 import useUsers from 'hooks/useUsers';
@@ -19,12 +20,7 @@ const Users = () => {
     <div className="users-container">
       <div className="users-filters-container">
         <span className="users-filter-label">{filterByName}</span>
-        <input
-          className="users-filter-input"
-          type="text"
-          value={username}
-          onChange={({ target: { value: newValue } }) => changeFilter('username', newValue)}
-        />
+        <Input value={username} handleOnChange={newValue => changeFilter('username', newValue)} />
       </div>
       <div className="users-list-container">
         {usersList?.map(({ email, id, name, photo }, index) => (

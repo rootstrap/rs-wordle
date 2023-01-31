@@ -49,7 +49,7 @@ const Comment = ({
   };
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
-  const handleDeleteSuggestion = async () => {
+  const handleConfirmDelete = async () => {
     await handleDeleteComment(id);
     setIsDialogOpen(false);
   };
@@ -95,7 +95,7 @@ const Comment = ({
       <DeleteDialog
         isDialogOpen={isDialogOpen}
         handleCloseDialog={handleCloseDialog}
-        handleConfirmDialog={handleDeleteSuggestion}
+        handleConfirmDialog={handleConfirmDelete}
         title={t('comments.confirmTitle')}
         description={t('comments.confirmDescription')}
       />

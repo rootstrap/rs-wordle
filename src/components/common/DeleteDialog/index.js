@@ -10,8 +10,6 @@ import Button from 'components/common/Button';
 import { BACKGROUND_COLOR, TEXT_COLOR } from 'constants/constants';
 import useTranslation from 'hooks/useTranslation';
 
-import './styles.css';
-
 const DeleteDialog = ({
   isDialogOpen,
   handleCloseDialog,

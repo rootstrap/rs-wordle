@@ -49,9 +49,8 @@ const Comment = ({
   };
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
-  const onDeleteComment = () => handleDeleteComment(id);
   const handleDeleteSuggestion = async () => {
-    await onDeleteComment();
+    await handleDeleteComment(id);
     setIsDialogOpen(false);
   };
 

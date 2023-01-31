@@ -1,5 +1,5 @@
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import Select from 'components/common/Select';
 import SuggestionCard from 'components/SuggestionCard';

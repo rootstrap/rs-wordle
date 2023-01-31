@@ -3,7 +3,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import DeleteDialog from 'components/common/DeleteDialog';
 import Input from 'components/common/Input';
@@ -47,8 +47,7 @@ const Comment = ({
     await handleUpdateComment();
     stopEditingComment();
   };
-  const handleOpenDialog = () => setIsDialogOpen(true);
-  const handleCloseDialog = () => setIsDialogOpen(false);
+  const handleToggleDialog = () => setIsDialogOpen(prevState => !prevState);
   const handleConfirmDelete = async () => {
     await handleDeleteComment(id);
     setIsDialogOpen(false);
@@ -75,7 +74,7 @@ const Comment = ({
               <IconButton onClick={enableEditComment}>
                 <EditIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={handleOpenDialog}>
+              <IconButton onClick={handleToggleDialog}>
                 <DeleteIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>
@@ -94,7 +93,7 @@ const Comment = ({
       </div>
       <DeleteDialog
         isDialogOpen={isDialogOpen}
-        handleCloseDialog={handleCloseDialog}
+        handleCloseDialog={handleToggleDialog}
         handleConfirmDialog={handleConfirmDelete}
         title={t('comments.confirmTitle')}
         description={t('comments.confirmDescription')}

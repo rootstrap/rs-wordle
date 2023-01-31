@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import Comments from 'components/Comments';
 import DeleteDialog from 'components/common/DeleteDialog';

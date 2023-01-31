@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 
 import Input from 'components/common/Input';

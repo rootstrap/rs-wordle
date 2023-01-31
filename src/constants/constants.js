@@ -51,3 +51,5 @@ export const ACCEPTED_WORDS = ['MONDAY', 'TUESDAY', 'FRIDAY', 'SUNDAY', 'ROOTSTR
 
 export const NOT_VOTED_COLOR = 'white';
 export const VOTED_COLOR = '#ffae00';
+export const BACKGROUND_COLOR = '#1a1a1b';
+export const TEXT_COLOR = 'white';

@@ -31,6 +31,7 @@ const Suggestions = () => {
     selectedComment,
     changeSelectedComment,
     updateComment,
+    deleteComment,
   } = useSuggestions();
   const { statusFilter } = filters;
 
@@ -63,6 +64,7 @@ const Suggestions = () => {
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
           updateComment={updateComment}
+          deleteComment={deleteComment}
         />
       ))}
       <SuggestionModal

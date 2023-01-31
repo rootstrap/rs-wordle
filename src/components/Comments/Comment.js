@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
+import DeleteDialog from 'components/common/DeleteDialog';
 import Input from 'components/common/Input';
 import { VOTED_COLOR } from 'constants/constants';
 import useAuth from 'hooks/useAuth';
@@ -21,11 +23,14 @@ const Comment = ({
   selectedComment,
   changeSelectedComment,
   handleUpdateComment,
+  handleDeleteComment,
 }) => {
   const t = useTranslation();
   const {
     user: { uid },
   } = useAuth();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const isSelected = id === selectedComment?.id;
   const isMyComment = userId === uid;
@@ -41,6 +46,13 @@ const Comment = ({
   const onEditComment = async () => {
     await handleUpdateComment();
     stopEditingComment();
+  };
+  const handleOpenDialog = () => setIsDialogOpen(true);
+  const handleCloseDialog = () => setIsDialogOpen(false);
+  const onDeleteComment = () => handleDeleteComment(id);
+  const handleDeleteSuggestion = async () => {
+    await onDeleteComment();
+    setIsDialogOpen(false);
   };
 
   return (
@@ -64,7 +76,7 @@ const Comment = ({
               <IconButton onClick={enableEditComment}>
                 <EditIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={() => alert('TODO: delete comment')}>
+              <IconButton onClick={handleOpenDialog}>
                 <DeleteIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>
@@ -81,6 +93,13 @@ const Comment = ({
           )}
         </div>
       </div>
+      <DeleteDialog
+        isDialogOpen={isDialogOpen}
+        handleCloseDialog={handleCloseDialog}
+        handleConfirmDialog={handleDeleteSuggestion}
+        title={t('comments.confirmTitle')}
+        description={t('comments.confirmDescription')}
+      />
       <div className="suggested-by-container commented-by-container">
         <span className="suggested-by-name">
           {t('suggestions.commentedBy')} {name}

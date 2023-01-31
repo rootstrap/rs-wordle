@@ -8,6 +8,10 @@
     "misplaced": "misplaced",
     "word": "word"
   },
+  "comments": {
+    "confirmTitle": "Are you sure you want to delete this comment?",
+    "confirmDescription": "Deleting this comment is a permanent action. Are you sure you want to delete it?"
+  },
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",
@@ -16,6 +20,8 @@
     "lettersAmount": "{attemptedWord} doesn't have {wordLength} letters"
   },
   "global": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
     "pageTitle": "RS Wordle"
   },
   "home": {
@@ -64,9 +70,7 @@
   "suggestions": {
     "addSuggestion": "Add Suggestion",
     "editSuggestion": "Edit Suggestion",
-    "cancelDelete": "Cancel",
     "commentedBy": "Commented by",
-    "confirmDelete": "Confirm",
     "confirmDescription": "Deleting \"{title}\" is a permanent action. Are you sure you want to delete it?",
     "confirmTitle": "Are you sure you want to delete this suggestion?",
     "description": "Description",

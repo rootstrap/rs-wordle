@@ -14,6 +14,7 @@ const Comments = ({
   selectedComment,
   changeSelectedComment,
   updateComment,
+  deleteComment,
 }) => {
   const [newComment, setNewComment] = useState('');
 
@@ -23,6 +24,8 @@ const Comments = ({
   };
 
   const handleUpdateComment = () => updateComment(suggestion);
+
+  const handleDeleteComment = commentId => deleteComment(suggestion, commentId);
 
   return (
     <div className="comments-container">
@@ -41,6 +44,7 @@ const Comments = ({
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
           handleUpdateComment={handleUpdateComment}
+          handleDeleteComment={handleDeleteComment}
         />
       ))}
     </div>

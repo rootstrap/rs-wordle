@@ -4,24 +4,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from '@mui/material';
+import { IconButton } from '@mui/material';
 
-import Button from 'components/common/Button';
 import Comments from 'components/Comments';
-import { NOT_VOTED_COLOR, VOTED_COLOR } from 'constants/constants';
+import DeleteDialog from 'components/common/DeleteDialog';
+import { NOT_VOTED_COLOR, VOTED_COLOR, TEXT_COLOR } from 'constants/constants';
 import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
-
-const BACKGROUND_COLOR = '#1a1a1b';
-const TEXT_COLOR = 'white';
 
 const SuggestionCard = ({
   suggestion,
@@ -46,6 +36,7 @@ const SuggestionCard = ({
   selectedComment,
   changeSelectedComment,
   updateComment,
+  deleteComment,
 }) => {
   const t = useTranslation();
   const isPending = status === 'Pending';
@@ -108,30 +99,14 @@ const SuggestionCard = ({
             </div>
           </div>
         </div>
-        <Dialog
-          open={isDialogOpen}
-          onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          PaperProps={{
-            style: {
-              backgroundColor: BACKGROUND_COLOR,
-              color: TEXT_COLOR,
-            },
-          }}
-        >
-          <DialogTitle id="alert-dialog-title">{t('suggestions.confirmTitle')}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" style={{ color: TEXT_COLOR }}>
-              {t('suggestions.confirmDescription', { title })}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button handleClick={handleCloseDialog}>{t('suggestions.cancelDelete')}</Button>
-            <Button handleClick={handleDeleteSuggestion}>{t('suggestions.confirmDelete')}</Button>
-          </DialogActions>
-        </Dialog>
       </div>
+      <DeleteDialog
+        isDialogOpen={isDialogOpen}
+        handleCloseDialog={handleCloseDialog}
+        handleConfirmDialog={handleDeleteSuggestion}
+        title={t('suggestions.confirmTitle')}
+        description={t('suggestions.confirmDescription', { title })}
+      />
       {showComments && (
         <Comments
           suggestion={suggestion}
@@ -140,6 +115,7 @@ const SuggestionCard = ({
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
           updateComment={updateComment}
+          deleteComment={deleteComment}
         />
       )}
     </>

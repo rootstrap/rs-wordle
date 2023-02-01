@@ -29,14 +29,6 @@ const Comments = ({
 
   return (
     <div className="comments-container">
-      <div className="add-comment-container">
-        <Input value={newComment} handleOnChange={setNewComment} rows={4} />
-        <div className="send-icon">
-          <IconButton onClick={handleAddComment} disabled={!newComment}>
-            <SendIcon htmlColor="white" />
-          </IconButton>
-        </div>
-      </div>
       {comments.map(comment => (
         <Comment
           key={`${comment.id}`}
@@ -47,6 +39,14 @@ const Comments = ({
           handleDeleteComment={handleDeleteComment}
         />
       ))}
+      <div className="add-comment-container">
+        <Input value={newComment} handleOnChange={setNewComment} rows={4} />
+        <div className="send-icon">
+          <IconButton onClick={handleAddComment} disabled={!newComment}>
+            <SendIcon htmlColor="white" />
+          </IconButton>
+        </div>
+      </div>
     </div>
   );
 };

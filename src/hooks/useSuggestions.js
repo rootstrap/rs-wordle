@@ -259,7 +259,7 @@ const useSuggestions = () => {
 
   const addComment = async (suggestion, newComment) => {
     const newComments = [...suggestion.comments];
-    newComments.unshift({
+    newComments.push({
       id: Date.now(),
       text: newComment,
       user: {

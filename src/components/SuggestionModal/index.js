@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Modal } from '@mui/material';
+import Modal from '@mui/material/Modal';
 
 import Button from 'components/common/Button';
 import Loading from 'components/common/Loading';

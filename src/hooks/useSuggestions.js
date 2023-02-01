@@ -299,6 +299,20 @@ const useSuggestions = () => {
     }
   };
 
+  const deleteComment = async (suggestion, commentId) => {
+    const newSuggestion = getDataFromSuggestion({ suggestion });
+    const newComments = newSuggestion.comments.filter(comment => comment.id !== commentId);
+    newSuggestion.comments = newComments;
+
+    try {
+      await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
+      await getSuggestions();
+    } catch (err) {
+      // TODO: handle errors
+      console.error(err);
+    }
+  };
+
   return {
     filters,
     onChangeFilter,
@@ -318,6 +332,7 @@ const useSuggestions = () => {
     selectedComment,
     changeSelectedComment,
     updateComment,
+    deleteComment,
   };
 };
 

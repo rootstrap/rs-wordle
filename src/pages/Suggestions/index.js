@@ -1,5 +1,5 @@
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import Select from 'components/common/Select';
 import SuggestionCard from 'components/SuggestionCard';
@@ -31,6 +31,7 @@ const Suggestions = () => {
     selectedComment,
     changeSelectedComment,
     updateComment,
+    deleteComment,
   } = useSuggestions();
   const { statusFilter } = filters;
 
@@ -63,6 +64,7 @@ const Suggestions = () => {
           selectedComment={selectedComment}
           changeSelectedComment={changeSelectedComment}
           updateComment={updateComment}
+          deleteComment={deleteComment}
         />
       ))}
       <SuggestionModal

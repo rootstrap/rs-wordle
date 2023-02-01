@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 
 import Input from 'components/common/Input';
+import { TEXT_COLOR } from 'constants/constants';
 
 import Comment from './Comment';
 import './styles.css';
@@ -43,7 +44,7 @@ const Comments = ({
         <Input value={newComment} handleOnChange={setNewComment} rows={4} />
         <div className="send-icon">
           <IconButton onClick={handleAddComment} disabled={!newComment}>
-            <SendIcon htmlColor="white" />
+            <SendIcon htmlColor={TEXT_COLOR} />
           </IconButton>
         </div>
       </div>

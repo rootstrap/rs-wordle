@@ -33,10 +33,9 @@ const SideNav = () => {
               <NavLink
                 id={item.id}
                 key={item.id}
-                className="sideitem"
-                activeClassName="selected-item"
+                className={({ isActive }) => cn('sideitem', { isActive })}
                 to={item.link}
-                exact={item.exact}
+                end={item.end}
               >
                 {item.icon}
                 {open && <span className="sidenav-link-text">{item.text}</span>}
@@ -46,8 +45,7 @@ const SideNav = () => {
         </div>
         <NavLink
           id={settings.id}
-          className="sideitem"
-          activeClassName="selected-item"
+          className={({ isActive }) => cn('sideitem', { isActive })}
           to={settings.link}
         >
           {settings.icon}

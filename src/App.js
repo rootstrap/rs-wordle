@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -28,25 +27,23 @@ function App() {
         {authenticated && isRootstrapDomain && <SideNav />}
         <main id={MAIN_ID}>
           <Routes>
-            <Fragment>
-              {routes.map(route => (
-                <Route
-                  key={`route-${route.path}`}
-                  {...route}
-                  element={
-                    <PrivateRoute
-                      {...route}
-                      authenticated={authenticated}
-                      isRootstrapDomain={isRootstrapDomain}
-                    >
-                      <PageWrapper title={route.title} subtitle={route.subtitle}>
-                        {route.element}
-                      </PageWrapper>
-                    </PrivateRoute>
-                  }
-                />
-              ))}
-            </Fragment>
+            {routes.map(route => (
+              <Route
+                key={`route-${route.path}`}
+                {...route}
+                element={
+                  <PrivateRoute
+                    {...route}
+                    authenticated={authenticated}
+                    isRootstrapDomain={isRootstrapDomain}
+                  >
+                    <PageWrapper title={route.title} subtitle={route.subtitle}>
+                      {route.element}
+                    </PageWrapper>
+                  </PrivateRoute>
+                }
+              />
+            ))}
           </Routes>
         </main>
       </BrowserRouter>

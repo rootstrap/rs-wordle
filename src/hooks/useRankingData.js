@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
@@ -16,7 +16,7 @@ const useRankingData = () => {
     user: { email: currentUser },
   } = useAuth();
 
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const [dailyResults, setDailyResults] = useState([]);
   const [rankingData, setRankingData] = useState([]);
@@ -120,7 +120,7 @@ const useRankingData = () => {
   );
 
   const goToUsersStatistics = ({ email, name, photo, uid }) =>
-    push({
+    navigate({
       pathname: `/statistics/${uid}`,
       state: { email, name, photo },
     });

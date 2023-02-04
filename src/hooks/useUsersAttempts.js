@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import wordExists from 'word-exists';
 
 import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
@@ -7,8 +6,7 @@ import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'cons
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
-import { DAILY_RESULTS } from 'firebase/collections';
-import firebaseData from 'firebase/firebase';
+import { addDailyResults, getDailyResults, updateDailyResults } from 'firebase/dailyResults';
 import useActiveElement from 'hooks/useActiveElement';
 import useSlackApp from 'hooks/useSlackApp';
 import useTranslation from 'hooks/useTranslation';
@@ -21,9 +19,6 @@ import {
 
 import useAuth from './useAuth';
 import useUserStatistics from './useUsersStatistics';
-
-const { firebaseDb } = firebaseData;
-const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
 
 const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   const {
@@ -72,13 +67,10 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
         setWordDate(today);
         setUsersAttempts([Array(wordLength).fill('')]);
         setRoundsResults([Array(wordLength).fill('')]);
-        try {
-          const q = query(
-            collection(firebaseDb, DAILY_RESULTS),
-            where('user.email', '==', currentUser),
-            where('date', '==', today)
-          );
-          const docs = await getDocs(q);
+        const { docs, error } = await getDailyResults(currentUser, today);
+        if (error) {
+          setLoading(false);
+        } else {
           const newUsersAttempts = [];
           const newRoundsResults = [];
           const newKeyboardLetters = { ...keyboardLetters };
@@ -124,9 +116,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           setUsersAttempts(newUsersAttempts);
           setRoundsResults(newRoundsResults);
           setKeyboardLetters(newKeyboardLetters);
-          setLoading(false);
-        } catch (err) {
-          console.log('err: ', err);
           setLoading(false);
         }
       }
@@ -244,10 +233,8 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
             photo,
           },
         };
-        const { id: dailyResultsId } = await addDoc(
-          collection(firebaseDb, DAILY_RESULTS),
-          newDailyResults
-        );
+
+        const dailyResultsId = await addDailyResults(newDailyResults);
 
         setDailyResultsId(dailyResultsId);
         setDailyResults(newDailyResults);
@@ -268,7 +255,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           status: newStatus,
         };
 
-        await updateDoc(doc(dailyResultsRef, dailyResultsId), newDailyResults);
+        await updateDailyResults(dailyResultsId, newDailyResults);
 
         setDailyResults(newDailyResults);
       }

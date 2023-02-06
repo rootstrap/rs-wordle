@@ -16,6 +16,7 @@ function App() {
   const t = useTranslation();
   const { authenticated } = useAuth();
   const { isRootstrapDomain } = useRootstrapAuth();
+  const showSideNav = authenticated && isRootstrapDomain;
 
   return (
     <div className="App">
@@ -23,8 +24,8 @@ function App() {
         <title>{t('global.pageTitle')}</title>
       </Helmet>
       <BrowserRouter>
-        {authenticated && isRootstrapDomain && <SideNav />}
-        <main id={MAIN_ID}>
+        {showSideNav && <SideNav />}
+        <main id={MAIN_ID} {...(showSideNav ? { className: 'page-with-nav' } : {})}>
           <Switch>
             {routes.map(route => (
               <RouteFromPath

@@ -9,6 +9,9 @@ body {
 
 main {
   flex: 1;
+}
+
+.page-with-nav {
   margin-left: var(--closed-side-menu);
 }
 

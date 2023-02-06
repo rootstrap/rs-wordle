@@ -13,20 +13,17 @@ const routes = [
   {
     path: routesPaths.index,
     element: <Home />,
-    exact: true,
     isPrivate: true,
   },
   {
     path: routesPaths.ranking,
     element: <Ranking />,
-    exact: true,
     isPrivate: true,
     title: 'Ranking',
   },
   {
     path: routesPaths.rules,
     element: <Rules />,
-    exact: true,
     isPrivate: true,
     title: 'RULES',
     subtitle: 'Can you guess the word before other Rootstrappers do?',
@@ -34,33 +31,28 @@ const routes = [
   {
     path: routesPaths.settings,
     element: <Settings />,
-    exact: true,
     isPrivate: true,
     title: 'Settings (more coming soon 👀)',
   },
   {
     path: routesPaths.statistics,
     element: <Statistics />,
-    exact: true,
     isPrivate: true,
   },
   {
     path: routesPaths.users,
     element: <Users />,
-    exact: true,
     isPrivate: true,
     title: 'Users',
   },
   {
     path: routesPaths.usersStatistics,
     element: <Statistics />,
-    exact: true,
     isPrivate: true,
   },
   {
     path: routesPaths.suggestions,
     element: <Suggestions />,
-    exact: true,
     isPrivate: true,
     title: 'Suggestions',
   },
@@ -71,7 +63,6 @@ const routes = [
   {
     path: routesPaths.invalidUser,
     element: <InvalidUser />,
-    exact: true,
     isPrivate: true,
   },
 ];

@@ -1,7 +1,8 @@
-import { Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import RouteFromPath from 'components/routes/RouteFromPath';
+import PageWrapper from 'components/common/PageWrapper';
+import PrivateRoute from 'components/routes/PrivateRoute';
 import SideNav from 'components/SideNav';
 import { MAIN_ID } from 'constants/componentsIds';
 import useTranslation from 'hooks/useTranslation';
@@ -26,16 +27,25 @@ function App() {
       <BrowserRouter>
         {showSideNav && <SideNav />}
         <main id={MAIN_ID} {...(showSideNav ? { className: 'page-with-nav' } : {})}>
-          <Switch>
+          <Routes>
             {routes.map(route => (
-              <RouteFromPath
+              <Route
                 key={`route-${route.path}`}
                 {...route}
-                authenticated={authenticated}
-                isRootstrapDomain={isRootstrapDomain}
+                element={
+                  <PrivateRoute
+                    {...route}
+                    authenticated={authenticated}
+                    isRootstrapDomain={isRootstrapDomain}
+                  >
+                    <PageWrapper title={route.title} subtitle={route.subtitle}>
+                      {route.element}
+                    </PageWrapper>
+                  </PrivateRoute>
+                }
               />
             ))}
-          </Switch>
+          </Routes>
         </main>
       </BrowserRouter>
     </div>

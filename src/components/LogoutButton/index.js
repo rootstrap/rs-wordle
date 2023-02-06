@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Button from 'components/common/Button';
@@ -12,13 +12,13 @@ import './styles.css';
 const LogoutButton = () => {
   const t = useTranslation();
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { logout: firebaseLogout } = firebaseData;
 
   const handleLogout = async () => {
     await firebaseLogout();
     await dispatch(logout());
-    push(routesPaths.login);
+    navigate(routesPaths.login);
   };
 
   return (

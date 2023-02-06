@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import Input from 'components/common/Input';
@@ -11,7 +11,7 @@ import './styles.css';
 const Users = () => {
   const { filters, changeFilter, usersList } = useUsers();
   const { username } = filters;
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const t = useTranslation();
   const filterByName = t('users.filterByName');
@@ -27,7 +27,7 @@ const Users = () => {
           <ListRow
             key={`${name}-${index}`}
             onClick={() =>
-              push({
+              navigate({
                 pathname: `/statistics/${id}`,
                 state: { email, name, photo },
               })

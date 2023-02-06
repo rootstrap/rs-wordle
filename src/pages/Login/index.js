@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Redirect, useHistory } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -17,7 +17,7 @@ const Login = () => {
   // eslint-disable-next-line
   const t = useTranslation();
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { authenticated } = useAuth();
   const { firebaseAuth, signInWithGoogle } = firebaseData;
 
@@ -26,7 +26,7 @@ const Login = () => {
   useEffect(() => {
     if (fbUser && !authenticated) {
       const { email, displayName, photoURL, uid } = fbUser;
-      push(routesPaths.index);
+      navigate(routesPaths.index);
       dispatch(
         login({
           user: {
@@ -38,10 +38,10 @@ const Login = () => {
         })
       );
     }
-  }, [authenticated, dispatch, fbUser, loading, push]);
+  }, [authenticated, dispatch, fbUser, loading, navigate]);
 
   if (authenticated) {
-    return <Redirect to={routesPaths.index} />;
+    return <Navigate to={routesPaths.index} />;
   }
 
   return (

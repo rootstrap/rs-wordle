@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import flatten from 'flat';
@@ -20,7 +20,10 @@ const messages = locales[locale];
 
 const { persistor, store } = configureStore();
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <React.StrictMode>
     <IntlProvider messages={flatten(messages)} locale={locale} defaultLocale={DEFAULT_LANGUAGE}>
       <Provider store={store}>
@@ -31,6 +34,5 @@ ReactDOM.render(
         </PersistGate>
       </Provider>
     </IntlProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

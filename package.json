@@ -24,7 +24,7 @@
     "react-hook-form": "^7.9.0",
     "react-intl": "^5.20.4",
     "react-redux": "^7.2.3",
-    "react-router-dom": "5.2.0",
+    "react-router-dom": "^6.8.0",
     "react-scripts": "4.0.3",
     "react-select": "^5.7.0",
     "reactjs-flip-card": "^2.0.0",

@@ -9,7 +9,8 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  box-shadow: rgb(15 15 15 / 5%) 0px 0px 0px 1px, rgb(15 15 15 / 10%) 0px 3px 6px, rgb(15 15 15 / 20%) 0px 9px 24px;
+  box-shadow: rgb(15 15 15 / 5%) 0px 0px 0px 1px, rgb(15 15 15 / 10%) 0px 3px 6px,
+    rgb(15 15 15 / 20%) 0px 9px 24px;
 }
 
 .sidenav.closed {
@@ -25,6 +26,10 @@
   text-decoration: none;
 }
 
+.sideitem.isActive {
+  background-color: var(--color-background);
+}
+
 .sidenav-link-text {
   padding-left: 16px;
 }
@@ -35,10 +40,6 @@
 
 .sideitem:focus {
   outline: 2px solid var(--color-white);
-}
-
-.selected-item {
-  background-color: var(--color-background);
 }
 
 .menuBtn {

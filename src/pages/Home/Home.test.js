@@ -4,17 +4,28 @@ import 'fake-indexeddb/auto';
 import Home from 'pages/Home';
 import { fireEvent, render, screen, waitFor } from 'setupTests';
 
+let emptyStatistics = {
+  totalGames: 0,
+  totalWins: 0,
+  totalAttempts: [0, 0, 0, 0, 0, 0, 0],
+  currentStreak: 0,
+  lastDatePlayed: '',
+  longestStreak: 0,
+  longestStreakDate: '',
+  attemptedWords: {},
+  timeAverage: 0,
+  minTime: 0,
+  maxTime: 0,
+};
+
 jest.mock('components/common/Loading');
 
 jest.mock('hooks/useSlackApp', () => () => ({
   sendMessageToChannel: jest.fn(),
 }));
 
-jest.mock('hooks/useWordDb', () => () => ({
-  letters: ['G', 'E', 'N', 'I', 'E'],
-  word: 'GENIE',
-  loading: false,
-  setLoading: jest.fn(),
+jest.mock('firebase/words', () => ({
+  getTodaysWord: () => ({ todaysWord: 'GENIE' }),
 }));
 
 jest.mock('firebase/dailyResults', () => ({
@@ -26,6 +37,13 @@ jest.mock('firebase/dailyResults', () => ({
   updateDailyResults: jest.fn(),
 }));
 
+jest.mock('firebase/usersStatistics', () => ({
+  getUsersStatistics: () => ({
+    currentStatistics: emptyStatistics,
+  }),
+  updateUsersStatistics: () => {},
+}));
+
 const getKeyboardLetter = letter => screen.getByRole('button', { name: letter });
 
 const getLetters = buttons =>
@@ -34,7 +52,7 @@ const getLetters = buttons =>
     return ariaRoleDescription === 'letter';
   });
 
-beforeEach(() => {
+beforeEach(async () => {
   render(<Home />, {
     preloadedState: {
       user: {
@@ -48,14 +66,14 @@ beforeEach(() => {
       },
     },
   });
-});
 
-test('renders empty row with empty letters', () => {
-  const emptyWord = screen.getAllByRole('group', { name: 'empty' });
-  expect(emptyWord).toHaveLength(1);
+  await waitFor(() => {
+    const emptyWord = screen.getAllByRole('group', { name: 'empty' });
+    expect(emptyWord).toHaveLength(1);
 
-  const emptyLetters = screen.getAllByRole('button', { name: 'empty' });
-  expect(emptyLetters).toHaveLength(5);
+    const emptyLetters = screen.getAllByRole('button', { name: 'empty' });
+    expect(emptyLetters).toHaveLength(5);
+  });
 });
 
 test('enter all incorrect letters (CLASS)', async () => {

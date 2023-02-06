@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Loading = () => <></>;
+const Loading = () => <>Loading</>;
 
 export default Loading;

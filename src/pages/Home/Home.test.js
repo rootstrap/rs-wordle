@@ -19,6 +19,7 @@ let emptyStatistics = {
 };
 
 jest.mock('components/common/Loading');
+jest.mock('react-confetti');
 
 jest.mock('hooks/useSlackApp', () => () => ({
   sendMessageToChannel: jest.fn(),
@@ -262,5 +263,76 @@ test('enter some correct letters (GLOVE)', async () => {
 
     const newLineEmptyLetters = screen.getAllByRole('button', { name: 'empty' });
     expect(newLineEmptyLetters).toHaveLength(5);
+  });
+});
+
+test('enter the correct word (GENIE)', async () => {
+  // get all the keyboard buttons we will use
+  const GButton = getKeyboardLetter('G');
+  const EButton = getKeyboardLetter('E');
+  const NButton = getKeyboardLetter('N');
+  const IButton = getKeyboardLetter('I');
+
+  // type GENIE with the keyboard buttons
+  fireEvent.click(GButton);
+  fireEvent.click(EButton);
+  fireEvent.click(NButton);
+  fireEvent.click(IButton);
+  fireEvent.click(EButton);
+
+  // check there are no more empty spaces and now it has GENIE content
+  const emptyWord = screen.queryByRole('group', { name: 'empty' });
+  expect(emptyWord).not.toBeInTheDocument();
+
+  const genieWord = screen.queryByRole('group', { name: 'GENIE' });
+  expect(genieWord).toBeInTheDocument();
+
+  const emptyLetters = screen.queryByRole('button', { name: 'empty' });
+  expect(emptyLetters).not.toBeInTheDocument();
+
+  const GLetters = screen.getAllByRole('button', { name: 'G' });
+  expect(getLetters(GLetters)).toHaveLength(1);
+
+  const ELetters = screen.getAllByRole('button', { name: 'E' });
+  expect(getLetters(ELetters)).toHaveLength(2);
+
+  const NLetters = screen.getAllByRole('button', { name: 'N' });
+  expect(getLetters(NLetters)).toHaveLength(1);
+
+  const ILetters = screen.getAllByRole('button', { name: 'I' });
+  expect(getLetters(ILetters)).toHaveLength(1);
+
+  // submit the word
+  const enterButton = screen.getByRole('button', { name: /enter/i });
+  fireEvent.click(enterButton);
+
+  await waitFor(() => {
+    // G, E, N and I letters in row and keyboard should have correct aria label
+    const absentLetterG = screen.getAllByRole('button', { name: /G correct/i });
+    expect(absentLetterG).toHaveLength(2);
+
+    const absentLetterE = screen.getAllByRole('button', { name: /E correct/i });
+    expect(absentLetterE).toHaveLength(3);
+
+    const absentLetterN = screen.getAllByRole('button', { name: /N correct/i });
+    expect(absentLetterN).toHaveLength(2);
+
+    const absentLetterI = screen.getAllByRole('button', { name: /I correct/i });
+    expect(absentLetterI).toHaveLength(2);
+
+    // there is not a new row for new empty word since we end the game
+    const newLineEmptyWord = screen.queryByRole('group', { name: 'empty' });
+    expect(newLineEmptyWord).not.toBeInTheDocument();
+
+    const newLineEmptyLetters = screen.queryAllByRole('button', { name: 'empty' });
+    expect(newLineEmptyLetters).toHaveLength(0);
+
+    // it shows the won message
+    const wonText = screen.getByText(/won/i);
+    expect(wonText).toBeInTheDocument();
+
+    // it shows the confetti
+    const confetti = screen.getByText(/confetti/i);
+    expect(confetti).toBeInTheDocument();
   });
 });

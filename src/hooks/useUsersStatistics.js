@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { toPairs } from 'lodash';
+import toPairs from 'lodash/toPairs';
 
 import { MAX_ATTEMPTS } from 'constants/constants';
 import { USERS_STATISTICS } from 'firebase/collections';

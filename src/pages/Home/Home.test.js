@@ -2,7 +2,9 @@ import React from 'react';
 import 'fake-indexeddb/auto';
 
 import Home from 'pages/Home';
-import { fireEvent, render, screen, waitFor } from 'setupTests';
+import { fireEvent, render, screen, waitFor, within } from 'setupTests';
+
+const TODAYS_WORD = 'GENIE';
 
 let emptyStatistics = {
   totalGames: 0,
@@ -26,7 +28,7 @@ jest.mock('hooks/useSlackApp', () => () => ({
 }));
 
 jest.mock('firebase/words', () => ({
-  getTodaysWord: () => ({ todaysWord: 'GENIE' }),
+  getTodaysWord: () => ({ todaysWord: TODAYS_WORD }),
 }));
 
 jest.mock('firebase/dailyResults', () => ({
@@ -46,12 +48,6 @@ jest.mock('firebase/usersStatistics', () => ({
 }));
 
 const getKeyboardLetter = letter => screen.getByRole('button', { name: letter });
-
-const getLetters = buttons =>
-  buttons.filter(item => {
-    const ariaRoleDescription = item.getAttribute('aria-roledescription');
-    return ariaRoleDescription === 'letter';
-  });
 
 beforeEach(async () => {
   render(<Home />, {
@@ -73,11 +69,13 @@ beforeEach(async () => {
     expect(emptyWord).toHaveLength(1);
 
     const emptyLetters = screen.getAllByRole('button', { name: 'empty' });
-    expect(emptyLetters).toHaveLength(5);
+    expect(emptyLetters).toHaveLength(TODAYS_WORD.length);
   });
 });
 
 test('enter all incorrect letters (CLASS)', async () => {
+  const CLASS = 'CLASS';
+
   // get all the keyboard buttons we will use
   const CButton = getKeyboardLetter('C');
   const LButton = getKeyboardLetter('L');
@@ -95,43 +93,48 @@ test('enter all incorrect letters (CLASS)', async () => {
   const emptyWord = screen.queryByRole('group', { name: 'empty' });
   expect(emptyWord).not.toBeInTheDocument();
 
-  const classWord = screen.queryByRole('group', { name: 'CLASS' });
+  const classWord = screen.getByRole('group', { name: CLASS });
   expect(classWord).toBeInTheDocument();
 
   const emptyLetters = screen.queryByRole('button', { name: 'empty' });
   expect(emptyLetters).not.toBeInTheDocument();
 
-  const CLetters = screen.getAllByRole('button', { name: 'C' });
-  expect(getLetters(CLetters)).toHaveLength(1);
+  const CLetter = within(classWord).getByRole('button', { name: 'C' });
+  expect(CLetter).toBeInTheDocument();
 
-  const LLetters = screen.getAllByRole('button', { name: 'L' });
-  expect(getLetters(LLetters)).toHaveLength(1);
+  const LLetter = within(classWord).getByRole('button', { name: 'L' });
+  expect(LLetter).toBeInTheDocument();
 
-  const ALetters = screen.getAllByRole('button', { name: 'A' });
-  expect(getLetters(ALetters)).toHaveLength(1);
+  const ALetter = within(classWord).getByRole('button', { name: 'A' });
+  expect(ALetter).toBeInTheDocument();
 
-  const SLetters = screen.getAllByRole('button', { name: 'S' });
-  expect(getLetters(SLetters)).toHaveLength(2);
+  const SLetters = within(classWord).getAllByRole('button', { name: 'S' });
+  expect(SLetters).toHaveLength(2);
 
   // submit the word
   const enterButton = screen.getByRole('button', { name: /enter/i });
   fireEvent.click(enterButton);
 
   await waitFor(() => {
-    // the CLASS letter's row and CLAS keys has all absent aria label (9 in total)
-    const absentLetters = screen.getAllByRole('button', { name: /absent/i });
-    expect(absentLetters).toHaveLength(9);
+    // the CLASS (5) letter's row and CLASS keyboard keys (4) have all absent aria-label
+    const absentClassLetters = within(classWord).getAllByRole('button', { name: /absent/i });
+    expect(absentClassLetters).toHaveLength(CLASS.length);
 
-    // there is a new row for new empty word
+    const keyboard = screen.getByRole('group', { name: 'keyboard' });
+    expect(within(keyboard).getAllByRole('button', { name: /absent/i })).toHaveLength(4);
+
+    // a new empty row is created
     const newLineEmptyWord = screen.getByRole('group', { name: 'empty' });
     expect(newLineEmptyWord).toBeInTheDocument();
 
     const newLineEmptyLetters = screen.getAllByRole('button', { name: 'empty' });
-    expect(newLineEmptyLetters).toHaveLength(5);
+    expect(newLineEmptyLetters).toHaveLength(TODAYS_WORD.length);
   });
 });
 
 test('enter some misplaced letters (BLEED)', async () => {
+  const BLEED = 'BLEED';
+
   // get all the keyboard buttons we will use
   const BButton = getKeyboardLetter('B');
   const LButton = getKeyboardLetter('L');
@@ -149,30 +152,30 @@ test('enter some misplaced letters (BLEED)', async () => {
   const emptyWord = screen.queryByRole('group', { name: 'empty' });
   expect(emptyWord).not.toBeInTheDocument();
 
-  const bleedWord = screen.queryByRole('group', { name: 'BLEED' });
+  const bleedWord = screen.getByRole('group', { name: BLEED });
   expect(bleedWord).toBeInTheDocument();
 
   const emptyLetters = screen.queryByRole('button', { name: 'empty' });
   expect(emptyLetters).not.toBeInTheDocument();
 
-  const BLetters = screen.getAllByRole('button', { name: 'B' });
-  expect(getLetters(BLetters)).toHaveLength(1);
+  const BLetter = within(bleedWord).getByRole('button', { name: 'B' });
+  expect(BLetter).toBeInTheDocument();
 
-  const LLetters = screen.getAllByRole('button', { name: 'L' });
-  expect(getLetters(LLetters)).toHaveLength(1);
+  const LLetter = within(bleedWord).getByRole('button', { name: 'L' });
+  expect(LLetter).toBeInTheDocument();
 
-  const ELetters = screen.getAllByRole('button', { name: 'E' });
-  expect(getLetters(ELetters)).toHaveLength(2);
+  const ELetters = within(bleedWord).getAllByRole('button', { name: 'E' });
+  expect(ELetters).toHaveLength(2);
 
-  const DLetters = screen.getAllByRole('button', { name: 'D' });
-  expect(getLetters(DLetters)).toHaveLength(1);
+  const DLetter = within(bleedWord).getByRole('button', { name: 'D' });
+  expect(DLetter).toBeInTheDocument();
 
   // submit the word
   const enterButton = screen.getByRole('button', { name: /enter/i });
   fireEvent.click(enterButton);
 
   await waitFor(() => {
-    // B, L and D letters in row and keyboard should have absent aria label
+    // B, L and D letters in row and keyboard should have absent aria-label
     const absentLetterB = screen.getAllByRole('button', { name: /B absent/i });
     expect(absentLetterB).toHaveLength(2);
 
@@ -182,7 +185,7 @@ test('enter some misplaced letters (BLEED)', async () => {
     const absentLetterD = screen.getAllByRole('button', { name: /D absent/i });
     expect(absentLetterD).toHaveLength(2);
 
-    // E letters in row and keyboard should have misplaced aria label
+    // E letters in row and keyboard should have misplaced aria-label
     const absentLetterE = screen.getAllByRole('button', { name: /E misplaced/i });
     expect(absentLetterE).toHaveLength(3);
 
@@ -191,11 +194,13 @@ test('enter some misplaced letters (BLEED)', async () => {
     expect(newLineEmptyWord).toBeInTheDocument();
 
     const newLineEmptyLetters = screen.getAllByRole('button', { name: 'empty' });
-    expect(newLineEmptyLetters).toHaveLength(5);
+    expect(newLineEmptyLetters).toHaveLength(TODAYS_WORD.length);
   });
 });
 
 test('enter some correct letters (GLOVE)', async () => {
+  const GLOVE = 'GLOVE';
+
   // get all the keyboard buttons we will use
   const GButton = getKeyboardLetter('G');
   const LButton = getKeyboardLetter('L');
@@ -214,26 +219,26 @@ test('enter some correct letters (GLOVE)', async () => {
   const emptyWord = screen.queryByRole('group', { name: 'empty' });
   expect(emptyWord).not.toBeInTheDocument();
 
-  const gloveWord = screen.queryByRole('group', { name: 'GLOVE' });
+  const gloveWord = screen.getByRole('group', { name: GLOVE });
   expect(gloveWord).toBeInTheDocument();
 
   const emptyLetters = screen.queryByRole('button', { name: 'empty' });
   expect(emptyLetters).not.toBeInTheDocument();
 
-  const GLetters = screen.getAllByRole('button', { name: 'G' });
-  expect(getLetters(GLetters)).toHaveLength(1);
+  const GLetter = within(gloveWord).getByRole('button', { name: 'G' });
+  expect(GLetter).toBeInTheDocument();
 
-  const LLetters = screen.getAllByRole('button', { name: 'L' });
-  expect(getLetters(LLetters)).toHaveLength(1);
+  const LLetter = within(gloveWord).getByRole('button', { name: 'L' });
+  expect(LLetter).toBeInTheDocument();
 
-  const OLetters = screen.getAllByRole('button', { name: 'O' });
-  expect(getLetters(OLetters)).toHaveLength(1);
+  const OLetter = within(gloveWord).getByRole('button', { name: 'O' });
+  expect(OLetter).toBeInTheDocument();
 
-  const VLetters = screen.getAllByRole('button', { name: 'V' });
-  expect(getLetters(VLetters)).toHaveLength(1);
+  const VLetter = within(gloveWord).getByRole('button', { name: 'V' });
+  expect(VLetter).toBeInTheDocument();
 
-  const ELetters = screen.getAllByRole('button', { name: 'E' });
-  expect(getLetters(ELetters)).toHaveLength(1);
+  const ELetter = within(gloveWord).getByRole('button', { name: 'E' });
+  expect(ELetter).toBeInTheDocument();
 
   // submit the word
   const enterButton = screen.getByRole('button', { name: /enter/i });
@@ -262,7 +267,7 @@ test('enter some correct letters (GLOVE)', async () => {
     expect(newLineEmptyWord).toBeInTheDocument();
 
     const newLineEmptyLetters = screen.getAllByRole('button', { name: 'empty' });
-    expect(newLineEmptyLetters).toHaveLength(5);
+    expect(newLineEmptyLetters).toHaveLength(TODAYS_WORD.length);
   });
 });
 
@@ -284,30 +289,30 @@ test('enter the correct word (GENIE)', async () => {
   const emptyWord = screen.queryByRole('group', { name: 'empty' });
   expect(emptyWord).not.toBeInTheDocument();
 
-  const genieWord = screen.queryByRole('group', { name: 'GENIE' });
+  const genieWord = screen.getByRole('group', { name: TODAYS_WORD });
   expect(genieWord).toBeInTheDocument();
 
   const emptyLetters = screen.queryByRole('button', { name: 'empty' });
   expect(emptyLetters).not.toBeInTheDocument();
 
-  const GLetters = screen.getAllByRole('button', { name: 'G' });
-  expect(getLetters(GLetters)).toHaveLength(1);
+  const GLetter = within(genieWord).getByRole('button', { name: 'G' });
+  expect(GLetter).toBeInTheDocument();
 
-  const ELetters = screen.getAllByRole('button', { name: 'E' });
-  expect(getLetters(ELetters)).toHaveLength(2);
+  const ELetters = within(genieWord).getAllByRole('button', { name: 'E' });
+  expect(ELetters).toHaveLength(2);
 
-  const NLetters = screen.getAllByRole('button', { name: 'N' });
-  expect(getLetters(NLetters)).toHaveLength(1);
+  const NLetter = within(genieWord).getByRole('button', { name: 'N' });
+  expect(NLetter).toBeInTheDocument();
 
-  const ILetters = screen.getAllByRole('button', { name: 'I' });
-  expect(getLetters(ILetters)).toHaveLength(1);
+  const ILetter = within(genieWord).getByRole('button', { name: 'I' });
+  expect(ILetter).toBeInTheDocument();
 
   // submit the word
   const enterButton = screen.getByRole('button', { name: /enter/i });
   fireEvent.click(enterButton);
 
   await waitFor(() => {
-    // G, E, N and I letters in row and keyboard should have correct aria label
+    // G, E, N and I letters in row and keyboard should have correct aria-label
     const absentLetterG = screen.getAllByRole('button', { name: /G correct/i });
     expect(absentLetterG).toHaveLength(2);
 

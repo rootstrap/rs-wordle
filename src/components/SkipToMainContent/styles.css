@@ -6,6 +6,7 @@
   outline: 2px solid var(--color-white);
   padding: 15px;
   position: absolute;
+  z-index: 1;
 }
 
 .skipToMainContent:focus {

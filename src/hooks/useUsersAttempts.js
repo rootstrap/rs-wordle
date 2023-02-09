@@ -61,66 +61,76 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     updateStatistics,
   } = useUserStatistics();
 
-  useEffect(() => {
-    (async function () {
-      if (wordDate !== today && !!correctWord) {
-        setWordDate(today);
-        setUsersAttempts([Array(wordLength).fill('')]);
-        setRoundsResults([Array(wordLength).fill('')]);
-        const { docs, error } = await getDailyResults(currentUser, today);
-        if (error) {
-          setLoading(false);
-        } else {
-          const newUsersAttempts = [];
-          const newRoundsResults = [];
-          const newKeyboardLetters = { ...keyboardLetters };
-          let roundCount = 0;
-          let won = false;
+  const renameLater = useCallback(
+    docs => {
+      const newUsersAttempts = [];
+      const newRoundsResults = [];
+      const newKeyboardLetters = { ...keyboardLetters };
+      let roundCount = 0;
+      let won = false;
 
-          docs.forEach(doc => {
-            const { attemptedWords, ...restDailyResults } = doc.data();
+      docs.forEach(doc => {
+        const { attemptedWords, ...restDailyResults } = doc.data();
 
-            attemptedWords.forEach(({ results, word }) => {
-              const wordAttempt = word.split('');
-              newUsersAttempts.push(wordAttempt);
-              newRoundsResults.push(results);
-              results.forEach((statusId, index) => {
-                const letter = wordAttempt[index];
-                const currentStatusOrder = LETTER_STATUS[newKeyboardLetters[letter]].colorOrder;
-                const newStatusOrder = LETTER_STATUS[statusId].colorOrder;
+        attemptedWords.forEach(({ results, word }) => {
+          const wordAttempt = word.split('');
+          newUsersAttempts.push(wordAttempt);
+          newRoundsResults.push(results);
+          results.forEach((statusId, index) => {
+            const letter = wordAttempt[index];
+            const currentStatusOrder = LETTER_STATUS[newKeyboardLetters[letter]].colorOrder;
+            const newStatusOrder = LETTER_STATUS[statusId].colorOrder;
 
-                if (newStatusOrder > currentStatusOrder) {
-                  newKeyboardLetters[letter] = statusId;
-                }
-              });
-              won = word.toUpperCase() === correctWord.toUpperCase();
-              if (!won) {
-                roundCount++;
-              }
-            });
-
-            setDailyResults({
-              attemptedWords,
-              ...restDailyResults,
-            });
-            setDailyResultsId(doc.id);
+            if (newStatusOrder > currentStatusOrder) {
+              newKeyboardLetters[letter] = statusId;
+            }
           });
-          setCurrentRound(roundCount);
-          const lost = newUsersAttempts.length === MAX_ATTEMPTS;
-          if (won || lost) {
-            setGameStatus(won ? GAME_STATUS.won : GAME_STATUS.lost);
-            setLetterIndex(-1);
-          } else {
-            newUsersAttempts.push(Array(wordLength).fill(''));
+          won = word.toUpperCase() === correctWord.toUpperCase();
+          if (!won) {
+            roundCount++;
           }
-          setUsersAttempts(newUsersAttempts);
-          setRoundsResults(newRoundsResults);
-          setKeyboardLetters(newKeyboardLetters);
-          setLoading(false);
-        }
+        });
+
+        setDailyResults({
+          attemptedWords,
+          ...restDailyResults,
+        });
+        setDailyResultsId(doc.id);
+      });
+
+      setCurrentRound(roundCount);
+      const lost = newUsersAttempts.length === MAX_ATTEMPTS;
+      if (won || lost) {
+        setGameStatus(won ? GAME_STATUS.won : GAME_STATUS.lost);
+        setLetterIndex(-1);
+      } else {
+        newUsersAttempts.push(Array(wordLength).fill(''));
       }
-    })();
-  }, [correctWord, currentUser, keyboardLetters, setLoading, today, wordDate, wordLength]);
+      setUsersAttempts(newUsersAttempts);
+      setRoundsResults(newRoundsResults);
+      setKeyboardLetters(newKeyboardLetters);
+      setLoading(false);
+    },
+    [correctWord, keyboardLetters, setLoading, wordLength]
+  );
+
+  const initialize = useCallback(async () => {
+    if (wordDate !== today && !!correctWord) {
+      setWordDate(today);
+      setUsersAttempts([Array(wordLength).fill('')]);
+      setRoundsResults([Array(wordLength).fill('')]);
+      const { docs, error } = await getDailyResults(currentUser, today);
+      if (error) {
+        setLoading(false);
+      } else {
+        renameLater(docs);
+      }
+    }
+  }, [correctWord, currentUser, renameLater, setLoading, today, wordDate, wordLength]);
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
 
   const shareResults = useCallback(
     async (

@@ -87,9 +87,7 @@ const SuggestionCard = ({
           )}
           <p>{description}</p>
           <div className="suggested-by-container">
-            <span className="suggested-by-name">
-              {t('suggestions.suggestedBy')} {name}
-            </span>
+            <span className="suggested-by-name">{t('suggestions.suggestedBy', { name })}</span>
             <img src={photo} className="suggested-by-photo" alt={`suggested-by-${name}`} />
             <IconButton onClick={toggleShowComments} aria-label={commentAriaLabel}>
               <ModeCommentIcon htmlColor={TEXT_COLOR} />

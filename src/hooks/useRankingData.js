@@ -120,8 +120,7 @@ const useRankingData = () => {
   );
 
   const goToUsersStatistics = ({ email, name, photo, uid }) =>
-    navigate({
-      pathname: `/statistics/${uid}`,
+    navigate(`/statistics/${uid}`, {
       state: { email, name, photo },
     });
 

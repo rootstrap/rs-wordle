@@ -5,11 +5,8 @@ import { IntlProvider } from 'react-intl';
 import { configureStore } from '@reduxjs/toolkit';
 import flatten from 'flat';
 
+import reducer from 'state/reducers/reducer';
 import locales from './locales';
-
-const reducer = {
-  // TODO: Update when we have reducers
-};
 
 const render = (
   ui,

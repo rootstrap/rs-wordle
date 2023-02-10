@@ -27,8 +27,7 @@ const Users = () => {
           <ListRow
             key={`${name}-${index}`}
             onClick={() =>
-              navigate({
-                pathname: `/statistics/${id}`,
+              navigate(`/statistics/${id}`, {
                 state: { email, name, photo },
               })
             }

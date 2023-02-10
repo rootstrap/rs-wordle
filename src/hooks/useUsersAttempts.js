@@ -61,7 +61,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
     updateStatistics,
   } = useUserStatistics();
 
-  const renameLater = useCallback(
+  const analyzeData = useCallback(
     docs => {
       const newUsersAttempts = [];
       const newRoundsResults = [];
@@ -109,28 +109,26 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       setUsersAttempts(newUsersAttempts);
       setRoundsResults(newRoundsResults);
       setKeyboardLetters(newKeyboardLetters);
-      setLoading(false);
     },
-    [correctWord, keyboardLetters, setLoading, wordLength]
+    [correctWord, keyboardLetters, wordLength]
   );
 
-  const initialize = useCallback(async () => {
+  const initializeData = useCallback(async () => {
     if (wordDate !== today && !!correctWord) {
       setWordDate(today);
       setUsersAttempts([Array(wordLength).fill('')]);
       setRoundsResults([Array(wordLength).fill('')]);
       const { docs, error } = await getDailyResults(currentUser, today);
-      if (error) {
-        setLoading(false);
-      } else {
-        renameLater(docs);
+      if (!error) {
+        analyzeData(docs);
       }
+      setLoading(false);
     }
-  }, [correctWord, currentUser, renameLater, setLoading, today, wordDate, wordLength]);
+  }, [analyzeData, correctWord, currentUser, setLoading, today, wordDate, wordLength]);
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    initializeData();
+  }, [initializeData]);
 
   const shareResults = useCallback(
     async (

@@ -35,6 +35,6 @@ export const getUsersStatistics = async selectedUser => {
   return { currentStatistics };
 };
 
-export const updateUsersStatistics = async (newStatistics, selectedUser) => {
-  await updateDoc(doc(statisticsRef, selectedUser), newStatistics);
+export const updateUsersStatistics = (newStatistics, selectedUser) => {
+  updateDoc(doc(statisticsRef, selectedUser), newStatistics);
 };

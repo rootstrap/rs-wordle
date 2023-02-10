@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
-import { getAnalytics } from 'firebase/analytics';
 import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
 
 import { USERS } from './collections';
@@ -16,7 +15,6 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const firebaseAnalytics = getAnalytics(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
 const firebaseDb = getFirestore(firebaseApp);
 
@@ -48,7 +46,6 @@ const logout = async () => {
 
 const firebaseData = {
   firebaseAuth,
-  firebaseAnalytics,
   firebaseDb,
   signInWithGoogle,
   logout,

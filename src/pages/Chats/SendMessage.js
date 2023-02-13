@@ -20,7 +20,9 @@ const SendMessage = ({ message, handleSetMessage, handleSendMessage }) => {
         value={message}
         onChange={({ target: { value } }) => handleSetMessage(value)}
       />
-      <Button handleClick={handleSendMessage}>{t('chats.send')}</Button>
+      <Button handleClick={handleSendMessage} disabled={!message}>
+        {t('chats.send')}
+      </Button>
     </form>
   );
 };

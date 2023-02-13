@@ -29,10 +29,6 @@ const useMessages = () => {
   const handleSetMessage = newMessage => setMessage(newMessage);
 
   const handleSendMessage = async () => {
-    if (message.trim() === '') {
-      alert('Enter valid message');
-      return;
-    }
     await addMessage({ message, user });
     setMessage('');
   };

@@ -49,7 +49,11 @@ const Suggestions = () => {
             />
           </div>
         </div>
-        <IconButton color="success" onClick={handleOpenModal}>
+        <IconButton
+          color="success"
+          onClick={handleOpenModal}
+          aria-label={t('suggestions.addSuggestion')}
+        >
           <AddCircleOutlinedIcon fontSize="large" />
         </IconButton>
       </div>

@@ -9,8 +9,15 @@
     "word": "word"
   },
   "comments": {
+    "addComment": "Add Comment",
+    "addNewComment": "Add New Comment",
+    "cancelEditComment": "Cancel Edit Comment",
+    "commentText": "Comment Text",
+    "confirmEditComment": "Confirm Edit Comment",
     "confirmTitle": "Are you sure you want to delete this comment?",
-    "confirmDescription": "Deleting this comment is a permanent action. Are you sure you want to delete it?"
+    "confirmDescription": "Deleting this comment is a permanent action. Are you sure you want to delete it?",
+    "deleteComment": "Delete Comment",
+    "editComment": "Edit Comment"
   },
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
@@ -70,14 +77,23 @@
   "suggestions": {
     "addSuggestion": "Add Suggestion",
     "editSuggestion": "Edit Suggestion",
-    "commentedBy": "Commented by",
+    "comment": "Comment",
+    "commentedBy": "Commented by {name}",
     "confirmDescription": "Deleting \"{title}\" is a permanent action. Are you sure you want to delete it?",
     "confirmTitle": "Are you sure you want to delete this suggestion?",
+    "deleteSuggestion": "Delete Suggestion",
     "description": "Description",
+    "negativeVote": "Negative Vote",
+    "positiveVote": "Positive Vote",
+    "showComments": "Show Comments",
     "slogan": "Have a suggestion or want to report a bug? You are in the correct place!",
     "status": "Status",
-    "suggestedBy": "Suggested by",
-    "title": "Title"
+    "suggestedBy": "Suggested by {name}",
+    "title": "Title",
+    "votedNegative": "You voted negative",
+    "votedPositive": "You voted positive",
+    "voteNegative": "Vote negative",
+    "votePositive": "Vote positive"
   },
   "users": {
     "filterByName": "Filter by name"

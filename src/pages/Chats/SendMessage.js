@@ -1,23 +1,26 @@
 import React from 'react';
 
 import Button from 'components/common/Button';
+import useTranslation from 'hooks/useTranslation';
 
 const SendMessage = ({ message, handleSetMessage, handleSendMessage }) => {
+  const t = useTranslation();
+
   return (
     <form className="send-message">
       <label htmlFor="messageInput" hidden>
-        Enter Message
+        {t('chats.inputLabel')}
       </label>
       <input
         id="messageInput"
         name="messageInput"
         type="text"
         className="form-input__input"
-        placeholder="type message..."
+        placeholder={t('chats.placeholder')}
         value={message}
         onChange={({ target: { value } }) => handleSetMessage(value)}
       />
-      <Button handleClick={handleSendMessage}>Send</Button>
+      <Button handleClick={handleSendMessage}>{t('chats.send')}</Button>
     </form>
   );
 };

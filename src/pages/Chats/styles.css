@@ -1,5 +1,5 @@
 .messages-wrapper {
-  padding: 15%;
+  padding: 20px 15%;
   margin-bottom: 60px;
 }
 
@@ -8,8 +8,7 @@
   padding: 15px;
   background-color: var(--color-yellow);
   color: var(--color-black);
-  width: max-content;
-  max-width: calc(100% - 50px);
+  width: 30%;
   box-shadow: -2px 2px 1px 1px var(--color-yellow);
   display: flex;
   align-items: flex-start;
@@ -50,10 +49,10 @@
 .send-message {
   position: fixed;
   bottom: 0px;
-  padding: 20px 30px;
+  padding: 15px 20px;
   background-color: var(--color-hunter-green);
   display: flex;
-  width: 92%;
+  width: 93%;
 }
 
 .send-message > input {

@@ -8,6 +8,11 @@
     "misplaced": "misplaced",
     "word": "word"
   },
+  "chats": {
+    "inputLabel": "Enter Message",
+    "placeholder": "type message...",
+    "send": "Send"
+  },
   "comments": {
     "confirmTitle": "Are you sure you want to delete this comment?",
     "confirmDescription": "Deleting this comment is a permanent action. Are you sure you want to delete it?"

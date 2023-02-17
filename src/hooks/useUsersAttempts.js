@@ -153,7 +153,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       textResult += `\n${t('statistics.currentStreak')}: ${newCurrentStreak} ${getCurrentStreakIcon(
         newCurrentStreak
       )}\n`;
-      textResult += `\n${WORDLE_URL}`;
+      textResult += `\n${process.env.REACT_APP_WORDLE_URL}`;
 
       if (sendToSlack) {
         await sendMessageToChannel(`${name}${t('home.slackResult')}${textResult}`);

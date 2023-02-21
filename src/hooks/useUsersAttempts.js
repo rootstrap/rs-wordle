@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useMemo } from 'react';
 import wordExists from 'word-exists';
 
 import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
-import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS, WORDLE_URL } from 'constants/constants';
+import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS } from 'constants/constants';
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
 import { ARROW_LEFT, ARROW_RIGHT, BACKSPACE, ENTER } from 'constants/keyboardKeys';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';

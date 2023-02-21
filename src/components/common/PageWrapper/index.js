@@ -24,7 +24,7 @@ const PageWrapper = ({ title, subtitle, children }) => {
   return (
     <div className="page-container">
       <div className="open-onboarding-icon">
-        <IconButton onClick={handleOpenModal} aria-label={t('comments.editComment')}>
+        <IconButton onClick={handleOpenModal} aria-label={t('ariaLabels.seeWelcomeInfo')}>
           <QuestionMarkIcon htmlColor="white" fontSize="large" />
         </IconButton>
       </div>

@@ -27,42 +27,41 @@ const Onboarding = ({ handleCloseModal }) => {
   return (
     <Modal open={true}>
       <div className="onboarding-modal-container">
-        <h1 className="onboarding-modal-title">Welcome to RS WORDLE!</h1>
+        <h1 className="onboarding-modal-title">{t('onboarding.title')}</h1>
         <p>
-          This is Rootstrap's implementation of the world famous game{' '}
-          <span className="bold-text">wordle</span>. You can join the{' '}
+          {t('onboarding.intro')}
+          <span className="bold-text">{t('onboarding.wordle')}</span>. {t('onboarding.canJoin')}
           <a
             href="https://rootstrap.slack.com/archives/C02U49H0VJA"
             target="_blank"
             rel="noreferrer"
             className="onboarding-link"
           >
-            #wordle
-          </a>{' '}
-          channel on Slack.
+            #{t('onboarding.wordle')}
+          </a>
+          {t('onboarding.slackChannel')}
         </p>
         <p>
-          If it is your first time here, please{' '}
+          {t('onboarding.newPlayer')}
           <button className="rules-button" onClick={handleGoToRules}>
-            check out the rules
-          </button>{' '}
-          to see how it works.
+            {t('onboarding.checkRules')}
+          </button>
+          {t('onboarding.howItWorks')}
         </p>
         <p>
-          If you where already a player and you are experiencing some weird behavior, we recommend
-          you logout and login again. If this doesn't work please bring the issue to the{' '}
+          {t('onboarding.alreadyPlayer')}
           <a
             href="https://rootstrap.slack.com/archives/C02U49H0VJA"
             target="_blank"
             rel="noreferrer"
             className="onboarding-link"
           >
-            #wordle
-          </a>{' '}
-          channel on Slack.
+            #{t('onboarding.wordle')}
+          </a>
+          {t('onboarding.slackChannel')}
         </p>
-        <p>The most important thing, have fun! And let the competition begin 💪🏼</p>
-        <Button handleClick={changeOnboardingShown}>Start the fun!</Button>
+        <p>{t('onboarding.encouragingMessage')}</p>
+        <Button handleClick={changeOnboardingShown}>{t('onboarding.startFun')}</Button>
       </div>
     </Modal>
   );

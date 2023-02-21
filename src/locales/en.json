@@ -6,6 +6,7 @@
     "keyboard": "keyboard",
     "letter": "letter",
     "misplaced": "misplaced",
+    "seeWelcomeInfo": "See Welcome Info",
     "word": "word"
   },
   "comments": {
@@ -47,6 +48,19 @@
   },
   "logout": {
     "logoutBtn": "Logout"
+  },
+  "onboarding": {
+    "alreadyPlayer": "If you where already a player and you are experiencing some weird behavior, we recommend you logout and login again. If this doesn't work please bring the issue to the ",
+    "canJoin": "You can join the ",
+    "checkRules": "check out the rules",
+    "encouragingMessage": "The most important thing, have fun! And let the competition begin 💪🏼",
+    "howItWorks": " to see how it works.",
+    "intro": "This is Rootstrap's implementation of the world famous game ",
+    "newPlayer": "If it is your first time here, please ",
+    "slackChannel": " channel on Slack.",
+    "startFun": "Start the fun!",
+    "title": "Welcome to RS WORDLE!",
+    "wordle": "wordle"
   },
   "ranking": {
     "allTime": "All Time ({total})",

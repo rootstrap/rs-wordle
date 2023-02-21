@@ -1,0 +1,38 @@
+.onboarding-modal-container {
+    background-color: var(--color-background);
+    border-color: var(--color-white);
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    width: 40%;
+}
+
+.onboarding-modal-title {
+    align-self: center;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.onboarding-link {
+    color: var(--color-green)
+}
+
+.rules-button {
+    background-color: transparent;
+    border: none;
+    color: var(--color-green);
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    text-decoration: underline;
+}

@@ -31,7 +31,7 @@ const PageWrapper = ({ title, subtitle, children }) => {
       <Logo />
       <div className="titles-container">
         {title && <h1 className="page-title">{title}</h1>}
-        {subtitle && <h3>{subtitle}</h3>}
+        {subtitle && <h2>{subtitle}</h2>}
       </div>
       {(showOnboarding || showOnboardingFirstTime) && (
         <Onboarding handleCloseModal={handleCloseModal} />

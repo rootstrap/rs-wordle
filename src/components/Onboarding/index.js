@@ -25,7 +25,7 @@ const Onboarding = ({ handleCloseModal }) => {
   };
 
   return (
-    <Modal open={true}>
+    <Modal open>
       <div className="onboarding-modal-container">
         <h1 className="onboarding-modal-title">{t('onboarding.title')}</h1>
         <p>

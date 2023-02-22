@@ -87,6 +87,13 @@ const spiralShape = ctx => {
   ctx.closePath();
 };
 
+const oneShape = ctx => {
+  ctx.beginPath();
+  ctx.font = '36px serif';
+  ctx.fillText('1st', 0, 0);
+  ctx.stroke();
+};
+
 const starShape = ctx => {
   const numPoints = 5;
   const outerRadius = 10;
@@ -263,5 +270,12 @@ export const CUSTOM_CONFETTI = {
       numberOfPieces: 1000,
     },
     customMessage: 'Happy Saturday Pablito! 👻',
+  },
+  20230222: {
+    confettiExtraParams: {
+      drawShape: oneShape,
+      numberOfPieces: 700,
+    },
+    customMessage: 'Happy First Wordle! 🎉',
   },
 };

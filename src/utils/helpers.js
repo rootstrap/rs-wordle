@@ -39,6 +39,8 @@ export const getTimeDiff = (startDate, endDate, timeFormat = 'minutes') => {
   const dateTimeStart = new Date(startDate);
   const timeDiff = Math.abs(dateTimeEnd.getTime() - dateTimeStart.getTime());
   switch (timeFormat) {
+    case 'days':
+      return Math.ceil(timeDiff / (1000 * 3600 * 24));
     case 'seconds':
       return Math.round(timeDiff / 1000);
     case 'milliseconds':

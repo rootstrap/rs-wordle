@@ -6,14 +6,18 @@ import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
 import Keyboard from 'components/Keyboard';
 import { LETTER_STATUS } from 'constants/types';
-import useTranslation from 'hooks/useTranslation';
+import useCurrentUser from 'hooks/useCurrentUser';
 import useUsersAttempts from 'hooks/useUsersAttempts';
+import useTranslation from 'hooks/useTranslation';
+
 import useWordDb from 'hooks/useWordDb';
 
 import './styles.css';
 
 const Home = () => {
   const { letters, word, loading, setLoading } = useWordDb();
+
+  const { bannedDays, bannedStartDate, isBanned, timeRemaining } = useCurrentUser();
 
   const {
     currentRound,
@@ -47,6 +51,14 @@ const Home = () => {
   const shareResultsMessage = t('home.shareResults');
 
   if (loading) return <Loading />;
+
+  if (isBanned)
+    return (
+      <div className="word-container">
+        <span>ups estoy banneado que pena</span>
+        <span> y todavia me quedan {timeRemaining} dias</span>
+      </div>
+    );
 
   return (
     <div className="home-container">

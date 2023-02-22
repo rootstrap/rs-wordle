@@ -1,14 +1,18 @@
 import { useSelector } from 'react-redux';
 
 const useAuth = () => {
-  const { user, authenticated } = useSelector(({ user: { user, authenticated } }) => ({
-    user,
-    authenticated,
-  }));
+  const { user, authenticated, wasOnboardingShown } = useSelector(
+    ({ user: { user, authenticated, wasOnboardingShown } }) => ({
+      user,
+      authenticated,
+      wasOnboardingShown,
+    })
+  );
 
   return {
     user,
     authenticated,
+    wasOnboardingShown,
   };
 };
 

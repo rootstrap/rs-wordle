@@ -26,7 +26,7 @@ const useRankingData = () => {
   useEffect(() => {
     (async function () {
       setLoading(true);
-      const { users: usersResults } = await getUsers();
+      const { users: usersResults } = await getUsers({ isObject: true });
       setUsers(usersResults);
     })();
   }, []);

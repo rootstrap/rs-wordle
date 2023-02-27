@@ -2,19 +2,27 @@ import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 import { GAME_STATUS, RANKING_VALUES } from 'constants/types';
 import { DAILY_RESULTS, USERS_STATISTICS } from 'firebase/collections';
+import { USERS_STATISTICS_FIELDS } from 'firebase/fields';
 import firebaseData from 'firebase/firebase';
 
 const { firebaseDb } = firebaseData;
+const {
+  date: dateField,
+  status: statusField,
+  attempts: attemptsField,
+  solveTime: solveTimeField,
+  username: usernameField,
+} = USERS_STATISTICS_FIELDS;
 
 export const getTodaysResults = async today => {
   const q = query(
     collection(firebaseDb, DAILY_RESULTS),
-    where('date', '==', today),
-    where('status', '!=', GAME_STATUS.playing),
-    orderBy('status', 'desc'),
-    orderBy('attempts'),
-    orderBy('solveTime'),
-    orderBy('user.name')
+    where(dateField, '==', today),
+    where(statusField, '!=', GAME_STATUS.playing),
+    orderBy(statusField, 'desc'),
+    orderBy(attemptsField),
+    orderBy(solveTimeField),
+    orderBy(usernameField)
   );
 
   const docs = await getDocs(q);

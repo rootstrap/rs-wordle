@@ -24,13 +24,15 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <IntlProvider messages={flatten(messages)} locale={locale} defaultLocale={DEFAULT_LANGUAGE}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </PersistGate>
-    </Provider>
-  </IntlProvider>
+  <React.StrictMode>
+    <IntlProvider messages={flatten(messages)} locale={locale} defaultLocale={DEFAULT_LANGUAGE}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </PersistGate>
+      </Provider>
+    </IntlProvider>
+  </React.StrictMode>
 );

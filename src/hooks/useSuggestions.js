@@ -11,6 +11,7 @@ import {
   where,
 } from 'firebase/firestore';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { MODAL_TYPE, SUGGESTIONS_STATUS } from 'constants/types';
 import { SUGGESTIONS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -29,6 +30,7 @@ const EMPTY_ERRORS = {
 const useSuggestions = () => {
   const t = useTranslation();
   const today = getTodaysDate();
+  const { triggerError } = useErrorHandling();
 
   const DEFAULT_STATUS = useMemo(() => SUGGESTIONS_STATUS.find(({ isDefault }) => isDefault), []);
 
@@ -108,55 +110,68 @@ const useSuggestions = () => {
   };
 
   const getSuggestions = useCallback(async () => {
-    let q;
-    if (statusFilterValue === 'All') {
-      q = query(
-        suggestionsRef,
-        orderBy('createdDate', 'desc'),
-        orderBy('status', 'desc'),
-        orderBy('voteCount', 'desc')
-      );
-    } else {
-      q = query(
-        suggestionsRef,
-        where('status', '==', statusFilterValue),
-        orderBy('createdDate', 'desc'),
-        orderBy('voteCount', 'desc')
-      );
-    }
-    const docs = await getDocs(q);
-
     const results = [];
-    docs.forEach(doc => {
-      const { description, negativeVotes, positiveVotes, status, title, ...restSuggestionsProps } =
-        doc.data();
-      const negativeVotesCount = negativeVotes.length;
-      const positiveVotesCount = positiveVotes.length;
-      const statusColor =
-        SUGGESTIONS_STATUS.find(({ value }) => value === status)?.color || 'black';
-      const suggestedBy = positiveVotes[0];
-      const votedNegative = negativeVotes.some(({ id }) => id === myId);
-      const votedPositive = positiveVotes.some(({ id }) => id === myId);
 
-      results.push({
-        description,
-        isMySuggestion: suggestedBy.id === myId,
-        negativeVotes,
-        negativeVotesCount,
-        positiveVotes,
-        positiveVotesCount,
-        status,
-        statusColor,
-        suggestedBy,
-        title,
-        votedNegative,
-        votedPositive,
-        ...restSuggestionsProps,
-        id: doc.id,
+    try {
+      let q;
+      if (statusFilterValue === 'All') {
+        q = query(
+          suggestionsRef,
+          orderBy('createdDate', 'desc'),
+          orderBy('status', 'desc'),
+          orderBy('voteCount', 'desc')
+        );
+      } else {
+        q = query(
+          suggestionsRef,
+          where('status', '==', statusFilterValue),
+          orderBy('createdDate', 'desc'),
+          orderBy('voteCount', 'desc')
+        );
+      }
+
+      const docs = await getDocs(q);
+
+      docs.forEach(doc => {
+        const {
+          description,
+          negativeVotes,
+          positiveVotes,
+          status,
+          title,
+          ...restSuggestionsProps
+        } = doc.data();
+        const negativeVotesCount = negativeVotes.length;
+        const positiveVotesCount = positiveVotes.length;
+        const statusColor =
+          SUGGESTIONS_STATUS.find(({ value }) => value === status)?.color || 'black';
+        const suggestedBy = positiveVotes[0];
+        const votedNegative = negativeVotes.some(({ id }) => id === myId);
+        const votedPositive = positiveVotes.some(({ id }) => id === myId);
+
+        results.push({
+          description,
+          isMySuggestion: suggestedBy.id === myId,
+          negativeVotes,
+          negativeVotesCount,
+          positiveVotes,
+          positiveVotesCount,
+          status,
+          statusColor,
+          suggestedBy,
+          title,
+          votedNegative,
+          votedPositive,
+          ...restSuggestionsProps,
+          id: doc.id,
+        });
       });
-    });
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
+    }
     setSuggestions(results);
-  }, [myId, statusFilterValue]);
+  }, [myId, statusFilterValue, triggerError]);
 
   useEffect(() => {
     getSuggestions();
@@ -194,9 +209,9 @@ const useSuggestions = () => {
       await getSuggestions();
 
       handleCloseModal();
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
     }
     setIsLoading(false);
   };
@@ -204,9 +219,9 @@ const useSuggestions = () => {
   const deleteSuggestion = async id => {
     try {
       await deleteDoc(doc(suggestionsRef, id));
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
       return false;
     }
 
@@ -249,9 +264,9 @@ const useSuggestions = () => {
 
     try {
       await updateDoc(doc(suggestionsRef, currentSuggestion.id), currentSuggestion);
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
     }
 
     await getSuggestions();
@@ -275,9 +290,9 @@ const useSuggestions = () => {
     try {
       await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
       await getSuggestions();
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
     }
   };
 
@@ -293,9 +308,9 @@ const useSuggestions = () => {
     try {
       await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
       await getSuggestions();
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
     }
   };
 
@@ -307,9 +322,9 @@ const useSuggestions = () => {
     try {
       await updateDoc(doc(suggestionsRef, newSuggestion.id), newSuggestion);
       await getSuggestions();
-    } catch (err) {
-      // TODO: handle errors
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      triggerError({ error });
     }
   };
 

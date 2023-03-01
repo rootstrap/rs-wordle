@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import wordExists from 'word-exists';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { IGNORE_KEYBOARD_COMPONENTS_IDS } from 'constants/componentsIds';
 import { ACCEPTED_WORDS, KEYBOARD_LETTERS, MAX_ATTEMPTS } from 'constants/constants';
 import { CUSTOM_CONFETTI_ANNUAL, CUSTOM_CONFETTI } from 'constants/customConfetti';
@@ -26,6 +27,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
   } = useAuth();
 
   const t = useTranslation();
+  const { triggerError } = useErrorHandling();
 
   const [wordDate, setWordDate] = useState(null);
   const [letterIndex, setLetterIndex] = useState(0);
@@ -118,13 +120,20 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       setWordDate(today);
       setUsersAttempts([Array(wordLength).fill('')]);
       setRoundsResults([Array(wordLength).fill('')]);
-      const { docs, error } = await getDailyResults(currentUser, today);
-      if (!error) {
-        analyzeData(docs);
-      }
+      const { docs } = await getDailyResults(currentUser, today, triggerError);
+      analyzeData(docs);
       setLoading(false);
     }
-  }, [analyzeData, correctWord, currentUser, setLoading, today, wordDate, wordLength]);
+  }, [
+    analyzeData,
+    correctWord,
+    currentUser,
+    setLoading,
+    today,
+    triggerError,
+    wordDate,
+    wordLength,
+  ]);
 
   useEffect(() => {
     initializeData();
@@ -242,7 +251,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           },
         };
 
-        const dailyResultsId = await addDailyResults(newDailyResults);
+        const dailyResultsId = await addDailyResults(newDailyResults, triggerError);
 
         setDailyResultsId(dailyResultsId);
         setDailyResults(newDailyResults);
@@ -263,7 +272,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
           status: newStatus,
         };
 
-        await updateDailyResults(dailyResultsId, newDailyResults);
+        await updateDailyResults(dailyResultsId, newDailyResults, triggerError);
 
         setDailyResults(newDailyResults);
       }
@@ -338,6 +347,7 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, setLoading }) => {
       totalAttempts,
       totalGames,
       totalWins,
+      triggerError,
       uid,
       updateStatistics,
       usersAttempts,

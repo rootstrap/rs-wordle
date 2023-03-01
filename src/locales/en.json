@@ -20,6 +20,12 @@
     "deleteComment": "Delete Comment",
     "editComment": "Edit Comment"
   },
+  "errorBoundary": {
+    "description": "You can check the technical issue here:",
+    "subtitle": "Something went wrong. Sorry for the inconvenience.",
+    "title": "Oops there was an error 😭",
+    "tryAgain": "Try Again"
+  },
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",

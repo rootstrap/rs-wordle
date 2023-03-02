@@ -1,45 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
-import { USERS } from 'firebase/collections';
-import firebaseData from 'firebase/firebase';
-
-const { firebaseDb } = firebaseData;
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
+import { getUsers } from 'firebase/users';
 
 const useUsers = () => {
   const [filters, setFilters] = useState({ username: '' });
   const [usersList, setUsersList] = useState();
 
   const { username } = filters;
+  const { triggerError } = useErrorHandling();
 
-  const getUsers = useCallback(async () => {
-    try {
-      const q = query(collection(firebaseDb, USERS), orderBy('name'));
-      const docs = await getDocs(q);
-      const newUsersList = [];
-      docs.forEach(doc => {
-        const { email, name, photo, uid } = doc.data();
-        if (name.toUpperCase().includes(username.toUpperCase())) {
-          newUsersList.push({ email, name, photo, id: uid });
-        }
-      });
-      setUsersList(newUsersList);
-    } catch (err) {
-      console.log('err: ', err);
-    }
-  }, [username]);
+  const getUsersList = useCallback(async () => {
+    const { users } = await getUsers({ username, triggerError });
+    setUsersList(users);
+  }, [triggerError, username]);
 
   const changeFilter = async (key, value) => {
     setFilters(prevFilters => ({
       ...prevFilters,
       [key]: value,
     }));
-    getUsers();
+    getUsersList();
   };
 
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+    getUsersList();
+  }, [getUsersList]);
 
   return {
     filters,

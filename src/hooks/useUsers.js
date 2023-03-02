@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { getUsers } from 'firebase/users';
 
 const useUsers = () => {
@@ -7,15 +8,12 @@ const useUsers = () => {
   const [usersList, setUsersList] = useState();
 
   const { username } = filters;
+  const { triggerError } = useErrorHandling();
 
   const getUsersList = useCallback(async () => {
-    try {
-      const { users } = await getUsers({ username });
-      setUsersList(users);
-    } catch (err) {
-      console.log('err: ', err);
-    }
-  }, [username]);
+    const { users } = await getUsers({ username, triggerError });
+    setUsersList(users);
+  }, [triggerError, username]);
 
   const changeFilter = async (key, value) => {
     setFilters(prevFilters => ({

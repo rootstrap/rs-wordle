@@ -6,15 +6,20 @@ import firebaseData from 'firebase/firebase';
 const { firebaseDb } = firebaseData;
 const dailyResultsRef = collection(firebaseDb, DAILY_RESULTS);
 
-export const addDailyResults = async newDailyResults => {
-  const { id: dailyResultsId } = await addDoc(
-    collection(firebaseDb, DAILY_RESULTS),
-    newDailyResults
-  );
-  return dailyResultsId;
+export const addDailyResults = async (newDailyResults, triggerError) => {
+  try {
+    const { id: dailyResultsId } = await addDoc(
+      collection(firebaseDb, DAILY_RESULTS),
+      newDailyResults
+    );
+    return dailyResultsId;
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+  }
 };
 
-export const getDailyResults = async (currentUser, today) => {
+export const getDailyResults = async (currentUser, today, triggerError) => {
   try {
     const q = query(
       collection(firebaseDb, DAILY_RESULTS),
@@ -24,16 +29,18 @@ export const getDailyResults = async (currentUser, today) => {
     const docs = await getDocs(q);
     return {
       docs,
-      error: false,
     };
-  } catch (err) {
-    console.error(err);
-    return {
-      error: true,
-    };
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+    return { docs: [] };
   }
 };
 
-export const updateDailyResults = async (dailyResultsId, newDailyResults) => {
-  await updateDoc(doc(dailyResultsRef, dailyResultsId), newDailyResults);
+export const updateDailyResults = async (dailyResultsId, newDailyResults, triggerError) => {
+  try {
+    await updateDoc(doc(dailyResultsRef, dailyResultsId), newDailyResults);
+  } catch (error) {
+    triggerError({ error });
+  }
 };

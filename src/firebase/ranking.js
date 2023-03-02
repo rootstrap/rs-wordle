@@ -14,77 +14,85 @@ const {
   username: usernameField,
 } = USERS_STATISTICS_FIELDS;
 
-export const getTodaysResults = async today => {
-  const q = query(
-    collection(firebaseDb, DAILY_RESULTS),
-    where(dateField, '==', today),
-    where(statusField, '!=', GAME_STATUS.playing),
-    orderBy(statusField, 'desc'),
-    orderBy(attemptsField),
-    orderBy(solveTimeField),
-    orderBy(usernameField)
-  );
-
-  const docs = await getDocs(q);
-
+export const getTodaysResults = async (today, triggerError) => {
   const todaysResults = [];
-  let position = 0;
-  let currentAttempts = 0;
-  let currentStatus = GAME_STATUS.won;
-  let currentSolveTime = 0;
-  docs.forEach(doc => {
-    const { attempts, solveTime, status, ...restDailyResults } = doc.data();
-    if (
-      currentAttempts !== attempts ||
-      solveTime !== currentSolveTime ||
-      currentStatus !== status
-    ) {
-      currentAttempts = attempts;
-      currentSolveTime = solveTime;
-      currentStatus = status;
-      position += 1;
-    }
-    todaysResults.push({
-      attempts,
-      solveTime,
-      status,
-      ...restDailyResults,
-      position,
-    });
-  });
 
+  try {
+    const q = query(
+      collection(firebaseDb, DAILY_RESULTS),
+      where(dateField, '==', today),
+      where(statusField, '!=', GAME_STATUS.playing),
+      orderBy(statusField, 'desc'),
+      orderBy(attemptsField),
+      orderBy(solveTimeField),
+      orderBy(usernameField)
+    );
+    const docs = await getDocs(q);
+
+    let position = 0;
+    let currentAttempts = 0;
+    let currentStatus = GAME_STATUS.won;
+    let currentSolveTime = 0;
+    docs.forEach(doc => {
+      const { attempts, solveTime, status, ...restDailyResults } = doc.data();
+      if (
+        currentAttempts !== attempts ||
+        solveTime !== currentSolveTime ||
+        currentStatus !== status
+      ) {
+        currentAttempts = attempts;
+        currentSolveTime = solveTime;
+        currentStatus = status;
+        position += 1;
+      }
+      todaysResults.push({
+        attempts,
+        solveTime,
+        status,
+        ...restDailyResults,
+        position,
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+  }
   return { todaysResults };
 };
 
-export const getAllTimeRankingData = async users => {
-  const q = query(collection(firebaseDb, USERS_STATISTICS), orderBy('currentStreak', 'desc'));
-
-  const docs = await getDocs(q);
-
+export const getAllTimeRankingData = async (users, triggerError) => {
   const allTimeRankingData = [];
-  let position = 0;
-  let currentStreakValue = Number.MAX_SAFE_INTEGER;
+  try {
+    const q = query(collection(firebaseDb, USERS_STATISTICS), orderBy('currentStreak', 'desc'));
+    const docs = await getDocs(q);
 
-  docs.forEach(async doc => {
-    const { id: userEmail } = doc;
-    const { currentStreak, lastDatePlayed, totalGames, ...restStatistics } = doc.data();
-    if (!!totalGames) {
-      if (currentStreak !== currentStreakValue) {
-        currentStreakValue = currentStreak;
-        position += 1;
+    let position = 0;
+    let currentStreakValue = Number.MAX_SAFE_INTEGER;
+
+    docs.forEach(async doc => {
+      const { id: userEmail } = doc;
+      const { currentStreak, lastDatePlayed, totalGames, ...restStatistics } = doc.data();
+      if (!!totalGames) {
+        if (currentStreak !== currentStreakValue) {
+          currentStreakValue = currentStreak;
+          position += 1;
+        }
+        allTimeRankingData.push({
+          ...restStatistics,
+          currentStreak,
+          lastDatePlayed,
+          rightText: RANKING_VALUES[0].getRightText({ currentStreak, isFirst: position === 1 }),
+          suffix: RANKING_VALUES[0].getSuffix({ lastDatePlayed }),
+          totalGames,
+          position,
+          user: users[userEmail] || { email: userEmail, name: userEmail.split('@')[0] },
+        });
       }
-      allTimeRankingData.push({
-        ...restStatistics,
-        currentStreak,
-        lastDatePlayed,
-        rightText: RANKING_VALUES[0].getRightText({ currentStreak, isFirst: position === 1 }),
-        suffix: RANKING_VALUES[0].getSuffix({ lastDatePlayed }),
-        totalGames,
-        position,
-        user: users[userEmail] || { email: userEmail, name: userEmail.split('@')[0] },
-      });
-    }
-  });
+    });
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+  }
 
   return { allTimeRankingData };
 };

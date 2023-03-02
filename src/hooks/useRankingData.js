@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { RANKING_VALUES } from 'constants/types';
 import { getAllTimeRankingData, getTodaysResults } from 'firebase/ranking';
 import { getUsers } from 'firebase/users';
@@ -14,6 +15,7 @@ const useRankingData = () => {
   } = useAuth();
 
   const navigate = useNavigate();
+  const { triggerError } = useErrorHandling();
 
   const [dailyResults, setDailyResults] = useState([]);
   const [rankingData, setRankingData] = useState([]);
@@ -26,25 +28,25 @@ const useRankingData = () => {
   useEffect(() => {
     (async function () {
       setLoading(true);
-      const { users: usersResults } = await getUsers({ isObject: true });
+      const { users: usersResults } = await getUsers({ isObject: true, triggerError });
       setUsers(usersResults);
     })();
-  }, []);
+  }, [triggerError]);
 
   useEffect(() => {
     (async function () {
-      const { todaysResults } = await getTodaysResults(today);
+      const { todaysResults } = await getTodaysResults(today, triggerError);
       setDailyResults(todaysResults);
     })();
-  }, [today]);
+  }, [today, triggerError]);
 
   useEffect(() => {
     (async function () {
-      const { allTimeRankingData } = await getAllTimeRankingData(users);
+      const { allTimeRankingData } = await getAllTimeRankingData(users, triggerError);
       setRankingData(allTimeRankingData);
       setLoading(false);
     })();
-  }, [users]);
+  }, [triggerError, users]);
 
   const currentUserPlayed = useMemo(
     () => dailyResults.find(item => item.user.email === currentUser),

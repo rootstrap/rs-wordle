@@ -16,18 +16,19 @@ class RSWordleErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log({ error, errorInfo });
+    console.error({ error, errorInfo });
   }
 
   triggerError = ({ error, errorInfo }) => {
-    console.log({ error, errorInfo });
+    console.error({ error, errorInfo });
     this.setState({ hasError: true, errorMessage: error.message });
   };
 
   resetError = () => this.setState({ hasError: false, errorMessage: '' });
 
   render() {
-    const { t } = this.props;
+    const { errorMessage, hasError } = this.state;
+    const { children, showSideNav, t } = this.props;
 
     return (
       <ErrorBoundaryContext.Provider
@@ -36,16 +37,16 @@ class RSWordleErrorBoundary extends React.Component {
           resetError: this.resetError,
         }}
       >
-        {this.state.hasError ? (
+        {hasError ? (
           <>
-            {this.props.showSideNav && <SideNav />}
-            <div {...(this.props.showSideNav ? { className: 'page-with-nav' } : {})}>
+            {showSideNav && <SideNav />}
+            <div {...(showSideNav ? { className: 'page-with-nav' } : {})}>
               <PageWrapper>
                 <div className="error-boundary-container">
                   <h1>{t('errorBoundary.title')}</h1>
                   <h2>{t('errorBoundary.subtitle')}</h2>
                   <p>{t('errorBoundary.description')}</p>
-                  <p className="error-boundary-message">{this.state.errorMessage}</p>
+                  <p className="error-boundary-message">{errorMessage}</p>
                   <div className="error-buttons-container">
                     <div className="try-again-button">
                       <Button handleClick={this.resetError}>{t('errorBoundary.tryAgain')}</Button>
@@ -57,7 +58,7 @@ class RSWordleErrorBoundary extends React.Component {
             </div>
           </>
         ) : (
-          this.props.children
+          children
         )}
       </ErrorBoundaryContext.Provider>
     );

@@ -1,52 +1,24 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { RANKING_VALUES } from 'constants/types';
-import { getAllTimeRankingData, getTodaysResults } from 'firebase/ranking';
-import { getUsers } from 'firebase/users';
-import { getTodaysDate } from 'utils/helpers';
+import { setAllTimeRanking } from 'state/actions/rankingActions';
 
 import useAuth from './useAuth';
+import useGetRankingData from './data/useGetRankingData';
 
 const useRankingData = () => {
   const {
     user: { email: currentUser },
   } = useAuth();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { triggerError } = useErrorHandling();
 
-  const [dailyResults, setDailyResults] = useState([]);
-  const [rankingData, setRankingData] = useState([]);
-  const [users, setUsers] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { dailyResults, rankingData } = useGetRankingData();
+
   const [selectedRanking, setSelectedRanking] = useState(RANKING_VALUES[0]);
-
-  const today = getTodaysDate();
-
-  useEffect(() => {
-    (async function () {
-      setLoading(true);
-      const { users: usersResults } = await getUsers({ isObject: true, triggerError });
-      setUsers(usersResults);
-    })();
-  }, [triggerError]);
-
-  useEffect(() => {
-    (async function () {
-      const { todaysResults } = await getTodaysResults(today, triggerError);
-      setDailyResults(todaysResults);
-    })();
-  }, [today, triggerError]);
-
-  useEffect(() => {
-    (async function () {
-      const { allTimeRankingData } = await getAllTimeRankingData(users, triggerError);
-      setRankingData(allTimeRankingData);
-      setLoading(false);
-    })();
-  }, [triggerError, users]);
 
   const currentUserPlayed = useMemo(
     () => dailyResults.find(item => item.user.email === currentUser),
@@ -58,7 +30,7 @@ const useRankingData = () => {
       state: { email, name, photo },
     });
 
-  const onChangeSelectedRanking = newSelectedRanking => {
+  const onChangeSelectedRanking = async newSelectedRanking => {
     if (newSelectedRanking !== selectedRanking) {
       setSelectedRanking(newSelectedRanking);
       let newRankingData = [...rankingData];
@@ -91,7 +63,7 @@ const useRankingData = () => {
           };
         });
 
-      setRankingData(newRankingData);
+      await dispatch(setAllTimeRanking({ allTimeRankingData: newRankingData }));
     }
   };
 
@@ -105,7 +77,6 @@ const useRankingData = () => {
     rankingDataLength,
     dailyResults,
     dailyResultsLength,
-    loading,
     selectedRanking,
     onChangeSelectedRanking,
     goToUsersStatistics,

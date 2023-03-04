@@ -9,6 +9,11 @@
     "seeWelcomeInfo": "See Welcome Info",
     "word": "word"
   },
+  "chats": {
+    "inputLabel": "Enter Message",
+    "placeholder": "type message...",
+    "send": "Send"
+  },
   "comments": {
     "addComment": "Add Comment",
     "addNewComment": "Add New Comment",

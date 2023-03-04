@@ -2,7 +2,7 @@ import { func, bool, string } from 'prop-types';
 
 import './styles.css';
 
-const Button = ({ children, type = 'button', disabled, handleClick }) => (
+const Button = ({ children, type = 'button', disabled = false, handleClick }) => (
   <button className="button" onClick={handleClick} type={type} disabled={disabled}>
     {children}
   </button>

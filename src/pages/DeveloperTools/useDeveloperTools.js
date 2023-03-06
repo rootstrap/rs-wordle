@@ -138,7 +138,7 @@ const useDeveloperTools = () => {
 
         const isDifferent = Object.keys(statisticsDifference).length > 0;
 
-        const errorConsoleLog = () => {
+        const errorConsoleLog = (showUpdateWarning = false) => {
           console.warn(email);
           console.log('statisticsDifference (expected): ', statisticsDifference);
           Object.entries(statisticsDifference).forEach(([key, value]) => {
@@ -150,6 +150,12 @@ const useDeveloperTools = () => {
               console.log(`${key}: expected ${value} -> found ${currentStatistics[key]}`);
             }
           });
+          if (showUpdateWarning) {
+            console.log(
+              'You will be changing the current statistics with these values: ',
+              expectedStatistics
+            );
+          }
         };
 
         if (isDifferent) {
@@ -161,7 +167,7 @@ const useDeveloperTools = () => {
           message: `${email} -> ${isDifferent ? '❌' : '✅'}`,
           handleClickLink: isDifferent
             ? async () => {
-                errorConsoleLog();
+                errorConsoleLog(true);
                 if (
                   window.confirm(
                     `Are you sure you want to update statistics for ${email}? Please check the console log to make sure of the changes you are going to make`

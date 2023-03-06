@@ -31,23 +31,30 @@ function App() {
           {showSideNav && <SideNav />}
           <main id={MAIN_ID} {...(showSideNav ? { className: 'page-with-nav' } : {})}>
             <Routes>
-              {routes.map(route => (
-                <Route
-                  key={`route-${route.path}`}
-                  {...route}
-                  element={
-                    <PrivateRoute
-                      {...route}
-                      authenticated={authenticated}
-                      isRootstrapDomain={isRootstrapDomain}
-                    >
-                      <PageWrapper title={route.title} subtitle={route.subtitle}>
-                        {route.element}
-                      </PageWrapper>
-                    </PrivateRoute>
-                  }
-                />
-              ))}
+              {routes.map(route => {
+                const showRoute =
+                  !route.isOnlyDevelop || process.env.REACT_APP_ENVIRONMENT === 'develop';
+
+                if (!showRoute) return null;
+
+                return (
+                  <Route
+                    key={`route-${route.path}`}
+                    {...route}
+                    element={
+                      <PrivateRoute
+                        {...route}
+                        authenticated={authenticated}
+                        isRootstrapDomain={isRootstrapDomain}
+                      >
+                        <PageWrapper title={route.title} subtitle={route.subtitle}>
+                          {route.element}
+                        </PageWrapper>
+                      </PrivateRoute>
+                    }
+                  />
+                );
+              })}
             </Routes>
           </main>
         </RSWordleErrorBoundary>

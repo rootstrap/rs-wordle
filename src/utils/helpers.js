@@ -32,7 +32,9 @@ export const getTodaysDate = (shouldFormat = true) => {
   return shouldFormat ? formatDate(today) : today.toString();
 };
 
-export const getTodaysDisplayDate = () => new Date().toLocaleString('en').split(',')[0];
+export const getDisplayDate = date => date.toLocaleString('en').split(',')[0];
+
+export const getTodaysDisplayDate = () => getDisplayDate(new Date());
 
 export const getTimeDiff = (startDate, endDate, timeFormat = 'minutes') => {
   const dateTimeEnd = new Date(endDate);

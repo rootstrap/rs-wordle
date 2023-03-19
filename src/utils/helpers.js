@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export const getCurrentStreakIcon = currentStreak => {
   let icon = '';
   if (currentStreak < 1) icon = '💔';
@@ -27,7 +29,7 @@ const formatDate = date => {
 };
 
 export const getTodaysDate = (shouldFormat = true) => {
-  const today = new Date();
+  const today = Timestamp.now().toDate();
 
   return shouldFormat ? formatDate(today) : today.toString();
 };

@@ -7,7 +7,7 @@ import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 import { getTodaysDate } from 'utils/helpers';
 
-const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, setLoading }) => {
+const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing, setLoading }) => {
   const t = useTranslation();
 
   const [letterIndex, setLetterIndex] = useState(0);
@@ -37,9 +37,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, setLoadi
         roundCount++;
       }
     });
-    if (!newAttempts) {
-      newAttempts.push(Array(wordLength).fill(''));
-    }
     setUsersAttempts(newAttempts);
     setRoundsResults(newRoundResults);
     setCurrentRound(roundCount);
@@ -51,11 +48,14 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, setLoadi
   };
 
   const initializeData = useCallback(async () => {
-    if (!!correctWord && !!attempts) {
+    if (playing && !!correctWord && !!attempts) {
       analyzeData(attempts);
       setLoading(false);
+    } else {
+      const newAttempts = [Array(5).fill('')];
+      setUsersAttempts(newAttempts);
     }
-  }, [attempts, correctWord, setLoading, wordLength]);
+  }, [playing, attempts, correctWord, wordLength]);
 
   useEffect(() => {
     initializeData();

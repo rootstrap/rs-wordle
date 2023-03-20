@@ -1,8 +1,8 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 85vh;
+  justify-content: space-evenly;
+  min-height: 70vh;
 }
 
 .word-container {
@@ -26,7 +26,6 @@
   font-weight: 800;
 }
 
-.share-results-button {
+.play-button {
   align-self: center;
-  max-width: 100px;
 }

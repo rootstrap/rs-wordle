@@ -5,7 +5,7 @@ import randomWords from 'random-words';
 import { ADMITTED_WORDS_SIZES } from 'constants/constants';
 import { getRandomInt } from 'utils/helpers';
 
-const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS', 'DOGS', 'CATS'];
+const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS'];
 
 export const getTodaysWord = async today => {
   try {
@@ -30,23 +30,19 @@ export const getTodaysWord = async today => {
   }
 };
 
-const useWordDb = () => {
+const useWordDb = playing => {
   const [word, setWord] = useState('');
-  const [wordDate, setWordDate] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const today = getTodaysDate();
 
   useEffect(() => {
     (async function () {
-      if (wordDate !== today) {
-        setLoading(true);
-        setWordDate(today);
-        const { todaysWord } = await getTodaysWord(today);
-        setWord(todaysWord);
-      }
+      setLoading(true);
+      const { todaysWord } = await getTodaysWord(today);
+      setWord(todaysWord);
     })();
-  }, [today, wordDate]);
+  }, []);
 
   const letters = useMemo(() => word?.split(''), [word]);
 

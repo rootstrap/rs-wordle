@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Confetti from 'react-confetti';
 
+import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
-import { LETTER_STATUS } from 'constants/types';
+import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
@@ -11,18 +12,18 @@ import { useGetAttemptsQuery } from 'services/wordleAI';
 import './styles.css';
 
 const Home = () => {
-  const { letters, word, loading, setLoading } = useWordDb();
-  const { isLoading, isError, data } = useGetAttemptsQuery(word);
+  const [playing, setPlaying] = useState(false);
+
+  const { letters, word, loading, setLoading } = useWordDb(playing);
+  const { isLoading, data } = useGetAttemptsQuery(word, playing);
   const attempts = data ? data.attempts : [];
-  //const attempts = [];
+
   const {
-    currentRound,
     usersAttempts,
     roundsResults,
     gameEnded,
     gameStatus,
     error,
-    letterIndex,
     wordProcessing,
     setLetterIndex,
     confettiExtraParams,
@@ -33,6 +34,7 @@ const Home = () => {
     correctWord: word,
     letters,
     attempts: attempts,
+    playing,
     setLoading,
   });
 
@@ -43,16 +45,13 @@ const Home = () => {
   );
   const correctWordMessage = useMemo(() => t('home.correctWordMessage', { word }), [t, word]);
 
-  // if (loading || isLoading) return <Loading />;
-
-  // if (isError) {
-  //   return <div>Error: there was an error</div>;
-  // }
-
-  console.log(usersAttempts);
+  if (playing && (loading || isLoading)) return <Loading />;
 
   return (
     <div className="home-container">
+      <div className="play-button">
+        <Button handleClick={() => setPlaying(true)}>Play word</Button>
+      </div>
       <div className="word-container">
         {usersAttempts.map((attempt, round) => {
           const attemptedWord = attempt.join('');
@@ -68,9 +67,8 @@ const Home = () => {
             >
               <>
                 {attempt.map((c, index) => {
-                  const completedRow = round !== currentRound || gameEnded;
+                  const completedRow = gameEnded;
                   const letter = usersAttempts[round][index];
-                  console.log(roundsResults);
                   const letterStatus = completedRow
                     ? LETTER_STATUS[roundsResults[round][index]]
                     : LETTER_STATUS.nothing;
@@ -81,7 +79,6 @@ const Home = () => {
                       style={{
                         backgroundColor: letterStatus.color,
                       }}
-                      isSelected={index === letterIndex && round === currentRound}
                       onClick={() => setLetterIndex(index)}
                       disabled={completedRow}
                       ariaLabel={letterStatus.ariaLabel(letter, t)}
@@ -89,11 +86,12 @@ const Home = () => {
                   );
                 })}
               </>
+              {/* handleClick={() => shareResults(false)} */}
             </div>
           );
         })}
-        {!!error && <p className="error-message">{error}</p>}
       </div>
+      {!!error && <p className="error-message">{error}</p>}
       {wordProcessing && <Loading />}
       {gameEnded && (
         <>

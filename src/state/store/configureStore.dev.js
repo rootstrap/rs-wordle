@@ -4,8 +4,10 @@ import logger from 'redux-logger';
 
 import reducer from 'state/reducers/reducer';
 import { api } from 'services/api';
+import { wordleAIApi } from 'services/wordleAI';
 
-const middleware = getDefaultMiddleware => getDefaultMiddleware().concat(logger, api.middleware);
+const middleware = getDefaultMiddleware =>
+  getDefaultMiddleware().concat(logger, api.middleware, wordleAIApi.middleware);
 
 const store = () => {
   const store = configureStore({

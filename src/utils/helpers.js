@@ -1,21 +1,3 @@
-export const getCurrentStreakIcon = currentStreak => {
-  let icon = '';
-  if (currentStreak < 1) icon = '💔';
-  else if (currentStreak < 10) icon = '🤍';
-  else if (currentStreak < 20) icon = '💛';
-  else if (currentStreak < 30) icon = '🧡';
-  else if (currentStreak < 40) icon = '💚';
-  else if (currentStreak < 50) icon = '💙';
-  else if (currentStreak < 60) icon = '💜';
-  else if (currentStreak < 70) icon = '🤎';
-  else if (currentStreak < 80) icon = '🖤';
-  else if (currentStreak < 90) icon = '❤️';
-  else if (currentStreak < 100) icon = '💖';
-  else icon = '❤️‍🔥';
-
-  return icon;
-};
-
 export const getRandomInt = max => Math.floor(Math.random() * max);
 
 const formatDate = date => {

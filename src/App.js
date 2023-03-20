@@ -6,8 +6,6 @@ import PrivateRoute from 'components/routes/PrivateRoute';
 import SideNav from 'components/SideNav';
 import { MAIN_ID } from 'constants/componentsIds';
 import useTranslation from 'hooks/useTranslation';
-import useAuth from 'hooks/useAuth';
-import useRootstrapAuth from 'hooks/useRootstrapAuth';
 import routes from 'routes';
 
 import 'styles/variables.css';
@@ -15,9 +13,7 @@ import './App.css';
 
 function App() {
   const t = useTranslation();
-  const { authenticated } = useAuth();
-  const { isRootstrapDomain } = useRootstrapAuth();
-  const showSideNav = authenticated && isRootstrapDomain;
+  const showSideNav = true;
 
   return (
     <div className="App">
@@ -33,11 +29,7 @@ function App() {
                 key={`route-${route.path}`}
                 {...route}
                 element={
-                  <PrivateRoute
-                    {...route}
-                    authenticated={authenticated}
-                    isRootstrapDomain={isRootstrapDomain}
-                  >
+                  <PrivateRoute {...route}>
                     <PageWrapper title={route.title} subtitle={route.subtitle}>
                       {route.element}
                     </PageWrapper>

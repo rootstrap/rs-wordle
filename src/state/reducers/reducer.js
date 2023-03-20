@@ -3,8 +3,8 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { api } from 'services/api';
+import { wordleAIApi } from 'services/wordleAI';
 
-import statisticsReducer from './statisticsReducer';
 import userReducer from './userReducer';
 
 const sessionPersistConfig = {
@@ -15,7 +15,7 @@ const sessionPersistConfig = {
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
-  statistics: statisticsReducer,
+  [wordleAIApi.reducerPath]: wordleAIApi.reducer,
   user: persistReducer(sessionPersistConfig, userReducer),
 });
 

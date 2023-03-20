@@ -4,18 +4,14 @@ import IconButton from '@mui/material/IconButton';
 
 import Logo from 'components/Logo';
 import Onboarding from 'components/Onboarding';
-import useAuth from 'hooks/useAuth';
-import useRootstrapAuth from 'hooks/useRootstrapAuth';
 import useTranslation from 'hooks/useTranslation';
 
 import './styles.css';
 
 const PageWrapper = ({ title, subtitle, children }) => {
-  const { authenticated, wasOnboardingShown } = useAuth();
-  const { isRootstrapDomain } = useRootstrapAuth();
   const t = useTranslation();
 
-  const showOnboardingFirstTime = authenticated && !wasOnboardingShown && isRootstrapDomain;
+  const showOnboardingFirstTime = false;
   const [showOnboarding, setOnboardingShown] = useState(false);
 
   const handleOpenModal = () => setOnboardingShown(true);
@@ -33,9 +29,7 @@ const PageWrapper = ({ title, subtitle, children }) => {
         {title && <h1 className="page-title">{title}</h1>}
         {subtitle && <h2>{subtitle}</h2>}
       </div>
-      {(showOnboarding || showOnboardingFirstTime) && (
-        <Onboarding handleCloseModal={handleCloseModal} />
-      )}
+      {showOnboarding && <Onboarding handleCloseModal={handleCloseModal} />}
       {children}
     </div>
   );

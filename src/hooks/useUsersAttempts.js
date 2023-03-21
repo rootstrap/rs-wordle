@@ -18,7 +18,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
   const [wordProcessing, setWordProcessing] = useState(false);
 
   const gameEnded = gameStatus !== GAME_STATUS.playing;
-
   const today = getTodaysDate();
 
   const analyzeData = attempts => {
@@ -45,12 +44,16 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
     setCurrentRound(roundCount);
   };
 
+  const initialState = () => {
+    setUsersAttempts([Array(5).fill('')]);
+    setGameStatus(GAME_STATUS.playing);
+  };
+
   const initializeData = useCallback(async () => {
     if (playing && !!correctWord && !!attempts) {
       analyzeData(attempts);
     } else {
-      const newAttempts = [Array(5).fill('')];
-      setUsersAttempts(newAttempts);
+      initialState();
     }
   }, [playing, correctWord, attempts]);
 
@@ -96,7 +99,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
 
     const won = correctCount === wordLength;
     const lost = usersAttempts.length === MAX_ATTEMPTS && !won;
-    console.log(usersAttempts.length);
     const newStatus = won ? GAME_STATUS.won : lost ? GAME_STATUS.lost : GAME_STATUS.playing;
     if (won || lost) {
       setGameStatus(newStatus);

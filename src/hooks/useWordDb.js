@@ -30,24 +30,22 @@ export const getTodaysWord = () => {
   }
 };
 
-const useWordDb = playing => {
-  const [word, setWord] = useState('');
+const useWordDb = (playing, goalWord, setGoalWord) => {
   const [loading, setLoading] = useState(true);
 
   const today = getTodaysDate();
 
   useEffect(() => {
-    if (playing) {
+    if (playing && !goalWord) {
       const { todaysWord } = getTodaysWord(today);
-      setWord(todaysWord);
+      setGoalWord(todaysWord);
     }
   }, [playing]);
 
-  const letters = useMemo(() => word?.split(''), [word]);
+  const letters = useMemo(() => goalWord?.split(''), [goalWord]);
 
   return {
     letters,
-    word,
     loading,
     setLoading,
   };

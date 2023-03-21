@@ -10,17 +10,19 @@ import useUsersAttempts from 'hooks/useUsersAttempts';
 import useWordDb from 'hooks/useWordDb';
 import { useGetAttemptsQuery } from 'services/wordleAI';
 import './styles.css';
+import Input from 'components/common/Input';
 
 const Home = () => {
   const [playing, setPlaying] = useState(false);
   const [attempts, setAttempts] = useState([]);
+  const [goalWord, setGoalWord] = useState('');
 
-  const { letters, word } = useWordDb(playing);
+  const { letters } = useWordDb(playing, goalWord, setGoalWord);
   const {
     isLoading,
     data,
     error: queryError,
-  } = useGetAttemptsQuery(word, { skip: !playing || !word });
+  } = useGetAttemptsQuery(goalWord, { skip: !playing || !goalWord });
 
   useEffect(() => {
     if (playing && data && !queryError) {
@@ -39,8 +41,8 @@ const Home = () => {
     customMessage,
     won,
   } = useUsersAttempts({
-    wordLength: word.length,
-    correctWord: word,
+    wordLength: goalWord.length,
+    correctWord: goalWord,
     letters,
     attempts: attempts,
     playing,
@@ -51,14 +53,34 @@ const Home = () => {
     () => t('home.gameStatusMessage', { gameStatus: gameStatus.toUpperCase() }),
     [gameStatus, t]
   );
-  const correctWordMessage = useMemo(() => t('home.correctWordMessage', { word }), [t, word]);
+  const correctWordMessage = useMemo(
+    () => t('home.correctWordMessage', { word: goalWord.toUpperCase() }),
+    [t, goalWord]
+  );
+
+  const resetState = () => {
+    setPlaying(false);
+    setGoalWord('');
+    setAttempts([]);
+  };
 
   if (playing && isLoading) return <Loading />;
 
   return (
     <div className="home-container">
-      <div className="play-button">
-        <Button handleClick={() => setPlaying(true)}>Play word</Button>
+      <div className="play-button-container">
+        <Input
+          value={goalWord.toUpperCase()}
+          handleOnChange={newValue => setGoalWord(newValue)}
+          placeholder="Enter goal word"
+          disabled={playing}
+          maxLength={5}
+        />
+        {playing ? (
+          <Button handleClick={() => resetState()}>Reset</Button>
+        ) : (
+          <Button handleClick={() => setPlaying(true)}>Play word</Button>
+        )}
       </div>
       <div className="word-container">
         {usersAttempts.map((attempt, round) => {
@@ -93,7 +115,6 @@ const Home = () => {
                   );
                 })}
               </>
-              {/* handleClick={() => shareResults(false)} */}
             </div>
           );
         })}

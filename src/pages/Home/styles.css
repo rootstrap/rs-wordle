@@ -28,6 +28,20 @@
   font-weight: 800;
 }
 
-.play-button {
+::placeholder {
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+.word-input-label {
+  font-size: 22px;
+  font-weight: 600;
+  padding-right: 25px;
+}
+
+.play-button-container {
+  align-items: center;
+  display: flex;
   align-self: center;
+  column-gap: 2em;
 }

@@ -2,7 +2,6 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import PageWrapper from 'components/common/PageWrapper';
-import PrivateRoute from 'components/routes/PrivateRoute';
 import SideNav from 'components/SideNav';
 import { MAIN_ID } from 'constants/componentsIds';
 import useTranslation from 'hooks/useTranslation';
@@ -29,11 +28,9 @@ function App() {
                 key={`route-${route.path}`}
                 {...route}
                 element={
-                  <PrivateRoute {...route}>
-                    <PageWrapper title={route.title} subtitle={route.subtitle}>
-                      {route.element}
-                    </PageWrapper>
-                  </PrivateRoute>
+                  <PageWrapper title={route.title} subtitle={route.subtitle}>
+                    {route.element}
+                  </PageWrapper>
                 }
               />
             ))}

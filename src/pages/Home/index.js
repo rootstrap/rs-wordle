@@ -35,7 +35,6 @@ const Home = () => {
     gameStatus,
     error,
     wordProcessing,
-    setLetterIndex,
     confettiExtraParams,
     customMessage,
     won,
@@ -88,7 +87,6 @@ const Home = () => {
                       style={{
                         backgroundColor: letterStatus.color,
                       }}
-                      onClick={() => setLetterIndex(index)}
                       disabled={completedRow}
                       ariaLabel={letterStatus.ariaLabel(letter, t)}
                     />

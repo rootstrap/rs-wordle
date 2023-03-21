@@ -10,7 +10,6 @@ import { getTodaysDate } from 'utils/helpers';
 const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing, setLoading }) => {
   const t = useTranslation();
 
-  const [letterIndex, setLetterIndex] = useState(0);
   const [currentRound, setCurrentRound] = useState(0);
   const [usersAttempts, setUsersAttempts] = useState([Array(wordLength).fill('')]);
   const [roundsResults, setRoundsResults] = useState([Array(wordLength).fill('')]);
@@ -37,14 +36,13 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
         roundCount++;
       }
     });
+    const lost = !won && newAttempts.length === MAX_ATTEMPTS;
+    if (won || lost) {
+      setGameStatus(won ? GAME_STATUS.won : GAME_STATUS.lost);
+    }
     setUsersAttempts(newAttempts);
     setRoundsResults(newRoundResults);
     setCurrentRound(roundCount);
-    const lost = usersAttempts.length === MAX_ATTEMPTS;
-    if (won || lost) {
-      setGameStatus(won ? GAME_STATUS.won : GAME_STATUS.lost);
-      setLetterIndex(-1);
-    }
   };
 
   const initializeData = useCallback(async () => {
@@ -98,13 +96,12 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
 
     const won = correctCount === wordLength;
     const lost = usersAttempts.length === MAX_ATTEMPTS && !won;
+    console.log(usersAttempts.length);
     const newStatus = won ? GAME_STATUS.won : lost ? GAME_STATUS.lost : GAME_STATUS.playing;
     if (won || lost) {
       setGameStatus(newStatus);
-      setLetterIndex(-1);
     } else {
       setCurrentRound(currentRound + 1);
-      setLetterIndex(0);
     }
     return currentRoundResult;
   };
@@ -163,8 +160,6 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
     gameEnded,
     gameStatus,
     error,
-    letterIndex,
-    setLetterIndex,
     wordProcessing,
     confettiExtraParams,
     customMessage,

@@ -1,8 +1,9 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   min-height: 70vh;
+  row-gap: 30px;
+  margin-top: 15px;
 }
 
 .word-container {
@@ -18,6 +19,7 @@
 
 .error-message {
   color: var(--color-red);
+  text-align: center;
 }
 
 .game-status {

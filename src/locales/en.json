@@ -9,17 +9,6 @@
     "seeWelcomeInfo": "See Welcome Info",
     "word": "word"
   },
-  "comments": {
-    "addComment": "Add Comment",
-    "addNewComment": "Add New Comment",
-    "cancelEditComment": "Cancel Edit Comment",
-    "commentText": "Comment Text",
-    "confirmEditComment": "Confirm Edit Comment",
-    "confirmTitle": "Are you sure you want to delete this comment?",
-    "confirmDescription": "Deleting this comment is a permanent action. Are you sure you want to delete it?",
-    "deleteComment": "Delete Comment",
-    "editComment": "Edit Comment"
-  },
   "errors": {
     "alreadyAttemptedWord": "You already tried with {attemptedWord}",
     "doesntExist": "{attemptedWord} doesn't exist in English",
@@ -35,19 +24,12 @@
   "home": {
     "copiedToClipboard": "Copied to Clipboard",
     "correctWordMessage": "The word was {word}",
+    "descriptionMessage": "Rootstrap ML team has trained an AI that can play Wordle using a machine learning technique called Reinforcement Learning",
+    "gameInfoMessage": "To make it play the RS version of the game enter a 5-letter goal word in the input and hit \"Play word\", or just click the button to play a random word.",
     "gameStatusMessage": "You {gameStatus}",
-    "shareResults": "Share Results",
-    "slackResult": "'s result:\n\n"
-  },
-  "invalidUser": {
-    "firstMessage": "I'm sorry {name} but your email \"{email}\" is not from Rootstrap.",
-    "secondMessage": "Please logout and login again with an \"@rootstrap.com\" email"
-  },
-  "login": {
-    "title": "Login with Google"
-  },
-  "logout": {
-    "logoutBtn": "Logout"
+    "playMessage": "Play word",
+    "resetMessage": "Reset",
+    "titleMessage": "Make an AI play Wordle!"
   },
   "onboarding": {
     "alreadyPlayer": "If you where already a player and you are experiencing some weird behavior, we recommend you logout and login again. If this doesn't work please bring the issue to the ",
@@ -62,10 +44,6 @@
     "title": "Welcome to RS WORDLE!",
     "wordle": "wordle"
   },
-  "ranking": {
-    "allTime": "All Time ({total})",
-    "today": "Today ({total})"
-  },
   "rules": {
     "maxAttemptsMessage": "Guess a word in {maxAttempts} attempts or less",
     "lettersAmountMessage": "The word could have between {minLetters} and {maxLetters} letters",
@@ -78,38 +56,5 @@
     "misplacedExplanation": " is in the word but in the wrong position",
     "incorrectExplanation": " is not in the word in any position",
     "repeatedLettersMessage": "Take into account that the word could have repeated letters, meaning you could have the same letter in different positions both painted in their corresponding color"
-  },
-  "statistics": {
-    "currentStreak": "Current Streak",
-    "longestStreak": "Longest Streak",
-    "played": "Played",
-    "topAttemptedWordsLabel": "Top Used Words",
-    "totalAttemptsLabel": "Guess Distribution",
-    "wins": "Wins",
-    "winsPercentage": "Wins (%)"
-  },
-  "suggestions": {
-    "addSuggestion": "Add Suggestion",
-    "editSuggestion": "Edit Suggestion",
-    "comment": "Comment",
-    "commentedBy": "Commented by {name}",
-    "confirmDescription": "Deleting \"{title}\" is a permanent action. Are you sure you want to delete it?",
-    "confirmTitle": "Are you sure you want to delete this suggestion?",
-    "deleteSuggestion": "Delete Suggestion",
-    "description": "Description",
-    "negativeVote": "Negative Vote",
-    "positiveVote": "Positive Vote",
-    "showComments": "Show Comments",
-    "slogan": "Have a suggestion or want to report a bug? You are in the correct place!",
-    "status": "Status",
-    "suggestedBy": "Suggested by {name}",
-    "title": "Title",
-    "votedNegative": "You voted negative",
-    "votedPositive": "You voted positive",
-    "voteNegative": "Vote negative",
-    "votePositive": "Vote positive"
-  },
-  "users": {
-    "filterByName": "Filter by name"
   }
 }

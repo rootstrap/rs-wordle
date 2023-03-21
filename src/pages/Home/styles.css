@@ -6,6 +6,10 @@
   margin-top: 15px;
 }
 
+.description {
+  text-align: center;
+}
+
 .word-container {
   align-items: center;
   display: flex;

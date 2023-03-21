@@ -49,6 +49,12 @@ const Home = () => {
   });
 
   const t = useTranslation();
+
+  const descriptionMessage = t('home.descriptionMessage');
+  const gameInfoMessage = t('home.gameInfoMessage');
+  const playMessage = t('home.playMessage');
+  const resetMessage = t('home.resetMessage');
+  const titleMessage = t('home.titleMessage');
   const gameStatusMessage = useMemo(
     () => t('home.gameStatusMessage', { gameStatus: gameStatus.toUpperCase() }),
     [gameStatus, t]
@@ -68,18 +74,23 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className="description">
+        <h3>{titleMessage}</h3>
+        <p>{descriptionMessage}</p>
+        <p>{gameInfoMessage}</p>
+      </div>
       <div className="play-button-container">
         <Input
           value={goalWord.toUpperCase()}
           handleOnChange={newValue => setGoalWord(newValue)}
-          placeholder="Enter goal word"
+          placeholder="Enter a 5-letter word"
           disabled={playing}
           maxLength={5}
         />
         {playing ? (
-          <Button handleClick={() => resetState()}>Reset</Button>
+          <Button handleClick={() => resetState()}>{resetMessage}</Button>
         ) : (
-          <Button handleClick={() => setPlaying(true)}>Play word</Button>
+          <Button handleClick={() => setPlaying(true)}>{playMessage}</Button>
         )}
       </div>
       <div className="word-container">

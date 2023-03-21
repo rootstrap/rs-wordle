@@ -7,11 +7,11 @@ import { getRandomInt } from 'utils/helpers';
 
 const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS'];
 
-export const getTodaysWord = async today => {
+export const getTodaysWord = () => {
   try {
     let todaysWord = '';
     const wordsCollection = randomWords({ exactly: 5, maxLength: 5 });
-    const correctSizeWords = await wordsCollection.filter(word =>
+    const correctSizeWords = wordsCollection.filter(word =>
       ADMITTED_WORDS_SIZES.includes(word.length)
     );
     if (!!correctSizeWords.length) {
@@ -37,12 +37,11 @@ const useWordDb = playing => {
   const today = getTodaysDate();
 
   useEffect(() => {
-    (async function () {
-      setLoading(true);
-      const { todaysWord } = await getTodaysWord(today);
+    if (playing) {
+      const { todaysWord } = getTodaysWord(today);
       setWord(todaysWord);
-    })();
-  }, []);
+    }
+  }, [playing]);
 
   const letters = useMemo(() => word?.split(''), [word]);
 

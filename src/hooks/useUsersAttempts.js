@@ -50,12 +50,11 @@ const useUsersAttempts = ({ wordLength, correctWord, letters, attempts, playing,
   const initializeData = useCallback(async () => {
     if (playing && !!correctWord && !!attempts) {
       analyzeData(attempts);
-      setLoading(false);
     } else {
       const newAttempts = [Array(5).fill('')];
       setUsersAttempts(newAttempts);
     }
-  }, [playing, attempts, correctWord, wordLength]);
+  }, [playing, correctWord, attempts]);
 
   useEffect(() => {
     initializeData();

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Confetti from 'react-confetti';
 
 import Button from 'components/common/Button';
@@ -13,10 +13,20 @@ import './styles.css';
 
 const Home = () => {
   const [playing, setPlaying] = useState(false);
+  const [attempts, setAttempts] = useState([]);
 
-  const { letters, word, loading, setLoading } = useWordDb(playing);
-  const { isLoading, data } = useGetAttemptsQuery(word, playing);
-  const attempts = data ? data.attempts : [];
+  const { letters, word } = useWordDb(playing);
+  const {
+    isLoading,
+    data,
+    error: queryError,
+  } = useGetAttemptsQuery(word, { skip: !playing || !word });
+
+  useEffect(() => {
+    if (playing && data && !queryError) {
+      setAttempts(data.attempts);
+    }
+  }, [playing, data]);
 
   const {
     usersAttempts,
@@ -35,7 +45,6 @@ const Home = () => {
     letters,
     attempts: attempts,
     playing,
-    setLoading,
   });
 
   const t = useTranslation();
@@ -45,7 +54,7 @@ const Home = () => {
   );
   const correctWordMessage = useMemo(() => t('home.correctWordMessage', { word }), [t, word]);
 
-  if (playing && (loading || isLoading)) return <Loading />;
+  if (playing && isLoading) return <Loading />;
 
   return (
     <div className="home-container">
@@ -92,6 +101,7 @@ const Home = () => {
         })}
       </div>
       {!!error && <p className="error-message">{error}</p>}
+      {!!queryError && <p className="error-message">{queryError.data.error}</p>}
       {wordProcessing && <Loading />}
       {gameEnded && (
         <>

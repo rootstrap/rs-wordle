@@ -7,8 +7,7 @@ import Loading from 'components/common/Loading';
 import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 import useUsersAttempts from 'hooks/useUsersAttempts';
-import useWordDb from 'hooks/useWordDb';
-import { useGetAttemptsQuery } from 'services/wordleAI';
+import { useGetAttemptsQuery, useGetWordQuery } from 'services/wordleAI';
 import './styles.css';
 import Input from 'components/common/Input';
 
@@ -16,19 +15,19 @@ const Home = () => {
   const [playing, setPlaying] = useState(false);
   const [attempts, setAttempts] = useState([]);
   const [goalWord, setGoalWord] = useState('');
+  const [wordCache, setWordCache] = useState('');
 
-  const { letters } = useWordDb(playing, goalWord, setGoalWord);
+  const {
+    isLoading: wordLoading,
+    data: wordData,
+    error: wordError,
+  } = useGetWordQuery({}, { skip: !playing || goalWord, refetchOnMountOrArgChange: true });
+
   const {
     isLoading,
     data,
     error: queryError,
   } = useGetAttemptsQuery(goalWord, { skip: !playing || !goalWord });
-
-  useEffect(() => {
-    if (playing && data && !queryError) {
-      setAttempts(data.attempts);
-    }
-  }, [playing, data]);
 
   const {
     usersAttempts,
@@ -41,12 +40,24 @@ const Home = () => {
     customMessage,
     won,
   } = useUsersAttempts({
-    wordLength: goalWord.length,
+    wordLength: goalWord?.length,
     correctWord: goalWord,
-    letters,
+    letters: goalWord?.split(''),
     attempts: attempts,
     playing,
   });
+
+  useEffect(() => {
+    if (playing) {
+      if (!goalWord && wordData && wordData.word != wordCache) {
+        setGoalWord(wordData.word);
+        setWordCache('');
+      }
+      if (data) {
+        setAttempts(data.attempts);
+      }
+    }
+  }, [playing, goalWord, data, wordData, wordCache]);
 
   const t = useTranslation();
 
@@ -65,12 +76,13 @@ const Home = () => {
   );
 
   const resetState = () => {
+    setWordCache(goalWord);
     setPlaying(false);
     setGoalWord('');
     setAttempts([]);
   };
 
-  if (playing && isLoading) return <Loading />;
+  if (playing && (wordLoading || isLoading)) return <Loading />;
 
   return (
     <div className="home-container">
@@ -81,8 +93,8 @@ const Home = () => {
       </div>
       <div className="play-button-container">
         <Input
-          value={goalWord.toUpperCase()}
-          handleOnChange={newValue => setGoalWord(newValue)}
+          value={goalWord}
+          handleOnChange={newValue => setGoalWord(newValue.toUpperCase())}
           placeholder="Enter a 5-letter word"
           disabled={playing}
           maxLength={5}
@@ -131,7 +143,11 @@ const Home = () => {
         })}
       </div>
       {!!error && <p className="error-message">{error}</p>}
-      {!!queryError && <p className="error-message">{queryError.data.error}</p>}
+      {!!wordError && <p className="error-message">{wordError.error}</p>}
+      {!!queryError && !!queryError.error && <p className="error-message">{queryError.error}</p>}
+      {!!queryError && !!queryError.data && (
+        <p className="error-message">{queryError.data.error}</p>
+      )}
       {wordProcessing && <Loading />}
       {gameEnded && (
         <>

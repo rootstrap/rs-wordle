@@ -7,7 +7,10 @@ export const wordleAIApi = createApi({
     getAttempts: builder.query({
       query: word => `/play_word?goal_word=${word}`,
     }),
+    getWord: builder.query({
+      query: () => '/word',
+    }),
   }),
 });
 
-export const { useGetAttemptsQuery } = wordleAIApi;
+export const { useGetAttemptsQuery, useGetWordQuery } = wordleAIApi;

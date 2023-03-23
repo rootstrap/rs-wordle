@@ -22,6 +22,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-helmet-async": "^1.0.9",
     "react-hook-form": "^7.9.0",
+    "react-icons": "^4.8.0",
     "react-intl": "^5.20.4",
     "react-redux": "^7.2.3",
     "react-router-dom": "^6.8.0",

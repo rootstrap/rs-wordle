@@ -1,21 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import './styles.css';
 import Confetti from 'react-confetti';
-
 import Button from 'components/common/Button';
+import GithubIconAnchor from 'components/GithubIconAnchor';
+import Input from 'components/common/Input';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
-import { LETTER_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 import useUsersAttempts from 'hooks/useUsersAttempts';
+import { useEffect, useMemo, useState } from 'react';
+import { LETTER_STATUS } from 'constants/types';
 import { useGetAttemptsQuery, useGetWordQuery } from 'services/wordleAI';
-import './styles.css';
-import Input from 'components/common/Input';
 
 const Home = () => {
   const [playing, setPlaying] = useState(false);
   const [attempts, setAttempts] = useState([]);
   const [goalWord, setGoalWord] = useState('');
   const [wordCache, setWordCache] = useState('');
+  const githubRepoId = process.env.REACT_APP_RS_REPO_ID;
 
   const {
     isLoading: wordLoading,
@@ -86,6 +87,9 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className="repo-icons">
+        <GithubIconAnchor repoId={githubRepoId} />
+      </div>
       <div className="description">
         <h3>{titleMessage}</h3>
         <p>{descriptionMessage}</p>

@@ -1,0 +1,12 @@
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    opacity:0.7;
+}
+
+svg {
+    width: 32px;
+    height: 32px;
+}

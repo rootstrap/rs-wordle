@@ -49,3 +49,8 @@
   align-self: center;
   column-gap: 2em;
 }
+
+.repo-icons {
+  padding-left: 39px;
+  position: absolute;
+}

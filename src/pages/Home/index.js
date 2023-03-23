@@ -4,7 +4,7 @@ import Confetti from 'react-confetti';
 import Button from 'components/common/Button';
 import LetterInput from 'components/common/LetterInput';
 import Loading from 'components/common/Loading';
-import { LETTER_STATUS, GAME_STATUS } from 'constants/types';
+import { LETTER_STATUS } from 'constants/types';
 import useTranslation from 'hooks/useTranslation';
 import useUsersAttempts from 'hooks/useUsersAttempts';
 import { useGetAttemptsQuery, useGetWordQuery } from 'services/wordleAI';
@@ -49,7 +49,7 @@ const Home = () => {
 
   useEffect(() => {
     if (playing) {
-      if (!goalWord && wordData && wordData.word != wordCache) {
+      if (!goalWord && wordData && wordData.word !== wordCache) {
         setGoalWord(wordData.word);
         setWordCache('');
       }

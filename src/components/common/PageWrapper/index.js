@@ -11,7 +11,6 @@ import './styles.css';
 const PageWrapper = ({ title, subtitle, children }) => {
   const t = useTranslation();
 
-  const showOnboardingFirstTime = false;
   const [showOnboarding, setOnboardingShown] = useState(false);
 
   const handleOpenModal = () => setOnboardingShown(true);

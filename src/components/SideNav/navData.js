@@ -1,16 +1,7 @@
 import HomeIcon from '@mui/icons-material/Home';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import InfoIcon from '@mui/icons-material/Info';
 
-import {
-  HOME_ID,
-  RANKING_ID,
-  STATISTICS_ID,
-  USERS_ID,
-  SUGGESTIONS_ID,
-  RULES_ID,
-  SETTINGS_ID,
-} from 'constants/componentsIds';
+import { HOME_ID, RULES_ID } from 'constants/componentsIds';
 
 export const navData = [
   {

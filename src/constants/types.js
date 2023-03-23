@@ -1,5 +1,3 @@
-import { getCurrentStreakIcon, pluralize } from 'utils/helpers';
-
 export const LETTER_STATUS = {
   correct: {
     id: 'correct',

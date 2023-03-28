@@ -102,6 +102,7 @@ const Home = () => {
           placeholder="Enter a 5-letter word"
           disabled={playing}
           maxLength={5}
+          autofocus="true"
         />
         {playing ? (
           <Button handleClick={() => resetState()}>{resetMessage}</Button>

@@ -83,8 +83,6 @@ const Home = () => {
     setAttempts([]);
   };
 
-  if (playing && (wordLoading || isLoading)) return <Loading />;
-
   return (
     <div className="home-container">
       <div className="repo-icons">
@@ -147,13 +145,13 @@ const Home = () => {
           );
         })}
       </div>
+      {playing && (wordLoading || isLoading || wordProcessing) && <Loading />}
       {!!error && <p className="error-message">{error}</p>}
       {!!wordError && <p className="error-message">{wordError.error}</p>}
       {!!queryError && !!queryError.error && <p className="error-message">{queryError.error}</p>}
       {!!queryError && !!queryError.data && (
         <p className="error-message">{queryError.data.error}</p>
       )}
-      {wordProcessing && <Loading />}
       {gameEnded && (
         <>
           <p className="game-status">{gameStatusMessage}</p>

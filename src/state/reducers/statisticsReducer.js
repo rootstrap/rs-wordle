@@ -3,7 +3,7 @@ import { createReducer } from '@rootstrap/redux-tools';
 import { setUserStatistics } from 'state/actions/statisticsActions';
 import { logout } from 'state/actions/userActions';
 
-export const initialState = {
+const initialState = {
   statistics: {},
 };
 

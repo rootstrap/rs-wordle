@@ -1,4 +1,13 @@
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 
 import { DAILY_RESULTS } from 'firebase/collections';
 import firebaseData from 'firebase/firebase';
@@ -16,6 +25,24 @@ export const addDailyResults = async (newDailyResults, triggerError) => {
   } catch (error) {
     console.error(error);
     triggerError({ error });
+  }
+};
+
+export const getAllUsersDailyResults = async (currentUser, triggerError) => {
+  try {
+    const q = query(
+      collection(firebaseDb, DAILY_RESULTS),
+      where('user.email', '==', currentUser),
+      orderBy('date')
+    );
+    const docs = await getDocs(q);
+    return {
+      docs,
+    };
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+    return { docs: [] };
   }
 };
 

@@ -1,4 +1,5 @@
 import routesPaths from './routesPaths';
+import DeveloperTools from 'pages/DeveloperTools';
 import Home from 'pages/Home';
 import InvalidUser from 'pages/InvalidUser';
 import Login from 'pages/Login';
@@ -63,6 +64,12 @@ const routes = [
   {
     path: routesPaths.invalidUser,
     element: <InvalidUser />,
+    isPrivate: true,
+  },
+  {
+    path: routesPaths.developerTools,
+    element: <DeveloperTools />,
+    isOnlyDevelop: true,
     isPrivate: true,
   },
 ];

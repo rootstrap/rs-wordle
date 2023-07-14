@@ -19,7 +19,7 @@ const handleSetOnboardingShown = state => {
 };
 
 const handleLogout = () => {
-  return { ...initialState };
+  return initialState;
 };
 
 export default createReducer(initialState, {

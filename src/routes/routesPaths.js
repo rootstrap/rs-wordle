@@ -9,6 +9,7 @@ const routesPaths = {
   usersStatistics: '/statistics/:id',
   login: '/login',
   invalidUser: '/invalidUser',
+  developerTools: '/developerTools',
 };
 
 export default routesPaths;

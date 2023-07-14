@@ -1,6 +1,4 @@
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
-// I prefer this library but generates out of memory errors in netlify
-// import { initialize } from '@paunovic/random-words';
 import randomWords from 'random-words';
 
 import { ADMITTED_WORDS_SIZES } from 'constants/constants';

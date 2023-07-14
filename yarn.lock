@@ -2178,11 +2178,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@paunovic/random-words@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@paunovic/random-words/-/random-words-1.2.1.tgz#411055cc76c72a94d06e9eca83af51de41ac441a"
-  integrity sha512-ZdPPZMK43b5sq96aHMXygxEePzSGpbJUBQAN7aOEMeDKvU84gwubqW2dTdLbPQOuW2BED+HHs+Bg7twVxe+e+Q==
-
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -10241,7 +10236,7 @@ raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
-random-words@^1.2.0:
+random-words@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/random-words/-/random-words-1.2.0.tgz#94d0cc8061965efe955d60b80ad93392a7edf2f5"
   integrity sha512-YP2bXrT19pxtBh22DK9CLcWsmBjUBAGzw3JWJycTNbXm1+0aS6PrKuAJ9aLT0GGaPlPp9LExfJIMVkzhrDZE6g==

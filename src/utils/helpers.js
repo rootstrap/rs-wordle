@@ -11,7 +11,16 @@ export const getCurrentStreakIcon = currentStreak => {
   else if (currentStreak < 80) icon = '🖤';
   else if (currentStreak < 90) icon = '❤️';
   else if (currentStreak < 100) icon = '💖';
-  else icon = '❤️‍🔥';
+  else if (currentStreak < 110) icon = '❤️‍🔥';
+  else if (currentStreak < 120) icon = '🔥';
+  else if (currentStreak < 130) icon = '🔅';
+  else if (currentStreak < 140) icon = '🔆';
+  else if (currentStreak < 150) icon = '☀️';
+  else if (currentStreak < 160) icon = '✨';
+  else if (currentStreak < 170) icon = '⭐️';
+  else if (currentStreak < 180) icon = '🌟';
+  else if (currentStreak < 190) icon = '💫';
+  else icon = '🧞';
 
   return icon;
 };

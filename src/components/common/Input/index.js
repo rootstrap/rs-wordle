@@ -2,7 +2,14 @@ import cn from 'classnames';
 
 import './styles.css';
 
-const Input = ({ value, handleOnChange, type = 'text', rows = 1, extraClassNames = [] }) => (
+const Input = ({
+  value,
+  handleOnChange,
+  type = 'text',
+  rows = 1,
+  extraClassNames = [],
+  ...props
+}) => (
   <>
     {rows > 1 ? (
       <textarea
@@ -10,6 +17,7 @@ const Input = ({ value, handleOnChange, type = 'text', rows = 1, extraClassNames
         value={value}
         onChange={({ target: { value: newValue } }) => handleOnChange(newValue)}
         rows={rows}
+        {...props}
       />
     ) : (
       <input
@@ -17,6 +25,7 @@ const Input = ({ value, handleOnChange, type = 'text', rows = 1, extraClassNames
         type={type}
         value={value}
         onChange={({ target: { value: newValue } }) => handleOnChange(newValue)}
+        {...props}
       />
     )}
   </>

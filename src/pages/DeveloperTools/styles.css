@@ -1,0 +1,41 @@
+.developer-tools-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 30px
+}
+
+.developer-tools-users-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.developer-tools-users-list-container {
+    background-color: var(--color-green);
+    height: 300px;
+    overflow-y: scroll;
+    min-width: 300px;
+}
+
+.developer-tools-button-container {
+    align-self: flex-start;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.developer-tools-statistics-resutls {
+    margin-top: 30px;
+}
+
+.developer-tools-update-statistics-link {
+    background-color: transparent;
+    border: none;
+    color: var(--color-red);
+    cursor: pointer;
+    font: inherit;
+    margin-left: 15px;
+    padding: 0;
+    text-decoration: underline;
+}

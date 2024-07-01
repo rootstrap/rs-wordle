@@ -4,6 +4,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import cn from 'classnames';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import SkipToMainContent from 'components/SkipToMainContent';
 import { SIDE_NAV_TOGGLE_ID } from 'constants/componentsIds';
 
@@ -12,6 +13,8 @@ import './sidenav.css';
 
 const SideNav = () => {
   const [open, setOpen] = useState(false);
+
+  const { resetError } = useErrorHandling();
 
   const toggleOpen = () => {
     setOpen(prev => !prev);
@@ -36,6 +39,7 @@ const SideNav = () => {
                 className={({ isActive }) => cn('sideitem', { isActive })}
                 to={item.link}
                 end={item.end}
+                onClick={resetError}
               >
                 {item.icon}
                 {open && <span className="sidenav-link-text">{item.text}</span>}
@@ -47,6 +51,7 @@ const SideNav = () => {
           id={settings.id}
           className={({ isActive }) => cn('sideitem', { isActive })}
           to={settings.link}
+          onClick={resetError}
         >
           {settings.icon}
           {open && <span className="sidenav-link-text">{settings.text}</span>}

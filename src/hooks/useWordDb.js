@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import useErrorHandling from 'components/common/RSWordleErrorBoundary/useErrorHandling';
 import { getTodaysWord } from 'firebase/words';
 import { getTodaysDate } from 'utils/helpers';
 
@@ -9,17 +10,18 @@ const useWordDb = () => {
   const [loading, setLoading] = useState(true);
 
   const today = getTodaysDate();
+  const { triggerError } = useErrorHandling();
 
   useEffect(() => {
     (async function () {
       if (wordDate !== today) {
         setLoading(true);
         setWordDate(today);
-        const { todaysWord } = await getTodaysWord(today);
+        const { todaysWord } = await getTodaysWord(today, triggerError);
         setWord(todaysWord);
       }
     })();
-  }, [today, wordDate]);
+  }, [today, triggerError, wordDate]);
 
   const letters = useMemo(() => word?.split(''), [word]);
 

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import Loading from 'components/common/Loading';
 import Tabs from 'components/common/Tabs';
+import useRankingEndpoints from 'hooks/endpoints/useRankingEndpoints';
 import useRankingData from 'hooks/useRankingData';
 import useTranslation from 'hooks/useTranslation';
 
@@ -10,7 +11,8 @@ import Today from './Today';
 import './styles.css';
 
 const Ranking = () => {
-  const { rankingDataLength, dailyResultsLength, loading } = useRankingData();
+  const { loading } = useRankingEndpoints();
+  const { rankingDataLength, dailyResultsLength } = useRankingData();
 
   const t = useTranslation();
   const allTimeLabel = useMemo(

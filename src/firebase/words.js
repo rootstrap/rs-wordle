@@ -13,7 +13,7 @@ const DEFAULT_WORDS = ['GENIE', 'GRACE', 'SPACE', 'CLASS', 'NOTICE', 'WORDS', 'D
 const { firebaseDb } = firebaseData;
 const wordsRef = collection(firebaseDb, WORDS_COLLECTION);
 
-export const getTodaysWord = async today => {
+export const getTodaysWord = async (today, triggerError) => {
   try {
     const docRef = doc(firebaseDb, WORDS_COLLECTION, today);
     const docSnap = await getDoc(docRef);
@@ -36,10 +36,11 @@ export const getTodaysWord = async today => {
       await setDoc(doc(wordsRef, today), { word: todaysWord });
       return { todaysWord };
     }
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     const randomIndex = getRandomInt(DEFAULT_WORDS.length);
     const todaysWord = DEFAULT_WORDS[randomIndex];
+    triggerError({ error });
     return { todaysWord };
   }
 };

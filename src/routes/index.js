@@ -10,6 +10,7 @@ import Suggestions from 'pages/Suggestions';
 import Users from 'pages/Users';
 
 import routesPaths from './routesPaths';
+import DeveloperTools from 'pages/DeveloperTools';
 
 const routes = [
   {
@@ -71,6 +72,12 @@ const routes = [
   {
     path: routesPaths.invalidUser,
     element: <InvalidUser />,
+    isPrivate: true,
+  },
+  {
+    path: routesPaths.developerTools,
+    element: <DeveloperTools />,
+    isOnlyDevelop: true,
     isPrivate: true,
   },
 ];

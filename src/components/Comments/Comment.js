@@ -63,6 +63,7 @@ const Comment = ({
               handleOnChange={handleEditCommentText}
               rows={4}
               extraClassNames={['edit-comment-text-area']}
+              aria-label={t('comments.commentText')}
             />
           ) : (
             <span>{text}</span>
@@ -71,20 +72,20 @@ const Comment = ({
         <div className="action-icons-container">
           {showEditDeleteIcons && (
             <>
-              <IconButton onClick={enableEditComment}>
+              <IconButton onClick={enableEditComment} aria-label={t('comments.editComment')}>
                 <EditIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={handleToggleDialog}>
+              <IconButton onClick={handleToggleDialog} aria-label={t('comments.deleteComment')}>
                 <DeleteIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>
           )}
           {showCancelSaveIcons && (
             <>
-              <IconButton onClick={stopEditingComment}>
+              <IconButton onClick={stopEditingComment} aria-label={t('comments.cancelEditComment')}>
                 <CancelIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
-              <IconButton onClick={onEditComment}>
+              <IconButton onClick={onEditComment} aria-label={t('comments.confirmEditComment')}>
                 <SaveIcon htmlColor={VOTED_COLOR} fontSize="small" />
               </IconButton>
             </>
@@ -99,9 +100,7 @@ const Comment = ({
         description={t('comments.confirmDescription')}
       />
       <div className="suggested-by-container commented-by-container">
-        <span className="suggested-by-name">
-          {t('suggestions.commentedBy')} {name}
-        </span>
+        <span className="suggested-by-name">{t('suggestions.commentedBy', { name })}</span>
         <img src={photo} className="suggested-by-photo" alt={`commented-by-${name}`} />
       </div>
     </div>

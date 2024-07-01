@@ -5,13 +5,13 @@ import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebas
 import { USERS } from './collections';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDtNY3LQVPluB4BLU97CZpr-1X8GELUNZU',
-  authDomain: 'rs-wordle.firebaseapp.com',
-  projectId: 'rs-wordle',
-  storageBucket: 'rs-wordle.appspot.com',
-  messagingSenderId: '511939813168',
-  appId: '1:511939813168:web:922d084f432c7a9dfb72f5',
-  measurementId: 'G-JTWS734E5Z',
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FB_APP_ID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

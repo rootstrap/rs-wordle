@@ -7,7 +7,7 @@ import firebaseData from 'firebase/firebase';
 const { firebaseDb } = firebaseData;
 const statisticsRef = collection(firebaseDb, USERS_STATISTICS);
 
-export const getUsersStatistics = async selectedUser => {
+export const getUsersStatistics = async (selectedUser, triggerError) => {
   let currentStatistics = {
     totalGames: 0,
     totalWins: 0,
@@ -29,12 +29,18 @@ export const getUsersStatistics = async selectedUser => {
     } else {
       await setDoc(doc(statisticsRef, selectedUser), currentStatistics);
     }
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
   }
   return { currentStatistics };
 };
 
-export const updateUsersStatistics = (newStatistics, selectedUser) => {
-  updateDoc(doc(statisticsRef, selectedUser), newStatistics);
+export const updateUsersStatistics = (newStatistics, selectedUser, triggerError) => {
+  try {
+    updateDoc(doc(statisticsRef, selectedUser), newStatistics);
+  } catch (error) {
+    console.error(error);
+    triggerError({ error });
+  }
 };

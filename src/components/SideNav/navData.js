@@ -5,12 +5,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import {
   HOME_ID,
   RANKING_ID,
   STATISTICS_ID,
   USERS_ID,
+  CHATS_ID,
   SUGGESTIONS_ID,
   RULES_ID,
   SETTINGS_ID,
@@ -43,6 +45,13 @@ export const navData = [
     icon: <GroupIcon />,
     text: 'Users',
     link: '/users',
+    end: true,
+  },
+  {
+    id: CHATS_ID,
+    icon: <ChatIcon />,
+    text: 'ChatRoom',
+    link: '/chats',
     end: true,
   },
   {

@@ -1,0 +1,83 @@
+.messages-wrapper {
+  padding: 20px 15%;
+  margin-bottom: 60px;
+}
+
+.chat-bubble {
+  border-radius: 20px 20px 20px 0;
+  padding: 15px;
+  background-color: var(--color-yellow);
+  color: var(--color-black);
+  width: 30%;
+  box-shadow: -2px 2px 1px 1px var(--color-yellow);
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.chat-bubble.right {
+  margin-left: auto;
+  border-radius: 20px 20px 0 20px;
+  background-color: var(--color-green);
+  box-shadow: -2px 2px 1px 1px var(--color-green);
+  color: var(--color-white);
+}
+
+.chat-bubble__left {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  color: pink;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.user-message {
+  word-break: break-all;
+}
+
+.message-time {
+  display: block;
+  text-align: right;
+}
+
+.send-message {
+  position: fixed;
+  bottom: 0px;
+  padding: 15px 20px;
+  background-color: var(--color-hunter-green);
+  display: flex;
+  width: 93%;
+}
+
+.send-message > input {
+  height: 30px;
+  padding: 10px 10px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+  flex-grow: 1;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-size: 16px;
+}
+
+.send-message > :is(input, button):focus {
+  outline: none;
+  border-bottom: 1px solid var(--color-green);
+}
+
+.send-message > button {
+  width: 70px;
+  height: 40px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--color-black);
+  background-color: var(--color-black);
+  font-weight: 600;
+  margin-left: 10px;
+}

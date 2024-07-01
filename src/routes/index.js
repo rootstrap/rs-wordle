@@ -1,5 +1,4 @@
-import routesPaths from './routesPaths';
-import DeveloperTools from 'pages/DeveloperTools';
+import Chats from 'pages/Chats';
 import Home from 'pages/Home';
 import InvalidUser from 'pages/InvalidUser';
 import Login from 'pages/Login';
@@ -9,6 +8,9 @@ import Settings from 'pages/Settings';
 import Statistics from 'pages/Statistics';
 import Suggestions from 'pages/Suggestions';
 import Users from 'pages/Users';
+
+import routesPaths from './routesPaths';
+import DeveloperTools from 'pages/DeveloperTools';
 
 const routes = [
   {
@@ -56,6 +58,12 @@ const routes = [
     element: <Suggestions />,
     isPrivate: true,
     title: 'Suggestions',
+  },
+  {
+    path: routesPaths.chats,
+    element: <Chats />,
+    isPrivate: true,
+    title: 'Lets Chat !',
   },
   {
     path: routesPaths.login,

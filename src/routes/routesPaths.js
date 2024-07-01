@@ -1,5 +1,6 @@
 const routesPaths = {
   index: '/',
+  chats: '/chats',
   ranking: '/ranking',
   rules: '/rules',
   statistics: '/statistics',

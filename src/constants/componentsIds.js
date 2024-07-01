@@ -7,6 +7,7 @@ export const HOME_ID = 'homeId';
 export const RANKING_ID = 'rankingId';
 export const STATISTICS_ID = 'statisticsId';
 export const USERS_ID = 'usersId';
+export const CHATS_ID = 'chatsId';
 export const SUGGESTIONS_ID = 'suggestionsId';
 export const RULES_ID = 'rulesId';
 export const SETTINGS_ID = 'settingsId';
